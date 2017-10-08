@@ -1,0 +1,46 @@
+* External programs.
+** Enable term-mode for NTEmacs.
+- https://github.com/d5884/fakecygpty
+- Compile
+  - gcc -D_GNU_SOURCE -o fakecygpty fakecygpty.c
+    gcc -o qkill qkill.c
+- Install
+  - fakecygpty.exe -> /usr/local/bin/
+  - qkill.exe      -> /usr/local/bin/
+  - fakecygpty.el  -> .emacs.d/lisp/
+- GPL2 or later
+** Install msvc package.
+- https://github.com/yaruopooner/ac-clang/releases (binary)
+- https://github.com/yaruopooner/msvc (minimal-config-sample/*.el)
+- Install
+  - clang-server.exe           -> /usr/local/bin/
+  - libclang.dll               -> /usr/local/bin/
+  - minimal-config-sample/*.el -> .emacs.d/lisp/
+- GPL3 or later (ac-clang, msvc)
+** Intall helm-gtags.
+- https://www.gnu.org/software/global/download.html
+- Compile
+  - ./configure && make && make install
+- Install
+  - Files are installed by 'make install' to:
+    - /usr/local/bin/ (gtags-cscope.exe globash htags-server htags.exe gtags.exe gozilla.exe global.exe)
+    - /usr/local/lib/gtags
+    - /usr/local/share/gtags
+    - /usr/local/share/info/
+    - /usr/local/share/man/
+    - /usr/local/var/gtags
+  - Manually installed file:
+    - gtags.el -> .emacs.d/lisp/
+- GPL3 or later (global)
+** Intall migemo.
+- https://www.kaoriya.net/software/cmigemo/
+- Install
+  - cmigemo.exe -> /usr/local/bin/
+  - migemo.dll  -> /usr/local/bin/
+  - dict        -> /usr/local/share/migemo/
+- MIT/original dual license
+** Use plink instead of ssh for windows-nt.
+- http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+- Install
+  - plink.exe -> /usr/local/bin/
+- MIT
