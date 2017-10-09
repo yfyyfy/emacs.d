@@ -1,0 +1,65 @@
+* List of elisp files currently in lisp directory.
+- lisp/141127102557.helm-next-error.1.el
+  - http://emacs.rubikitch.com/helm-next-error/
+- lisp/dos.el
+  -> bat-mode (part of Emacs)
+  license?
+- lisp/doxygen.el
+  - https://github.com/TreeRex/doxygen-el
+  - MIT
+- lisp/doxymacs.el
+  - https://github.com/emacsattic/doxymacs
+  - GPL2 or later
+- lisp/java-mode-indent-annotations.el
+  - https://www.emacswiki.org/emacs/java-mode-indent-annotations.el
+  - https://github.com/emacsmirror/java-mode-indent-annotations
+  - GPL2 or later
+- lisp/setup-cygwin.el
+  - marmalade
+  - GPL2 or later
+- lisp/skk/
+  - melpa
+  - GPL2 or later
+- lisp/visual-basic-mode.el
+  - https://www.emacswiki.org/emacs/visual-basic-mode.el
+  - https://github.com/emacsmirror/visual-basic-mode
+  - GPL2 or later
+- lisp/w32-symlinks.el
+  - https://www.emacswiki.org/emacs/w32-symlinks.el
+  - https://github.com/emacsmirror/w32-symlinks
+  - check http://d.hatena.ne.jp/holidays-l/20101226/p1
+  - GPL2 or later
+- lisp/windows-path.el
+  - https://www.emacswiki.org/emacs/windows-path.el
+  - https://github.com/emacsmirror/windows-path
+  - GPL2 or later
+- lisp/xml-parse.el
+  - https://www.emacswiki.org/emacs/xml-parse.el
+  - https://github.com/emacsmirror/xml-parse
+  - GPL2 or later
+
+- lisp/tempo.el
+  - part of emacs
+  - GPL2 or later
+- lisp/elib
+  - http://nixbit.com/software/elib-review/#
+  - https://github.com/emacsattic/elib
+  - GPL2 or later
+
+* Files on internet (virtually) identical to current local files.
+#+begin_src sh
+  curl -O http://rubikitch.com/f/141127102557.helm-next-error.1.el
+  curl -O https://raw.githubusercontent.com/sunesimonsen/Emacs.d/master/dos.el
+  curl -O https://raw.githubusercontent.com/TreeRex/doxygen-el/master/doxygen.el                                # virtually no diff.
+  curl -o doxymacs-1.8.0.tar.gz -L https://sourceforge.net/projects/doxymacs/files/latest/download?source=files
+  curl -O https://www.emacswiki.org/emacs/download/java-mode-indent-annotations.el                              # with small fix
+  curl -O https://www.emacswiki.org/emacs/download/setup-cygwin.el                                              # virtually no diff.
+  curl -O http://openlab.ring.gr.jp/skk/maintrunk/old-releases/ddskk-15.1.tar.gz
+  curl -O https://raw.githubusercontent.com/xahlee/ergoemacs/master/packages/visual-basic-mode.el
+  curl -O https://www.emacswiki.org/emacs/download/w32-symlinks.el
+  curl -O https://www.emacswiki.org/emacs/download/windows-path.el
+  curl -o xml-parse.el https://searchcode.com/codesearch/raw/52844022/
+  curl -O https://dev.sigpipe.me/dashie/emacs-d/raw/a87259123301d0915da3f7207b6b52498ab901a9/tempo.el
+  curl -OL https://github.com/emacsattic/elib/archive/master.zip
+  curl -O ftp://ftp.lysator.liu.se/pub/emacs/elib-1.0.tar.gz (http://nixbit.com/software/elib-review/#)
+#+end_src
