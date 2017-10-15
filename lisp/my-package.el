@@ -6,7 +6,7 @@
     '(recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode))
   "")
 
-(defvar my-locations
+(defvar my-package-repositories
   (if (boundp 'package-archives)
       (mapcar 'cdr package-archives)
     '(
@@ -17,36 +17,36 @@
       ))
   "")
 
-(defun my-package-install (pkgs locations)
-  "Install all packages in PKGS from LOCATIONS.
+(defun my-package-install (pkgs repositories)
+  "Install all packages in PKGS from REPOSITORIES.
 PKGS is a list of package symbols.
-LOCATIONS is a list of elpa repository URLs.
+REPOSITORIES is a list of elpa repository URLs.
 Each package is installed from the first repository in which it is found."
-  (dolist (location locations)
-    (setq pkgs (my-package--execute-pop-if-exists pkgs location
+  (dolist (repository repositories)
+    (setq pkgs (my-package--execute-pop-if-exists pkgs repository
 						 '(lambda (pkgs)
 						    (dolist (pkg pkgs)
 						      (package-install pkg)))))))
 
-(defun my-package-check (pkgs locations)
-  "Check from which repositories in LOCATIONS packages in PKGS will be retrieved."
+(defun my-package-check (pkgs repositories)
+  "Check from which repositories in REPOSITORIES packages in PKGS will be retrieved."
   (apply
-   (let ((myval (make-symbol "_myval_")))
-     `(lambda (pkgs locations)
-	(let (,myval)
-	  (dolist (location locations)
-	    (setq pkgs (my-package--execute-pop-if-exists pkgs location #'(lambda (pkgs) (add-to-list ',myval (list location pkgs))))))
-	  (add-to-list ',myval (list nil pkgs))
-	  ,myval)))
-     (list pkgs locations)))
+   (let ((repository-package-alist (make-symbol "_repository-package-alist_")))
+     `(lambda (pkgs repositories)
+	(let (,repository-package-alist)
+	  (dolist (repository repositories)
+	    (setq pkgs (my-package--execute-pop-if-exists pkgs repository #'(lambda (pkgs) (add-to-list ',repository-package-alist (list repository pkgs))))))
+	  (add-to-list ',repository-package-alist (list nil pkgs))
+	  ,repository-package-alist)))
+     (list pkgs repositories)))
 
-(defun my-package--execute-pop-if-exists (pkgs location func)
-  "Execute func for each package in PKGS if it is found in LOCATION.
+(defun my-package--execute-pop-if-exists (pkgs repos func)
+  "Execute func for each package in PKGS if it is found in REPOS.
 PKGS is a list of package symbols.
-LOCATION is a elpa repository URL.
+REPOS is a elpa repository URL.
 FUNC takes one argument (package symbol)."
   (let (pkgs-in pkgs-out pkgs-all)
-    (with-repository location
+    (with-repository repos
       (setq pkgs-all (mapcar (lambda (elt) (car elt)) package-archive-contents))
       (dolist (pkg pkgs)
 	(add-to-list (if (memq pkg pkgs-all) 'pkgs-in 'pkgs-out)
@@ -55,8 +55,8 @@ FUNC takes one argument (package symbol)."
     pkgs-out))
 
 ;; Usage
-;; (my-package-check my-package-selected-packages my-locations)
-;; (my-package-install my-package-selected-packages my-locations)
+;; (my-package-check my-package-selected-packages my-package-repositories)
+;; (my-package-install my-package-selected-packages my-package-repositories)
 
 (defmacro with-repository (repos &rest body)
   "Read REPOS, evaluate BODY forms sequentially and return value of last one
