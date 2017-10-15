@@ -25,8 +25,9 @@ Each package is installed from the first repository in which it is found."
   (dolist (repository repositories)
     (setq pkgs (my-package--execute-pop-if-exists pkgs repository
 						 '(lambda (pkgs)
-						    (dolist (pkg pkgs)
-						      (package-install pkg)))))))
+						    (if (not (eq pkgs 'invalid))
+							(dolist (pkg pkgs)
+							  (package-install pkg))))))))
 
 (defun my-package-check (pkgs repositories)
   "Check from which repositories in REPOSITORIES packages in PKGS will be retrieved."
@@ -36,7 +37,7 @@ Each package is installed from the first repository in which it is found."
 	(let (,repository-package-alist)
 	  (dolist (repository repositories)
 	    (setq pkgs (my-package--execute-pop-if-exists pkgs repository #'(lambda (pkgs) (add-to-list ',repository-package-alist (list repository pkgs))))))
-	  (add-to-list ',repository-package-alist (list nil pkgs))
+	  (add-to-list ',repository-package-alist (list 'orphan-packages pkgs))
 	  ,repository-package-alist)))
      (list pkgs repositories)))
 
@@ -44,14 +45,16 @@ Each package is installed from the first repository in which it is found."
   "Execute func for each package in PKGS if it is found in REPOS.
 PKGS is a list of package symbols.
 REPOS is a elpa repository URL.
-FUNC takes one argument (package symbol)."
-  (let (pkgs-in pkgs-out pkgs-all)
+FUNC takes one argument: list of package symbols, or 'invalid if reading REPOS is failed."
+  (let (pkgs-in pkgs-out pkgs-all ret)
     (with-repository repos
-      (setq pkgs-all (mapcar (lambda (elt) (car elt)) package-archive-contents))
-      (dolist (pkg pkgs)
-	(add-to-list (if (memq pkg pkgs-all) 'pkgs-in 'pkgs-out)
-		     pkg)))
-    (apply func (list pkgs-in))
+		     (apply func (list
+				  (progn
+				    (setq pkgs-all (mapcar (lambda (elt) (car elt)) package-archive-contents))
+				    (dolist (pkg pkgs)
+				      (add-to-list (if (memq pkg pkgs-all) 'pkgs-in 'pkgs-out)
+						   pkg))
+				    pkgs-in))))
     pkgs-out))
 
 ;; Usage
