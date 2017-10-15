@@ -41,20 +41,52 @@ Each package is installed from the first repository in which it is found."
 PKGS is a list of package symbols.
 LOCATION is a elpa repository URL.
 FUNC takes one argument (package symbol)."
-  (let ((package-archives `(("" . ,location)))
-	pkgs-in pkgs-out pkgs-all)
-    (unless package--initialized
-      (package-initialize t))
-    (package-refresh-contents)
-    (setq pkgs-all (mapcar (lambda (elt) (car elt)) package-archive-contents))
-    (dolist (pkg pkgs)
-      (add-to-list (if (memq pkg pkgs-all) 'pkgs-in 'pkgs-out)
-		   pkg))
+  (let (pkgs-in pkgs-out pkgs-all)
+    (with-repository location
+      (setq pkgs-all (mapcar (lambda (elt) (car elt)) package-archive-contents))
+      (dolist (pkg pkgs)
+	(add-to-list (if (memq pkg pkgs-all) 'pkgs-in 'pkgs-out)
+		     pkg)))
     (apply func (list pkgs-in))
     pkgs-out))
 
 ;; Usage
 ;; (my-package-check my-package-selected-packages my-locations)
 ;; (my-package-install my-package-selected-packages my-locations)
+
+(defmacro with-repository (repos &rest body)
+  "Read REPOS, evaluate BODY forms sequentially and return value of last one
+If reading REPOS is failed, return 'invalid."
+  (declare (indent 1) (debug t))
+  (let ((temp-dir (make-symbol "_temp-dir_"))
+	(invalid-repository-p (make-symbol "_invalid-repository-p_")))
+    `(let ((,temp-dir (make-temp-file "my-package-" t)))
+       ;; Create temporary repository.
+       (with-temp-file (expand-file-name "archive-contents" ,temp-dir)
+	 (insert (prin1-to-string '(1 (dummy . [(1) nil "dummy" tar])))))
+       ;; Initialize package if necessary.
+       (unless package--initialized
+	 (package-initialize t))
+       ;; First, read temporary repository, whose only package is "dummy".
+       ;; Then, read REPOS.
+       ;; If `package-archive-contents' contains a sole package "dummy",
+       ;; reading REPOS is failed.
+       ;; If reading REPOS is succeeded, execute BODY.
+       (prog1
+	   (let ((,invalid-repository-p
+		  (progn
+		    (let ((package-archives `(("" . ,,temp-dir))))
+		      (package-refresh-contents))
+		    (let ((package-archives `(("" . ,,repos)))
+			  (debug-on-error nil))
+		      (package-refresh-contents))
+		    (and (= (length package-archive-contents) 1)
+			 (eq (car (car package-archive-contents)) 'dummy))))
+		 (package-archives `(("" . ,,repos))))
+	     (if ,invalid-repository-p
+		 'invalid
+	       (progn ,@body)))
+	 ;; Delete temporary repository.
+	 (delete-directory ,temp-dir t)))))
 
 (provide 'my-package)
