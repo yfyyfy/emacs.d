@@ -30,11 +30,15 @@ Each package is installed from the first repository in which it is found."
 
 (defun my-package-check (pkgs locations)
   "Check from which repositories in LOCATIONS packages in PKGS will be retrieved."
-  (let (myval)
-    (dolist (location locations)
-      (setq pkgs (my-package--execute-pop-if-exists pkgs location '(lambda (pkgs) (add-to-list 'myval (list location pkgs))))))
-    (add-to-list 'myval (list nil pkgs))
-    myval))
+  (apply
+   (let ((myval (make-symbol "_myval_")))
+     `(lambda (pkgs locations)
+	(let (,myval)
+	  (dolist (location locations)
+	    (setq pkgs (my-package--execute-pop-if-exists pkgs location #'(lambda (pkgs) (add-to-list ',myval (list location pkgs))))))
+	  (add-to-list ',myval (list nil pkgs))
+	  ,myval)))
+     (list pkgs locations)))
 
 (defun my-package--execute-pop-if-exists (pkgs location func)
   "Execute func for each package in PKGS if it is found in LOCATION.
