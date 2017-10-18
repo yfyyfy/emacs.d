@@ -29,17 +29,52 @@ Each package is installed from the first repository in which it is found."
 							(dolist (pkg pkgs)
 							  (package-install pkg))))))))
 
-(defun my-package-check (pkgs repositories)
-  "Check from which repositories in REPOSITORIES packages in PKGS will be retrieved."
-  (apply
-   (let ((repository-package-alist (make-symbol "_repository-package-alist_")))
-     `(lambda (pkgs repositories)
-	(let (,repository-package-alist)
-	  (dolist (repository repositories)
-	    (setq pkgs (my-package--execute-pop-if-exists pkgs repository #'(lambda (pkgs) (add-to-list ',repository-package-alist (list repository pkgs))))))
-	  (add-to-list ',repository-package-alist (list 'orphan-packages pkgs))
-	  ,repository-package-alist)))
-     (list pkgs repositories)))
+(defun my-package-check (pkgs repositories &optional pop-up)
+  "Check from which repositories in REPOSITORIES packages in PKGS will be retrieved.
+If POP-UP is non-nil, show buffer summarizing the result."
+  (interactive
+   (list my-package-selected-packages my-package-repositories t))
+  (let ((ret
+	 (apply
+	  (let ((repository-package-alist (make-symbol "_repository-package-alist_")))
+	    `(lambda (pkgs repositories)
+	       (let (,repository-package-alist)
+		 (dolist (repository repositories)
+		   (setq pkgs (my-package--execute-pop-if-exists pkgs repository
+								 #'(lambda (pkgs)
+								     (add-to-list ',repository-package-alist
+										  (list repository pkgs))))))
+		 (add-to-list ',repository-package-alist (list 'orphan-packages pkgs))
+		 ,repository-package-alist)))
+	  (list pkgs repositories))))
+    ;; (nreverse ret)
+    (setq ret (reverse ret))
+    (if pop-up
+	(my-package-pop-up-result ret))
+    ret))
+
+(defvar my-package-output-buffer "*my-package*")
+(defun my-package-pop-up-result (result)
+  "Pretty-print results of `my-package-check' in `my-package-output-buffer'"
+  (get-buffer-create my-package-output-buffer)
+  (with-current-buffer my-package-output-buffer
+    (erase-buffer)
+    (let ((max-repository-length
+	   (apply 'max (mapcar #'(lambda (elt)
+				   (let ((c (car elt)))
+				     (length
+				      (if (stringp c) c (prin1-to-string c)))))
+			       result))))
+      (dolist (elt result)
+	(let ((repos (car elt))
+	      (pkgs (cdr elt)))
+	  (insert (format (format "%%-%ss: %%s\n" (1+ max-repository-length))
+			  repos
+			  (if (eq (car pkgs) 'invalid)
+			      "(failed to read repository)"
+			    (mapconcat 'prin1-to-string (car pkgs) " "))))))))
+  (if (with-current-buffer my-package-output-buffer (> (point-max) (point-min)))
+      (display-message-or-buffer (get-buffer my-package-output-buffer))))
 
 (defun my-package--execute-pop-if-exists (pkgs repos func)
   "Execute func for each package in PKGS if it is found in REPOS.
@@ -58,7 +93,6 @@ FUNC takes one argument: list of package symbols, or 'invalid if reading REPOS i
     pkgs-out))
 
 ;; Usage
-;; (my-package-check my-package-selected-packages my-package-repositories)
 ;; (my-package-install my-package-selected-packages my-package-repositories)
 
 (defmacro with-repository (repos &rest body)
