@@ -1,13 +1,41 @@
 (require 'package)
 
+(defun my-package--get-original-value (var)
+  "Return the original value of the symbol VAR."
+  (let* ((sv (get var 'standard-value))
+	 (origval (and (consp sv)
+		       (condition-case nil
+			   (eval (car sv))))))
+    origval))
+
 (defvar my-package-selected-packages
-  (if (boundp 'package-selected-packages)
+  (if (and (boundp 'package-selected-packages)
+	   (not (eq package-selected-packages
+		    (my-package--get-original-value 'package-selected-packages))))
       package-selected-packages
-    '(recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode))
-  "")
+    (eval
+     (car
+      (delete nil
+	      (with-temp-buffer
+		(insert-file-contents user-init-file)
+		(goto-char (point-min))
+		(re-search-forward "(custom-set-variables\\_>" nil 'noerror)
+		(let* ((start (match-beginning 0))
+		       (end (scan-sexps start 1))
+		       (sexp (read (buffer-substring start end))))
+		  (mapcar #'(lambda (elt)
+			      (and (listp elt)
+				   (eq 'quote (car elt))
+				   (listp (cadr elt))
+				   (eq 'package-selected-packages (car (cadr elt)))
+				   (cadr (cadr elt))))
+			  sexp)))))))
+  "my-package's version of `package-selected-packages'.")
 
 (defvar my-package-repositories
-  (if (boundp 'package-archives)
+  (if (and (boundp 'package-archives)
+	   (not (eq package-archives
+		    (my-package--get-original-value 'package-archives))))
       (mapcar 'cdr package-archives)
     '(
       "http://elpa.gnu.org/packages/"
@@ -15,7 +43,8 @@
       "http://melpa.org/packages/"
       "http://marmalade-repo.org/packages/"
       ))
-  "")
+  "List of package repositories URL for my-package.
+Each package will be installed from the first repository which contains it.")
 
 (defun my-package-install (pkgs repositories &optional pop-up dry-run)
   "Install all packages in PKGS from REPOSITORIES.
