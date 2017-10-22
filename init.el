@@ -133,47 +133,11 @@
 (global-unset-key [insert])
 
 ;; Package
-;; http://emacs-jp.github.io/packages/package-management/package-el.html
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t) ; Site blocked.
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
-(defun my-install-my-packages ()
-  (interactive)
-  (package-refresh-contents)
-;;  (let ((package-archives
-;;	 (let (tmp-list)
-;;	   (dolist (package package-archives)
-;;	     (unless (equal (car package) "melpa")
-;;	       (add-to-list 'tmp-list package)))
-;;	   tmp-list)))
-    (dolist (package my-packages)
-      (unless (package-installed-p package)
-	(package-install package)))
-;; )
-)
-(defvar my-packages
-  '(
-    web-mode
-    auto-complete yasnippet
-    irony company company-irony
-    cmake-mode
-    helm helm-gtags
-    ac-clang msvc
-    migemo
-    helm-swoop
-    magit magit-popup dash git-commit with-editor
-    csv
-    wgrep
-    php-mode
-    yaml-mode
-    htmlize
-    w3
-    cygwin-mount ; melpa (not stable)
-    color-moccur ; melpa (not stable)
-    recentf-ext ; melpa (not stable)
-    ))
 
 ;; Workaround for term-mode
 (when (eq system-type 'windows-nt)
@@ -902,7 +866,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
     ((nxml-child-indent . 1)
