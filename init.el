@@ -11,6 +11,14 @@
 	     (expand-file-name "~/.emacs.d/info")
 	     (expand-file-name "~/local/info"))
 
+;; Load packages
+;; el-get
+(require 'my-el-get)
+(setq my-el-get-package-list
+      '(el-get
+	setup-cygwin))
+(my-el-get-activate-packages)
+
 ;; Path-conversion utility
 (load-file "~/.emacs.d/elpa/cygwin-mount-20131111.1346/cygwin-mount.el") ;; Use find-lisp-find-files in find-lisp.el to avoid hard-coding.
 (cond ((eq system-type 'windows-nt)
