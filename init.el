@@ -423,10 +423,6 @@
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 (setq doxymacs-doxygen-style "JavaDoc")
 
-;; Dos
-(autoload 'dos-mode "dos" "Edit Dos scripts." t)
-(add-to-list 'auto-mode-alist '("\\.bat$" . dos-mode))
-
 ;; VB
 (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
