@@ -16,7 +16,14 @@
 (require 'my-el-get)
 (setq my-el-get-package-list
       '(el-get
-	setup-cygwin))
+	doxymacs ;; emacsattic version may be newer. See. https://emacsmirror.net/
+	helm-next-error
+	java-mode-indent-annotations
+	setup-cygwin
+	w32-symlinks
+	windows-path
+	TreeRex/doxygen-el
+	emacsmirror/visual-basic-mode))
 (my-el-get-activate-packages)
 
 ;; Path-conversion utility
@@ -431,7 +438,6 @@
 (setq doxymacs-doxygen-style "JavaDoc")
 
 ;; VB
-(autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
 (setq visual-basic-mode-indent 4)
 

@@ -1,0 +1,4 @@
+(:name helm-next-error
+       :type http
+       :description "helm-next-error"
+       :url "http://rubikitch.com/f/141127102557.helm-next-error.1.el")
