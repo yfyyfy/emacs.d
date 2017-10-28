@@ -11,6 +11,21 @@
 	     (expand-file-name "~/.emacs.d/info")
 	     (expand-file-name "~/local/info"))
 
+;; Load packages
+;; el-get
+(require 'my-el-get)
+(setq my-el-get-package-list
+      '(el-get
+	doxymacs ;; emacsattic version may be newer. See. https://emacsmirror.net/
+	helm-next-error
+	java-mode-indent-annotations
+	setup-cygwin
+	w32-symlinks
+	windows-path
+	TreeRex/doxygen-el
+	emacsmirror/visual-basic-mode))
+(my-el-get-activate-packages)
+
 ;; Path-conversion utility
 (load-file "~/.emacs.d/elpa/cygwin-mount-20131111.1346/cygwin-mount.el") ;; Use find-lisp-find-files in find-lisp.el to avoid hard-coding.
 (cond ((eq system-type 'windows-nt)
@@ -186,7 +201,6 @@
 	    nil t nil nil)))))))
 
 ;; SKK
-(require 'skk-autoloads)
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
@@ -423,12 +437,7 @@
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 (setq doxymacs-doxygen-style "JavaDoc")
 
-;; Dos
-(autoload 'dos-mode "dos" "Edit Dos scripts." t)
-(add-to-list 'auto-mode-alist '("\\.bat$" . dos-mode))
-
 ;; VB
-(autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
 (setq visual-basic-mode-indent 4)
 
@@ -866,7 +875,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
     ((nxml-child-indent . 1)

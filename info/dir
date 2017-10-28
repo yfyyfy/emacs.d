@@ -14,17 +14,6 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
-Emacs
-* SKK: (skk).           Simple Kana to Kanji conversion program.
-
-FAQs
-* Emacs/W3 FAQ: (w3-faq).       FAQ for Emacs/W3 World Wide Web browser.
-
 GNU Emacs Lisp
 * Emacs/W3: (w3).               Emacs/W3 World Wide Web browser.
 * Emacs/W3 FAQ: (w3-faq).       FAQ for Emacs/W3 World Wide Web browser.
-* SKK: (skk).           Simple Kana to Kanji conversion program.
-* PHP Mode: (php-mode).           PHP Mode.
-
-World Wide Web
-* Emacs/W3: (w3).               Emacs/W3 World Wide Web browser.
