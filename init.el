@@ -10,9 +10,9 @@
   (add-to-list 'load-path default-directory)
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
-(add-to-list 'Info-default-directory-list
-	     (locate-user-emacs-file "info")
-	     (expand-file-name "~/local/info"))
+
+(add-to-list 'Info-default-directory-list (locate-user-emacs-file "info"))
+(add-to-list 'Info-default-directory-list (expand-file-name "~/local/info"))
 
 ;; Package
 (require 'package)
