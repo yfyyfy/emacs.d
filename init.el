@@ -181,6 +181,24 @@
 	  (setq migemo-isearch-enable-p nil)))))
 (advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
+;; Dired
+(when (eq system-type 'windows-nt)
+  ;; Use ls for dired.
+  (setq ls-lisp-use-insert-directory-program "ls")
+  (defun insert-directory-around (f &rest args)
+    "Pass Unix-form path to ls."
+    (let ((cygwin-mount-activated-orig cygwin-mount-activated)
+	  newargs)
+      (if (not cygwin-mount-activated-orig)
+	  (cygwin-mount-activate))
+      (let* ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
+	     (file (cygwin-mount-substitute-longest-mount-name (car args))))
+	(setq newargs (cons file (cdr args))))
+      (if (not cygwin-mount-activated-orig)
+	  (cygwin-mount-deactivate))
+      (apply f newargs)))
+  (advice-add 'insert-directory :around #'insert-directory-around))
+
 ;; VC
 (setq log-edit-require-final-newline nil)
 (add-hook 'vc-dir-mode-hook
