@@ -244,54 +244,7 @@
 	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
 	  "autocorrect=" "correct=")))
 
-;; ;; JDEE
-;; (autoload 'jde-mode "jde" "JDE mode." t)
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . jde-mode))
-;;
-;; (setq jde-jdk '("1.6"))
-;; (setq jde-jdk-registry '(("1.5" . "/cygdrive/c/Program Files/Eclipse3.7 Indigo/java/5")
-;; 			 ("1.6" . "/cygdrive/c/Program Files/Eclipse3.7 Indigo/java/6")
-;; 			 ("1.7" . "/cygdrive/c/Program Files/Eclipse3.7 Indigo/java/7")))
-;; (setq jde-jdk-doc-url "file:///home/USERNAME/Documents/java/docs/api/index.html")
-;;
-;; (setq jde-cygwin-path-converter '(my-jde-cygwin-path-converter-internal))
-;; (defun my-jde-cygwin-path-converter-internal (path)
-;;   "Convert cygwin style PATH to a form acceptable to java vm.  Basically
-;; converts paths of the form: '//C/dir/file' or '/cygdrive/c/dir/file' to
-;; 'c:/dir/file'.  This function will not modify standard unix style paths
-;; unless they begin with '//[a-z]/' or '/cygdrive/[a-z]/'."
-;;   (interactive "sPath: ")
-;;   (if (fboundp 'mswindows-cygwin-to-win32-path)
-;;       (substitute ?/ ?\\ (mswindows-cygwin-to-win32-path path))
-;;     (let ((path-re "/\\(bin\\|dev\\|etc\\|home\\|lib\\|opt\\|proc\\|sbin\\|srv\\|tmp\\|usr\\|var\\)/"))
-;;       (if (string-match (concat "^" path-re) path)
-;; 	  (setq path (concat "/cygdrive/c/cygwin" path))))
-;;     (let* ((path-re "/\\(cygdrive\\)?/\\([a-zA-Z]\\)/")
-;; 	   (subexpr 2)
-;; 	   (index1 (* 2 subexpr))
-;; 	   (index2 (1+ index1)))
-;;       (if (string-match (concat "^" path-re) path)
-;; 	  (let ((new-path
-;; 		 (concat (substring path
-;; 				    (nth index1 (match-data))
-;; 				    (nth index2 (match-data)))
-;; 			 ":/"
-;; 			 (substring path (match-end 0)))))
-;; 	    (while (string-match (concat ":" path-re) new-path)
-;; 	      (setq new-path
-;; 		    (concat
-;; 		     (substring new-path 0 (match-beginning 0))
-;; 		     ";"
-;; 		     (substring new-path
-;; 				(nth index1 (match-data))
-;; 				(nth index2 (match-data)))
-;; 		     ":/"
-;; 		     (substring new-path (match-end 0)))))
-;; 	    (substitute ?\\ ?\/ new-path))
-;; 	path))))
-
 ;; Elisp
-
 (add-hook 'lisp-interaction-mode-hook
 	  '(lambda()
 	     (setq tab-width 8)))
@@ -342,9 +295,6 @@
 	     (local-set-key "\C-c\C-c" 'comment-region)
 	     (ad-activate 'fortran-indent-to-column)))
 
-;; nXhtml
-;; (load "~/.emacs.d/lisp/nxhtml/autostart.elc")
-
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -361,9 +311,6 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 
-;; ;; mmm-mode
-;; Deleted. It can be retrieved via package.el
-
 ;; js
 (setq js-mode-hook
       '(lambda ()
@@ -374,25 +321,6 @@
 	 (local-set-key "\C-\M-n" 'forward-list)
 	 (local-set-key "\C-\M-p" 'backward-list)
 	 (local-set-key "\C-c\C-c" 'comment-region)))
-
-;; js-console
-;; (autoload 'js-console "js-console" nil t)
-;; (defun js-console-execute-region (start end)
-;;   "Execute region"
-;;   (interactive "r")
-;;   (let ((buf-name (buffer-name (current-buffer)))
-;; 	(input-string (buffer-substring start end)))
-;;     (switch-to-buffer-other-window "*js*")
-;;     (js-console-exec-input input-string)
-;;     (switch-to-buffer-other-window buf-name)))
-;; (add-hook 'js-mode-hook
-;; 	  (lambda ()
-;; 	    (local-set-key "\C-c\C-c" 'comment-region)
-;; 	    (local-set-key "\C-c\C-j" 'js-console-execute-region)
-;; 	    ))
-
-;; js2
-;; Deleted. It can be retrieved via package.el
 
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
