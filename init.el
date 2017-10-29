@@ -3,12 +3,15 @@
   (mapcar #'(lambda (ele) (cons (cdr ele) (car ele))) cons-list))
 
 ;; Path
-(let ((default-directory (expand-file-name "~/.emacs.d/lisp")))
+(when load-file-name
+  (setq user-emacs-directory (file-name-directory load-file-name)))
+
+(let ((default-directory (locate-user-emacs-file "lisp")))
   (add-to-list 'load-path default-directory)
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 (add-to-list 'Info-default-directory-list
-	     (expand-file-name "~/.emacs.d/info")
+	     (locate-user-emacs-file "info")
 	     (expand-file-name "~/local/info"))
 
 ;; Package
@@ -197,7 +200,7 @@
 	    nil t nil nil)))))))
 
 ;; SKK
-(setq skk-user-directory "~/.emacs.d/.ddskk")
+(setq skk-user-directory (locate-user-emacs-file ".ddskk"))
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
@@ -230,7 +233,7 @@
   (if (eq system-type 'windows-nt)
       (setq tramp-default-method "plink")
     (setq tramp-default-method "ssh"))
-  (setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
+  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave"))
   (setq tramp-remote-process-environment
 	`("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
 	  "LC_TIME=c"
@@ -744,7 +747,7 @@ MYFUNCTION YOURFUNCTION"
 ;; Experimental
 
 ;; Load the experimental setting file.
-(let ((filename "~/.emacs.d/init-sub-experimental.el"))
+(let ((filename (locate-user-emacs-file "init-sub-experimental.el")))
   (if (file-exists-p filename)
       (load-file filename)))
 
