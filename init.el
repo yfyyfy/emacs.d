@@ -96,7 +96,6 @@
   (setq w32-lwindow-modifier 'meta)
 
   (cond ((eq system-type 'cygwin)
-	 (setenv "HOME" "/cygdrive/c/cygwin/home/USERNAME") ; We need this only for anything/recentf, not for helm/recentf
 	 (setenv "PATH" (mapconcat 'identity exec-path ":")))
 	((eq system-type 'windows-nt)
 	 (setenv "PATH" (mapconcat 'identity exec-path ";")) 
