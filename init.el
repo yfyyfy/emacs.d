@@ -255,21 +255,20 @@
 	     ))
 
 ;; TRAMP
-(require 'tramp)
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink")
-  (setq tramp-default-method "ssh"))
-
 (setq password-cache-expiry nil)
-(setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
-(setq tramp-remote-process-environment
-      `("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
-	"LC_TIME=c"
-	,(format "TERM=%s" tramp-terminal-type)
-	"EMACS=t" ;; Deprecated.
-	,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
-	"CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
-	"autocorrect=" "correct="))
+(with-eval-after-load 'tramp
+  (if (eq system-type 'windows-nt)
+      (setq tramp-default-method "plink")
+    (setq tramp-default-method "ssh"))
+  (setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
+  (setq tramp-remote-process-environment
+	`("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
+	  "LC_TIME=c"
+	  ,(format "TERM=%s" tramp-terminal-type)
+	  "EMACS=t" ;; Deprecated.
+	  ,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
+	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
+	  "autocorrect=" "correct=")))
 
 ;; ;; JDEE
 ;; (autoload 'jde-mode "jde" "JDE mode." t)
@@ -345,7 +344,6 @@
 	     (setq c-basic-offset 2)))
 
 ;; Java
-(require 'java-mode-indent-annotations)
 (defun my-java-mode-hook()
   (java-mode-indent-annotations-setup)
   (setq indent-tabs-mode t))
@@ -374,7 +372,6 @@
 ;; (load "~/.emacs.d/lisp/nxhtml/autostart.elc")
 
 ;; Web-mode
-;; (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -429,13 +426,13 @@
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 
 ;; Doxymacs
-(require 'doxymacs)
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
 (defun my-doxymacs-font-lock-hook ()
   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-(setq doxymacs-doxygen-style "JavaDoc")
+(with-eval-after-load 'doxymacs
+  (setq doxymacs-doxygen-style "JavaDoc"))
 
 ;; VB
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
@@ -801,13 +798,13 @@ MYFUNCTION YOURFUNCTION"
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
 ;; MSVC
-(require 'cedet.config)
-(require 'flymake.config)
-(require 'setup.auto-complete)
-(require 'setup.yasnippet)
-(require 'setup.ac-clang)
-(setq ac-clang-async-autocompletion-manualtrigger-key "C-<tab>")
 (when (eq system-type 'windows-nt)
+  (require 'cedet.config)
+  (require 'flymake.config)
+  (require 'setup.auto-complete)
+  (require 'setup.yasnippet)
+  (require 'setup.ac-clang)
+  (setq ac-clang-async-autocompletion-manualtrigger-key "C-<tab>")
   ;; Remove double-quotation in CFLAGS' path (msvc.el treats the double-quoted absolute paths as relative ones).
   (defun msvc-flags--regist-db-around (f &rest args)
     (dolist (cflag (cadr args))
