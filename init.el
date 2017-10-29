@@ -85,11 +85,13 @@
 			"/usr/local/bin"
 			"/usr/bin"))
 	(exec-path-post (list
-			 "/home/USERNAME/local/bin"
-			 "/home/USERNAME/mybin")))
+			 "~/local/bin"
+			 "~/mybin")))
     (when (eq system-type 'windows-nt)
       (setq exec-path-pre (mapcar 'cygwin-mount-substitute-longest-mount-name exec-path-pre))
       (setq exec-path-post (mapcar 'cygwin-mount-substitute-longest-mount-name exec-path-post)))
+    (setq exec-path-pre (mapcar 'expand-file-name exec-path-pre))
+    (setq exec-path-post (mapcar 'expand-file-name exec-path-post))
     (setq exec-path (append exec-path-pre exec-path exec-path-post)))
   (setenv "LC_CTYPE" "ja_JP.utf8") ; This fixes problems for shell, eg) svn st
   (set-language-environment "Japanese")
@@ -387,8 +389,8 @@
 (setq recentf-filename-handlers '(my-replace-pathname))
 
 (defun my-replace-pathname (name)
-  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/USERNAME" name)
-	 (replace-match "/home/USERNAME" t t name))
+  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/" name)
+	 (replace-match "/home/" t t name))
 	(t name)))
 
 ;; Helm
