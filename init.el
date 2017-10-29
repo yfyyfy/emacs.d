@@ -33,7 +33,7 @@
 (my-el-get-activate-packages)
 
 ;; Path-conversion utility
-(load-file "~/.emacs.d/elpa/cygwin-mount-20131111.1346/cygwin-mount.el") ;; Use find-lisp-find-files in find-lisp.el to avoid hard-coding.
+(require 'cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
