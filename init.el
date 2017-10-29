@@ -11,7 +11,13 @@
 	     (expand-file-name "~/.emacs.d/info")
 	     (expand-file-name "~/local/info"))
 
-;; Load packages
+;; Package
+(require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
+
 ;; el-get
 (require 'my-el-get)
 (setq my-el-get-package-list
@@ -143,13 +149,6 @@
 (global-unset-key [prior])
 (global-unset-key [next])
 (global-unset-key [insert])
-
-;; Package
-(require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(package-initialize)
 
 ;; Workaround for term-mode
 (when (eq system-type 'windows-nt)
