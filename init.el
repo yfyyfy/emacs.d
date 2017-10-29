@@ -3,15 +3,24 @@
   (mapcar #'(lambda (ele) (cons (cdr ele) (car ele))) cons-list))
 
 ;; Path
-(let ((default-directory (expand-file-name "~/.emacs.d/lisp")))
+(when load-file-name
+  (setq user-emacs-directory (file-name-directory load-file-name)))
+
+(let ((default-directory (locate-user-emacs-file "lisp")))
   (add-to-list 'load-path default-directory)
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 (add-to-list 'Info-default-directory-list
-	     (expand-file-name "~/.emacs.d/info")
+	     (locate-user-emacs-file "info")
 	     (expand-file-name "~/local/info"))
 
-;; Load packages
+;; Package
+(require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
+
 ;; el-get
 (require 'my-el-get)
 (setq my-el-get-package-list
@@ -27,7 +36,7 @@
 (my-el-get-activate-packages)
 
 ;; Path-conversion utility
-(load-file "~/.emacs.d/elpa/cygwin-mount-20131111.1346/cygwin-mount.el") ;; Use find-lisp-find-files in find-lisp.el to avoid hard-coding.
+(require 'cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
@@ -76,11 +85,13 @@
 			"/usr/local/bin"
 			"/usr/bin"))
 	(exec-path-post (list
-			 "/home/USERNAME/local/bin"
-			 "/home/USERNAME/mybin")))
+			 "~/local/bin"
+			 "~/mybin")))
     (when (eq system-type 'windows-nt)
       (setq exec-path-pre (mapcar 'cygwin-mount-substitute-longest-mount-name exec-path-pre))
       (setq exec-path-post (mapcar 'cygwin-mount-substitute-longest-mount-name exec-path-post)))
+    (setq exec-path-pre (mapcar 'expand-file-name exec-path-pre))
+    (setq exec-path-post (mapcar 'expand-file-name exec-path-post))
     (setq exec-path (append exec-path-pre exec-path exec-path-post)))
   (setenv "LC_CTYPE" "ja_JP.utf8") ; This fixes problems for shell, eg) svn st
   (set-language-environment "Japanese")
@@ -144,13 +155,6 @@
 (global-unset-key [next])
 (global-unset-key [insert])
 
-;; Package
-(require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(package-initialize)
-
 ;; Workaround for term-mode
 (when (eq system-type 'windows-nt)
   (require 'fakecygpty)
@@ -163,7 +167,7 @@
 (setq migemo-user-dictionary nil)
 (setq migemo-regex-dictionary nil)
 (setq migemo-coding-system 'utf-8-unix)
-(load-library "migemo")
+(require 'migemo)
 (migemo-init)
 ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
 (defun migemo-get-pattern-around (f &rest args)
@@ -198,7 +202,7 @@
 	    nil t nil nil)))))))
 
 ;; SKK
-(setq skk-user-directory "~/.emacs.d/.ddskk")
+(setq skk-user-directory (locate-user-emacs-file ".ddskk"))
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
@@ -231,7 +235,7 @@
   (if (eq system-type 'windows-nt)
       (setq tramp-default-method "plink")
     (setq tramp-default-method "ssh"))
-  (setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
+  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave"))
   (setq tramp-remote-process-environment
 	`("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
 	  "LC_TIME=c"
@@ -385,8 +389,8 @@
 (setq recentf-filename-handlers '(my-replace-pathname))
 
 (defun my-replace-pathname (name)
-  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/USERNAME" name)
-	 (replace-match "/home/USERNAME" t t name))
+  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/" name)
+	 (replace-match "/home/" t t name))
 	(t name)))
 
 ;; Helm
@@ -406,7 +410,7 @@
   '(lambda ()
      (helm-migemo-mode 1)))
 (require 'helm-files) ; my-helm-mini requires this.
-(load "141127102557.helm-next-error.1") ;; Enable M-g M-p/M-g M-n for helm.
+(my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
 (add-hook 'c-mode-hook 'helm-gtags-mode)
@@ -745,7 +749,7 @@ MYFUNCTION YOURFUNCTION"
 ;; Experimental
 
 ;; Load the experimental setting file.
-(let ((filename "~/.emacs.d/init-sub-experimental.el"))
+(let ((filename (locate-user-emacs-file "init-sub-experimental.el")))
   (if (file-exists-p filename)
       (load-file filename)))
 
