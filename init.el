@@ -162,7 +162,7 @@
 (setq migemo-user-dictionary nil)
 (setq migemo-regex-dictionary nil)
 (setq migemo-coding-system 'utf-8-unix)
-(load-library "migemo")
+(require 'migemo)
 (migemo-init)
 ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
 (defun migemo-get-pattern-around (f &rest args)
