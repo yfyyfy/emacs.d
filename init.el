@@ -410,7 +410,7 @@
   '(lambda ()
      (helm-migemo-mode 1)))
 (require 'helm-files) ; my-helm-mini requires this.
-(load "141127102557.helm-next-error.1") ;; Enable M-g M-p/M-g M-n for helm.
+(my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
 (add-hook 'c-mode-hook 'helm-gtags-mode)

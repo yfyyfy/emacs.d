@@ -11,6 +11,18 @@ not assume that `el-get-dir' is defined when defining this variable.")
 (defvar my-el-get-package-list '(el-get)
   "List of packages intended to be managed by el-get.")
 
+(defun my-el-get-load (package)
+  "Load PACKAGE managed by el-get.
+This function loads all lisp files in el-get's PACKAGE directory and
+intended to be used for single-file packages."
+  (let* ((regexp "\\.elc?$")
+	 (dir (el-get-package-directory package))
+	 (files
+	  (delete-dups
+	   (mapcar #'(lambda(str) (replace-regexp-in-string regexp "" str))
+		   (directory-files dir nil regexp)))))
+    (mapcar 'load files)))
+
 (defun my-el-get-install (packages)
   "Install PACKAGES via el-get and load them.
 Install el-get first if it has not been installed.
