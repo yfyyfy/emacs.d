@@ -1,0 +1,27 @@
+;; -*- mode: emacs-lisp -*-
+
+(setq skk-large-jisyo (expand-file-name "SKK-JISYO.L" skk-user-directory))
+(setq skk-kakutei-key [henkan])
+(setq skk-isearch-start-mode 'latin)
+(setq skk-rom-kana-rule-list
+      (append skk-rom-kana-rule-list
+	      '(("!" nil "！")
+		("#" nil "＃")
+		("$" nil "＄")
+		("%" nil "％")
+		("&" nil "＆")
+		("(" nil "（")
+		(")" nil "）")
+		("=" nil "＝")
+		("~" nil "～")
+		("^" nil "＾")
+		("|" nil "｜")
+		("@" nil "＠")
+		("{" nil "｛")
+		("+" nil "＋")
+		("*" nil "＊")
+		("}" nil "｝")
+		("<" nil "＜")
+		(">" nil "＞")
+		("_" nil "＿")
+		("z " nil "　"))))

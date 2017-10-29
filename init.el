@@ -201,37 +201,11 @@
 	    nil t nil nil)))))))
 
 ;; SKK
+(setq skk-user-directory "~/.emacs.d/.ddskk")
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
 (setq dired-bind-jump nil)              ; Prevents C-x C-j from being overridden.
-(add-hook 'skk-load-hook
-	  '(lambda ()
-	     (setq skk-large-jisyo (expand-file-name "~/.skk-my-jisho.d/SKK-JISYO.L"))
-	     (setq skk-kakutei-key [henkan])
-	     (setq skk-isearch-start-mode 'latin)
-	     (setq skk-rom-kana-rule-list
-		   (append skk-rom-kana-rule-list
-			   '(("!" nil "！")
-			     ("#" nil "＃")
-			     ("$" nil "＄")
-			     ("%" nil "％")
-			     ("&" nil "＆")
-			     ("(" nil "（")
-			     (")" nil "）")
-			     ("=" nil "＝")
-			     ("~" nil "～")
-			     ("^" nil "＾")
-			     ("|" nil "｜")
-			     ("@" nil "＠")
-			     ("{" nil "｛")
-			     ("+" nil "＋")
-			     ("*" nil "＊")
-			     ("}" nil "｝")
-			     ("<" nil "＜")
-			     (">" nil "＞")
-			     ("_" nil "＿")
-			     ("z " nil "　"))))))
 (add-hook 'isearch-mode-hook
 	  '(lambda ()
 	     (when (and (boundp 'skk-mode)

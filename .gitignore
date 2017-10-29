@@ -4,4 +4,6 @@ el-get
 elpa
 recentf
 server/*
+.ddskk/*
+!.ddskk/init
 !.gitkeep
