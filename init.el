@@ -161,19 +161,31 @@
   (fakecygpty-activate))
 
 ;; Migemo
-(setq migemo-command "cmigemo")
-(setq migemo-options '("-q" "--emacs"))
-(setq migemo-dictionary "c:/cygwin/usr/local/share/migemo/dict/utf-8/migemo-dict") ;; Windows binary requires Windows-style path.
-(setq migemo-user-dictionary nil)
-(setq migemo-regex-dictionary nil)
-(setq migemo-coding-system 'utf-8-unix)
-(require 'migemo)
-(migemo-init)
-;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
-(defun migemo-get-pattern-around (f &rest args)
-  (let ((system-type 'windows-nt))
-    (apply f args)))
-(advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around)
+(with-eval-after-load 'migemo
+  (setq migemo-command "cmigemo")
+  (setq migemo-options '("-q" "--emacs"))
+  (setq migemo-dictionary "c:/cygwin/usr/local/share/migemo/dict/utf-8/migemo-dict") ;; Windows binary requires Windows-style path.
+  (setq migemo-user-dictionary nil)
+  (setq migemo-regex-dictionary nil)
+  (setq migemo-coding-system 'utf-8-unix)
+  (migemo-init)
+
+  ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
+  (defun migemo-get-pattern-around (f &rest args)
+    (let ((system-type 'windows-nt))
+      (apply f args)))
+  (advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around))
+
+(autoload 'migemo-isearch-toggle-migemo "migemo" "Toggle migemo mode in isearch." t)
+(autoload 'migemo-toggle-isearch-enable "migemo" nil t)
+(defun helm-migemo-mode-around (f &rest args)
+  (let ((migemo-loaded-before (featurep 'migemo))
+	(migemo-loaded (require 'migemo nil 'noerror)))
+    (prog1
+	(apply f args)
+      (if (and migemo-loaded (not migemo-loaded-before))
+	  (setq migemo-isearch-enable-p nil)))))
+(advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
 ;; VC
 (setq log-edit-require-final-newline nil)
