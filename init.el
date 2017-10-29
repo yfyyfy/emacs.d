@@ -73,8 +73,6 @@
 ;; exe-Path etc.
 (when (eq window-system 'w32)
   (let ((exec-path-pre (list
-			"/cygdrive/c/Program Files/Eclipse3.7 Indigo/eclipse/plugins/org.apache.ant_1.8.2.v20120109-1030/bin/"
-			"/cygdrive/c/Program Files/Eclipse3.7 Indigo/java/6/bin"
 			"/usr/local/bin"
 			"/usr/bin"))
 	(exec-path-post (list
