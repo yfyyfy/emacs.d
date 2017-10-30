@@ -198,6 +198,8 @@
 	  (cygwin-mount-deactivate))
       (apply f newargs)))
   (advice-add 'insert-directory :around #'insert-directory-around))
+(with-eval-after-load "dired"
+  (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
 
 ;; VC
 (setq log-edit-require-final-newline nil)
@@ -242,16 +244,6 @@
 	     (when (and (featurep 'skk-isearch)
 			skk-isearch-mode-enable)
 	       (skk-isearch-mode-cleanup))))
-
-;; Wdired
-(autoload 'wdired-change-to-wdired-mode "wdired")
-(eval-after-load "dired"
-	  '(lambda ()
-	     (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-	     ;; (define-key dired-mode-map
-	     ;;   [menu-bar immediate wdired-change-to-wdired-mode]
-	     ;;   '("Edit File Names" . wdired-change-to-wdired-mode))
-	     ))
 
 ;; TRAMP
 (setq password-cache-expiry nil)
