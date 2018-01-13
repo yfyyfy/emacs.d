@@ -335,6 +335,19 @@
 	 (local-set-key "\C-\M-p" 'backward-list)
 	 (local-set-key "\C-c\C-c" 'comment-region)))
 
+;; TypeScript
+(defun my-setup-tide-mode ()
+  (tide-setup)
+  (flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode t)
+  (tide-hl-identifier-mode)
+  (company-mode-on))
+(add-hook 'typescript-mode-hook
+          (lambda ()
+	    (my-setup-tide-mode)
+	    (setq indent-tabs-mode nil)))
+
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
@@ -787,20 +800,21 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+	(tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
-    ((nxml-child-indent . 1)
-     (sgml-basic-offset . 2)
-     (sgml-basic-offset . 4)
-     (web-mode-script-padding . 2)
-     (web-mode-style-padding . 2))))
+	((typescript-indent-level . 2)
+	 (nxml-child-indent . 1)
+	 (sgml-basic-offset . 2)
+	 (sgml-basic-offset . 4)
+	 (web-mode-script-padding . 2)
+	 (web-mode-style-padding . 2))))
  '(speedbar-frame-parameters
    (quote
-    ((minibuffer)
-     (width . 50)
-     (border-width . 0)
-     (menu-bar-lines . 0)
-     (tool-bar-lines . 0)
-     (unsplittable . t)
-     (left-fringe . 0)))))
+	((minibuffer)
+	 (width . 50)
+	 (border-width . 0)
+	 (menu-bar-lines . 0)
+	 (tool-bar-lines . 0)
+	 (unsplittable . t)
+	 (left-fringe . 0)))))
