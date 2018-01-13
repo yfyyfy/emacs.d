@@ -200,6 +200,7 @@
   (advice-add 'insert-directory :around #'insert-directory-around))
 (with-eval-after-load "dired"
   (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
+;; Saving as 644 (see files.el in setmodes)
 
 ;; VC
 (setq log-edit-require-final-newline nil)
