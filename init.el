@@ -722,6 +722,9 @@ MYFUNCTION YOURFUNCTION"
 	    replace-list)))
 
 ;; Magit
+(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+(with-eval-after-load 'magit
+  (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
@@ -800,21 +803,21 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
-	((typescript-indent-level . 2)
-	 (nxml-child-indent . 1)
-	 (sgml-basic-offset . 2)
-	 (sgml-basic-offset . 4)
-	 (web-mode-script-padding . 2)
-	 (web-mode-style-padding . 2))))
+    ((typescript-indent-level . 2)
+     (nxml-child-indent . 1)
+     (sgml-basic-offset . 2)
+     (sgml-basic-offset . 4)
+     (web-mode-script-padding . 2)
+     (web-mode-style-padding . 2))))
  '(speedbar-frame-parameters
    (quote
-	((minibuffer)
-	 (width . 50)
-	 (border-width . 0)
-	 (menu-bar-lines . 0)
-	 (tool-bar-lines . 0)
-	 (unsplittable . t)
-	 (left-fringe . 0)))))
+    ((minibuffer)
+     (width . 50)
+     (border-width . 0)
+     (menu-bar-lines . 0)
+     (tool-bar-lines . 0)
+     (unsplittable . t)
+     (left-fringe . 0)))))
