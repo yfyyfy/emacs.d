@@ -96,10 +96,7 @@
   (setenv "LC_CTYPE" "ja_JP.utf8") ; This fixes problems for shell, eg) svn st
   (set-language-environment "Japanese")
   (prefer-coding-system 'utf-8-unix)
-  ;; (set-file-name-coding-system 'cp932)
-  ;; (set-keyboard-coding-system 'cp932)
-  ;; (set-terminal-coding-system 'cp932)
-
+  (set-default-coding-systems 'utf-8-unix)
   ;; (keyboard-translate ?\\ ?_)
   ;; (keyboard-translate ?_ ?\\)
 
@@ -111,12 +108,9 @@
 	((eq system-type 'windows-nt)
 	 (setenv "PATH" (mapconcat 'identity exec-path ";")) 
 	 (setenv "SHELL" "/bin/bash")
-	 ;; (setenv "LANG" "ja_JP")
-	 (setenv "LANG" "ja_JP.UTF-8")
-;	 (add-to-list 'process-coding-system-alist '("bash" utf-8-unix . utf-8-unix)) ; original: ("bash" raw-text-dos . raw-text-unix) ; Stall later.
-;	 (add-to-list 'process-coding-system-alist '("bash" utf-8-dos . utf-8-unix)) ; original: ("bash" raw-text-dos . raw-text-unix)
-	 (add-to-list 'process-coding-system-alist '("bash" utf-8-dos . shift_jis-unix))
-	 )))
+	 (setenv "LANG" "ja_JP.UTF-8"))))
+(when (eq system-type 'windows-nt)
+  (require 'my-ntemacs-coding-system))
 
 ;; Env
 (setenv "LC_TIME" "C")
@@ -256,6 +250,18 @@
 	  ,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
 	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
 	  "autocorrect=" "correct=")))
+;; Fix for connection to Mac OSX.
+(when (eq system-type 'windows-nt)
+  (defun tramp-send-string-around (f &rest args)
+    (let* ((proc (tramp-get-connection-process vec))
+	   (cs (cdr (process-coding-system proc))))
+      (if (seq-contains (coding-system-eol-type 'utf-8-hfs) cs)
+	  ;; Change coding-system-for-write from utf-8-hfs-dos to utf-8-hfs-unix.
+	  (with-current-buffer (process-buffer proc)
+	    (tramp-compat-funcall
+	     'set-buffer-process-coding-system (car (process-coding-system proc)) 'utf-8-hfs-unix)))
+      (apply f args)))
+  (advice-add 'tramp-send-string :around #'tramp-send-string-around))
 
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
