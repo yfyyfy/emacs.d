@@ -1,16 +1,13 @@
 ;;; https://www49.atwiki.jp/ntemacs/pages/16.html
 
-(setenv "LANG" "ja_JP.UTF-8") 
+(require 'cl)
 
 ;; IME の設定をした後には実行しないこと
-;; (set-language-environment 'Japanese) 
-
-(prefer-coding-system 'utf-8-unix)
-(set-file-name-coding-system 'cp932)
-(setq locale-coding-system 'utf-8)
+;; (set-language-environment 'Japanese)
 
 ;; プロセスが出力する文字コードを判定して、process-coding-system の DECODING の設定値を決定する
 (setq default-process-coding-system '(undecided-dos . utf-8-unix))
+(setq process-coding-system-alist (delq (assoc "bash" process-coding-system-alist) process-coding-system-alist))
 
 ;; ldd の結果のキャッシュ
 (defvar ldd-cache nil)
@@ -34,23 +31,24 @@
 (defun convert-process-args (orig-fun prog-pos args-pos args)
   (let ((cygwin-quote (and w32-quote-process-args ; cygwin-program-p の再帰防止
 			   (cygwin-program-p (nth prog-pos args)))))
-    (setf (nthcdr args-pos args)
-	  (mapcar (lambda (arg)
-		    (when w32-quote-process-args
-		      (setq arg
-			    (concat "\""
-				    (if cygwin-quote
-					(replace-regexp-in-string "[\"\\\\]"
-								  "\\\\\\&"
-								  arg)
-				      (replace-regexp-in-string "\\(\\(\\\\\\)*\\)\\(\"\\)"
-								"\\1\\1\\\\\\3"
-								arg))
-				    "\"")))
-		    (if (multibyte-string-p arg)
-			(encode-coding-string arg 'cp932)
-		      arg))
-		  (nthcdr args-pos args))))
+    (if (nthcdr args-pos args)
+	(setf (nthcdr args-pos args)
+	      (mapcar (lambda (arg)
+			(when w32-quote-process-args
+			  (setq arg
+				(concat "\""
+					(if cygwin-quote
+					    (replace-regexp-in-string "[\"\\\\]"
+								      "\\\\\\&"
+								      arg)
+					  (replace-regexp-in-string "\\(\\(\\\\\\)*\\)\\(\"\\)"
+								    "\\1\\1\\\\\\3"
+								    arg))
+					"\"")))
+			(if (multibyte-string-p arg)
+			    (encode-coding-string arg 'cp932)
+			  arg))
+		      (nthcdr args-pos args)))))
 
   (let ((w32-quote-process-args nil))
     (apply orig-fun args)))
@@ -64,3 +62,5 @@
 							       ,prog-pos ,args-pos
 							       args))
 			       '((depth . 99)))))
+
+(provide 'my-ntemacs-coding-system)

@@ -96,10 +96,7 @@
   (setenv "LC_CTYPE" "ja_JP.utf8") ; This fixes problems for shell, eg) svn st
   (set-language-environment "Japanese")
   (prefer-coding-system 'utf-8-unix)
-  ;; (set-file-name-coding-system 'cp932)
-  ;; (set-keyboard-coding-system 'cp932)
-  ;; (set-terminal-coding-system 'cp932)
-
+  (set-default-coding-systems 'utf-8-unix)
   ;; (keyboard-translate ?\\ ?_)
   ;; (keyboard-translate ?_ ?\\)
 
@@ -111,12 +108,9 @@
 	((eq system-type 'windows-nt)
 	 (setenv "PATH" (mapconcat 'identity exec-path ";")) 
 	 (setenv "SHELL" "/bin/bash")
-	 ;; (setenv "LANG" "ja_JP")
-	 (setenv "LANG" "ja_JP.UTF-8")
-;	 (add-to-list 'process-coding-system-alist '("bash" utf-8-unix . utf-8-unix)) ; original: ("bash" raw-text-dos . raw-text-unix) ; Stall later.
-;	 (add-to-list 'process-coding-system-alist '("bash" utf-8-dos . utf-8-unix)) ; original: ("bash" raw-text-dos . raw-text-unix)
-	 (add-to-list 'process-coding-system-alist '("bash" utf-8-dos . shift_jis-unix))
-	 )))
+	 (setenv "LANG" "ja_JP.UTF-8"))))
+(when (eq system-type 'windows-nt)
+  (require 'my-ntemacs-coding-system))
 
 ;; Env
 (setenv "LC_TIME" "C")
