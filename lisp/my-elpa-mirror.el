@@ -4,7 +4,30 @@
   "Set output directory and clean it up before calling `elpamr-create-mirror-for-installed'.
 The behavior of `elpamr-create-mirror-for-installed' is modified so that output
 directory is self-sufficient, i.e., all packages with the version specified in
-archive-contents file is included in the directory."
+archive-contents file is included in the directory.
+
+FIXME:
+Created mirror can be restored by `my-elpamr-restore-from-mirror',
+but re-creating mirror with `my-elpamr-create-mirror-for-installed'
+may end up with some differences (diff -rq myelpa myelpa2).
+There are two reasons for this behavior.
+1. Time-stamps in PACKAGE.tar archive are different.
+2. Time-stamps in PACKAGE-autoloads.el (near the end of the file) are different.
+
+These problems can be solved by scripts below,
+but it will be better to automate this process.
+===============================================================================
+for tarfile in *.tar
+do
+	tmpfile=`mktemp -d tmp.XXXXX`
+	tar xf $tarfile -C $tmpfile --warning=no-timestamp
+	rm $tmpfile/${tarfile%.tar}/${tarfile%-*}-autoloads.el
+	tar cf $tarfile -C $tmpfile `ls $tmpfile` --mtime='1970-01-01' --warning=no-timestamp
+	rm -rf $tmpfile
+	# tar --delete -f $tarfile ${tarfile%.tar}/${tarfile%-*}-autoloads.el
+done
+===============================================================================
+"
   (interactive)
   (require 'elpa-mirror)
   (let* ((default-parent-dir (and elpamr-default-output-directory (file-name-directory elpamr-default-output-directory)))
