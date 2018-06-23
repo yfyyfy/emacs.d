@@ -62,12 +62,17 @@ done
 ;;     (apply f args)))
 ;; (advice-add 'elpamr-create-mirror-for-installed :around #'elpamr-create-mirror-for-installed-around)
 
-(defun my-elpamr-restore-from-mirror ()
+(defun my-elpamr-restore-from-mirror (&optional dir ask)
   "Install packages from local repository.
 The packages listed in `my-package-selected-packages' are installed from
 `elpamr-default-output-directory'.
 If the output directory `package-user-dir' is not empty, abort."
-  (interactive)
+  (interactive (list nil current-prefix-arg))
+  (when ask
+    (setq dir (read-directory-name "Restore from: " elpamr-default-output-directory nil t)))
+  (when (or (not dir)
+	    (= (length dir) 0))
+    (setq dir elpamr-default-output-directory))
   (if (not (and (boundp 'my-package-selected-packages)
 		my-package-selected-packages))
       ;; No package to install.
