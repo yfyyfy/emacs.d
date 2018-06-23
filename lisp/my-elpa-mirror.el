@@ -68,25 +68,22 @@ The packages listed in `my-package-selected-packages' are installed from
 `elpamr-default-output-directory'.
 If the output directory `package-user-dir' is not empty, abort."
   (interactive (list nil current-prefix-arg))
+  (require 'my-package)
+  ;; Set local mirror directory for restoration.
   (when ask
     (setq dir (read-directory-name "Restore from: " elpamr-default-output-directory nil t)))
   (when (or (not dir)
 	    (= (length dir) 0))
     (setq dir elpamr-default-output-directory))
-  (if (not (and (boundp 'my-package-selected-packages)
-		my-package-selected-packages))
-      ;; No package to install.
-      (message "my-package-selected-packages is empty or not defined.")
-    ;; Create `package-user-dir' if necessary.
-    (require 'my-package)
-    (if (not (file-directory-p package-user-dir))
-	(make-directory-internal package-user-dir))
-    ;; Install packages to `package-user-dir' if it is empty.
-    (if (delete 0
-		(mapcar #'(lambda (str) (or (string-match "^\\.*$" str) str))
-			(directory-files package-user-dir)))
-	(message "%s is not empty" package-user-dir)
-      (my-package-install my-package-selected-packages (list elpamr-default-output-directory)))))
+  ;; Create `package-user-dir' if necessary.
+  (if (not (file-directory-p package-user-dir))
+      (make-directory-internal package-user-dir))
+  ;; Install packages to `package-user-dir' if it is empty.
+  (if (delete 0
+	      (mapcar #'(lambda (str) (or (string-match "^\\.*$" str) str))
+		      (directory-files package-user-dir)))
+      (message "%s is not empty" package-user-dir)
+    (my-package-install my-package-selected-packages (list dir))))
 
 (defun elpamr--executable-find-around (f &rest args)
   "Let Emacs to find executables without the help of `elpamr--executable-find'."
