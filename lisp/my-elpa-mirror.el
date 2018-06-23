@@ -92,4 +92,16 @@ If the output directory `package-user-dir' is not empty, abort."
   (car args))
 (advice-add 'elpamr--executable-find :around #'elpamr--executable-find-around)
 
+(defun elpamr--extract-info-from-dir-override (dirname)
+  "Use package.el's logic to extract package information.
+The original function does not recognize version strings with alphabet.
+According to `package-version-join', \"pre\",\"beta\",\"alpha\" and \"snapshot\"
+are valid words in version string."
+  (let ((pkg-desc (package-load-descriptor (expand-file-name dirname package-user-dir))))
+    (if pkg-desc
+	(let ((name (package-desc-name pkg-desc))
+	      (version (package-desc-version pkg-desc)))
+	  (list (prin1-to-string name) (mapcar 'prin1-to-string version))))))
+(advice-add 'elpamr--extract-info-from-dir :override #'elpamr--extract-info-from-dir-override)
+
 (provide 'my-elpa-mirror)
