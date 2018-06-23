@@ -21,9 +21,10 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
+(autoload 'my-elpamr-create-mirror-for-installed "my-elpa-mirror" nil t)
+(autoload 'my-elpamr-restore-from-mirror "my-elpa-mirror" nil t)
 (when (and (not (file-directory-p package-user-dir))
 	   (yes-or-no-p (format "package-user-dir (%s) does not exist. Restore from local mirror? " package-user-dir)))
-  (require 'my-elpa-mirror)
   (my-elpamr-restore-from-mirror nil t))
 
 ;; el-get
