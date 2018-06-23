@@ -39,7 +39,7 @@
 	windows-path
 	TreeRex/doxygen-el
 	emacsmirror/visual-basic-mode))
-(my-el-get-activate-packages)
+(my-el-get-activate-packages-install-if-necessary)
 
 ;; Path-conversion utility
 (require 'cygwin-mount)
