@@ -23,7 +23,6 @@
 
 (when (and (not (file-directory-p package-user-dir))
 	   (yes-or-no-p (format "package-user-dir (%s) does not exist. Restore from local mirror? " package-user-dir)))
-  (require 'my-package)
   (require 'my-elpa-mirror)
   (my-elpamr-restore-from-mirror nil t))
 
