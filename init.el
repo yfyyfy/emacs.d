@@ -417,17 +417,6 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 
-;; js
-(setq js-mode-hook
-      '(lambda ()
-	 (setq js-indent-level 2)
-	 (setq indent-tabs-mode nil)
-	 (local-set-key "\C-\M-f" 'forward-sexp)
-	 (local-set-key "\C-\M-b" 'backward-sexp)
-	 (local-set-key "\C-\M-n" 'forward-list)
-	 (local-set-key "\C-\M-p" 'backward-list)
-	 (local-set-key "\C-c\C-c" 'comment-region)))
-
 ;; TypeScript
 (defun my-setup-tide-mode ()
   (tide-setup)
@@ -440,6 +429,26 @@
           (lambda ()
 	    (my-setup-tide-mode)
 	    (setq indent-tabs-mode nil)))
+
+;; JavaScript
+(add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
+(add-hook 'js-mode-hook
+	  (lambda ()
+ 	    (setq js-indent-level 2)
+ 	    (setq indent-tabs-mode nil)
+ 	    (local-set-key "\C-c\C-c" 'comment-region)))
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+	    (my-setup-tide-mode)))
+
+;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
+(defun js-jsx-indent-line-align-closing-bracket ()
+  "Workaround sgml-mode and align closing bracket with opening bracket"
+  (save-excursion
+    (beginning-of-line)
+    (when (looking-at-p "^ +\/?> *$")
+      (delete-char sgml-basic-offset))))
+(advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
@@ -896,7 +905,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (rjsx-mode git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
