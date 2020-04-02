@@ -227,6 +227,72 @@
 		    vc-handled-backends)
 	    nil t nil nil)))))))
 
+;; Git-gutter
+(require 'git-gutter-fringe)
+(setq git-gutter:handled-backends '(git svn))
+(defun my-git-gutter-nearest-backends (backends)
+  (let* ((lengths
+	  (mapcar
+	   #'(lambda (elt)
+	       (if (git-gutter:vcs-check-function elt)
+		   (let ((rootdir
+			  (locate-dominating-file default-directory
+						  (plist-get '(git ".git" svn ".svn" hg ".hg" bzr ".bzr")
+							     elt))))
+		     (length rootdir))
+		 -1))
+	   backends))
+	 (maxlen
+	  (apply 'max lengths))
+	 (pos
+	  (if (>= maxlen 0)
+	      (position maxlen lengths)
+	    -1)))
+    (if (>= pos 0)
+	(nth pos backends)
+      nil)))
+(defun git-gutter:in-repository-p-override ()
+  (setq-local git-gutter:vcs-type (my-git-gutter-nearest-backends git-gutter:handled-backends)))
+(advice-add 'git-gutter:in-repository-p :override #'git-gutter:in-repository-p-override)
+(global-git-gutter-mode)
+
+;; Diff-hl
+(defun turn-on-diff-hl-mode-around (f &rest args)
+  (cond ((not (file-directory-p default-directory))
+		 nil)
+		((git-gutter:in-repository-p)
+		 ;; The default-direcories of some buffers are nonexistent,
+		 ;; e.g. the buffer named " *code-conversion-work*",
+		 ;; whose default-direcory is determined according to
+		 ;; the build environment of Emacs itself.
+		 ;; It ends up an error on global-diff-hl-mode such as:
+		 ;; Error in post-command-hook (global-diff-hl-mode-check-buffers): (file-error "Setting current directory" "Permission denied" "EMACS_BUILD_DIRECTORY")
+		 ;; In the case of " *code-conversion-work*", killing the buffer
+		 ;; (which will be re-created automatically) solves the problem,
+		 ;; but in general, it is better to prevent trrigering of
+		 ;; `turn-on-diff-hl-mode'.
+		 nil)
+		(t
+		 (apply f args))))
+(advice-add 'turn-on-diff-hl-mode :around #'turn-on-diff-hl-mode-around)
+(global-diff-hl-mode)
+;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(add-hook 'dired-mode-hook #'diff-hl-dired-mode)
+
+(defun my-git-gutter-mode-hook ()
+  (when git-gutter-mode
+    (autoload 'diff-hl-diff-goto-hunk "diff-hl" nil t)
+    (local-set-key "\C-xv=" 'diff-hl-diff-goto-hunk)
+    (local-set-key "\C-xv[" 'git-gutter:previous-hunk)
+    (local-set-key "\C-xv]" 'git-gutter:next-hunk)))
+(add-hook 'git-gutter-mode-hook #'my-git-gutter-mode-hook)
+(defun my-diff-hl-mode-hook ()
+  (when diff-hl-mode
+    (local-set-key "\C-xv=" 'diff-hl-diff-goto-hunk)
+    (local-set-key "\C-xv[" 'diff-hl-previous-hunk)
+    (local-set-key "\C-xv]" 'diff-hl-next-hunk)))
+(add-hook 'diff-hl-mode-hook #'my-diff-hl-mode-hook)
+
 ;; SKK
 (setq skk-user-directory (locate-user-emacs-file ".ddskk"))
 (global-set-key "\C-x\C-j" 'skk-mode)
@@ -819,7 +885,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
