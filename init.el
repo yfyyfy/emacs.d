@@ -21,6 +21,12 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
+(autoload 'my-elpamr-create-mirror-for-installed "my-elpa-mirror" nil t)
+(autoload 'my-elpamr-restore-from-mirror "my-elpa-mirror" nil t)
+(when (and (not (file-directory-p package-user-dir))
+	   (yes-or-no-p (format "package-user-dir (%s) does not exist. Restore from local mirror? " package-user-dir)))
+  (my-elpamr-restore-from-mirror nil t))
+
 ;; el-get
 (require 'my-el-get)
 (setq my-el-get-package-list
@@ -33,14 +39,15 @@
 	windows-path
 	TreeRex/doxygen-el
 	emacsmirror/visual-basic-mode))
-(my-el-get-activate-packages)
+(my-el-get-activate-packages-install-if-necessary)
 
 ;; Path-conversion utility
 (require 'cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
-       (require 'setup-cygwin))
+       (require 'setup-cygwin)
+       (setq package-user-dir (expand-file-name package-user-dir)))
       ((eq system-type 'cygwin)
        (setq cygwin-mount-cygwin-bin-directory "/usr/bin")
        (require 'windows-path)
@@ -56,6 +63,7 @@
 	(setenv "SHELL" (cygwin-mount-substitute-longest-mount-name (getenv "SHELL")))
 	(setq shell-file-name (cygwin-mount-substitute-longest-mount-name shell-file-name))
 	(and (boundp 'explicit-shell-file-name) (setq explicit-shell-file-name (cygwin-mount-substitute-longest-mount-name explicit-shell-file-name)))
+	(and (boundp 'package-user-dir)         (setq package-user-dir (cygwin-mount-substitute-longest-mount-name package-user-dir)))
 	(and (boundp 'scheme-program-name)      (setq scheme-program-name (cygwin-mount-substitute-longest-mount-name scheme-program-name)))))
     res))
 (advice-add 'cygwin-mount-activate :around #'cygwin-mount-activate-around)
@@ -66,6 +74,7 @@
 	(env-SHELL-windows-nt (cygwin-mount-substitute-longest-mount-name (getenv "SHELL")))
 	(shell-file-name-windows-nt (cygwin-mount-substitute-longest-mount-name shell-file-name))
 	(explicit-shell-file-name-windows-nt (and (boundp 'explicit-shell-file-name) (cygwin-mount-substitute-longest-mount-name explicit-shell-file-name)))
+	(package-user-dir-nt                 (and (boundp 'package-user-dir)         (cygwin-mount-substitute-longest-mount-name package-user-dir)))
 	(scheme-program-name-windows-nt      (and (boundp 'scheme-program-name)      (cygwin-mount-substitute-longest-mount-name scheme-program-name)))
 	(res (apply f args)))
     ;; Cygwin -> Windows
@@ -75,6 +84,7 @@
       (setenv "SHELL" env-SHELL-windows-nt)
       (setq shell-file-name shell-file-name-windows-nt)
       (and (boundp 'explicit-shell-file-name) (setq explicit-shell-file-name explicit-shell-file-name-windows-nt))
+      (and (boundp 'package-user-dir)         (setq package-user-dir package-user-dir-nt))
       (and (boundp 'scheme-program-name)      (setq scheme-program-name scheme-program-name-windows-nt)))
     res))
 (advice-add 'cygwin-mount-deactivate :around #'cygwin-mount-deactivate-around)
