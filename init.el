@@ -444,6 +444,24 @@
 (add-hook 'rjsx-mode-hook
           (lambda ()
 	    (my-setup-tide-mode)))
+(add-hook 'rjsx-mode-hook #'add-node-modules-path)
+(add-hook 'rjsx-mode-hook #'flycheck-mode)
+(with-eval-after-load 'flycheck
+  ;; Fix taken from https://github.com/flycheck/flycheck/blob/master/flycheck.el (@0e6952e)
+  (defun flycheck-eslint-config-exists-p ()
+    "Whether there is a valid eslint config for the current buffer."
+    (let* ((executable (flycheck-find-checker-executable 'javascript-eslint))
+	   (exitcode (and executable
+			  (call-process executable nil nil nil
+					"--print-config" (or buffer-file-name
+							     "index.js")))))
+      (eq exitcode 0)))
+  (setq flycheck-error-list-format
+	`[("Line" 5 flycheck-error-list-entry-< :right-align t)
+	  ("Col" 3 nil :right-align t)
+	  ("Level" 8 flycheck-error-list-entry-level-<)
+	  ("ID" 25 t)
+	  (,(flycheck-error-list-make-last-column "Message" 'Checker) 0 t)]))
 
 ;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
 (defun js-jsx-indent-line-align-closing-bracket ()
