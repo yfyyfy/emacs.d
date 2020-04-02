@@ -181,6 +181,26 @@
 	  (setq migemo-isearch-enable-p nil)))))
 (advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
+;; Dired
+(when (eq system-type 'windows-nt)
+  ;; Use ls for dired.
+  (setq ls-lisp-use-insert-directory-program "ls")
+  (defun insert-directory-around (f &rest args)
+    "Pass Unix-form path to ls."
+    (let ((cygwin-mount-activated-orig cygwin-mount-activated)
+	  newargs)
+      (if (not cygwin-mount-activated-orig)
+	  (cygwin-mount-activate))
+      (let* ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
+	     (file (cygwin-mount-substitute-longest-mount-name (car args))))
+	(setq newargs (cons file (cdr args))))
+      (if (not cygwin-mount-activated-orig)
+	  (cygwin-mount-deactivate))
+      (apply f newargs)))
+  (advice-add 'insert-directory :around #'insert-directory-around))
+(with-eval-after-load "dired"
+  (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
+
 ;; VC
 (setq log-edit-require-final-newline nil)
 (add-hook 'vc-dir-mode-hook
@@ -224,16 +244,6 @@
 	     (when (and (featurep 'skk-isearch)
 			skk-isearch-mode-enable)
 	       (skk-isearch-mode-cleanup))))
-
-;; Wdired
-(autoload 'wdired-change-to-wdired-mode "wdired")
-(eval-after-load "dired"
-	  '(lambda ()
-	     (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-	     ;; (define-key dired-mode-map
-	     ;;   [menu-bar immediate wdired-change-to-wdired-mode]
-	     ;;   '("Edit File Names" . wdired-change-to-wdired-mode))
-	     ))
 
 ;; TRAMP
 (setq password-cache-expiry nil)
