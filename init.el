@@ -428,6 +428,32 @@
 	     (local-set-key "\C-c\C-c" 'comment-region)
 	     (ad-activate 'fortran-indent-to-column)))
 
+;; Python
+(defun my-add-venv-to-exec-path ()
+  (let* ((dir (locate-dominating-file default-directory ".venv"))
+	 (dot-venv (and dir (expand-file-name ".venv" dir)))
+	 (venv-directory
+	  (when dot-venv
+	    (with-temp-buffer
+	      (insert-file-contents dot-venv)
+	      (car (split-string (buffer-string)))))))
+    (if venv-directory
+	(dolist (subdir'( "bin" "Scripts"))
+	  (let ((bindir (expand-file-name
+			 subdir
+			 (expand-file-name venv-directory (file-name-directory dot-venv)))))
+	    (when (file-exists-p bindir)
+	      (setq-local exec-path (cons bindir exec-path))
+	      (message "Add to exec-path locally: %s" bindir)))))))
+(add-hook 'python-mode-hook #'my-add-venv-to-exec-path)
+(add-hook 'python-mode-hook #'flycheck-mode)
+(with-eval-after-load 'python-environment
+  ;; Python executable for default flycheck syntax checker.
+  (setq flycheck-python-pycompile-executable (python-environment-bin "python")))
+(add-hook 'python-mode-hook 'jedi:setup)
+(with-eval-after-load 'jedi-core
+  (setq jedi:complete-on-dot t))
+
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -980,7 +1006,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (add-node-modules-path rjsx-mode git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (jedi add-node-modules-path rjsx-mode git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
