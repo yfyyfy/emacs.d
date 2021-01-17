@@ -409,12 +409,17 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 (defun my-web-mode-hook ()
   (setq tab-width 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
+(with-eval-after-load 'web-mode
+  (setq web-mode-engines-alist
+	'(("django" . "\\.html\\'")
+	  ("ejs" . "\\.ejs\\'"))))
 
 ;; js
 (setq js-mode-hook
