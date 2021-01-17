@@ -821,6 +821,7 @@ MYFUNCTION YOURFUNCTION"
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 (with-eval-after-load 'magit
+  (setq magit-diff-refine-hunk 'all)
   (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
