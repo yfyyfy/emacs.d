@@ -473,7 +473,7 @@
   (setq org-directory "~/org.d")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-agenda-files '("~/org.d/notes.org"))
-  (add-to-list 'org-file-apps '("\\.pdf\\'" . "cygstart %ss")))
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "cygstart %s")))
 
 ;; Disable automatic rearrangement of the agenda file set.
 (add-hook 'org-mode-hook
