@@ -433,6 +433,7 @@
           (lambda ()
 	    (my-setup-tide-mode)
 	    (setq indent-tabs-mode nil)))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
 (add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
