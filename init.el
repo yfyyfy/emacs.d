@@ -349,6 +349,34 @@
       (apply f args)))
   (advice-add 'tramp-send-string :around #'tramp-send-string-around))
 
+;; Flycheck
+(with-eval-after-load 'flycheck
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (require 'tide) ;; Load tsx-tide.
+  (flycheck-add-next-checker 'tsx-tide '(t . javascript-eslint))
+  ;; ;; Bring tsx-tide, jsx-tide and javascript-eslint to the end of `flycheck-checkers'.
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'tsx-tide flycheck-checkers)
+  ;; 	      '(tsx-tide)))
+  ;; 
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'jsx-tide flycheck-checkers)
+  ;; 	      '(jsx-tide)))
+  ;; 
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'javascript-eslint flycheck-checkers)
+  ;; 	      '(javascript-eslint)))
+
+  ;; flycheck-checkers
+  (flycheck-define-generic-checker 'general-tide
+    "A [JT]SX? syntax checker using tsserver."
+    :start #'tide-flycheck-start
+    :verify #'tide-flycheck-verify
+    :modes '(web-mode js2-jsx-mode rjsx-mode)
+    :predicate (lambda () t))
+  (add-to-list 'flycheck-checkers 'general-tide)
+  (flycheck-add-next-checker 'general-tide '(t . javascript-eslint)))
+
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
 	  '(lambda()
@@ -433,6 +461,8 @@
     (my-setup-tide-mode)
     (setq web-mode-enable-auto-quoting nil)
     (local-set-key "\C-c\C-c" 'comment-region)
+    ;; (setq flycheck-disabled-checkers '(tsx-tide jsx-tide))
+    ;; (setq flycheck-disabled-checkers '(tsx-tide javascript-eslint))
     ))
 (with-eval-after-load 'web-mode
   (setq web-mode-engines-alist
