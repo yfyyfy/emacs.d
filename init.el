@@ -617,7 +617,10 @@
 	     (desktop-drive "d")
 	     (documents-drive "d")
 	     (downloads-drive "d")
-	     (conv-list `(((format "^/cygdrive/%s/cygwin\\(64\\)?/home/" ,cygwin-drive) . "/home/"))))
+	     (conv-list `(((format "^/cygdrive/%s/cygwin\\(64\\)?/home/" ,cygwin-drive) . "/home/")
+			  ((format "^%s:/cygwin64" ,cygwin-drive) . (format "%s:/cygwin" ,cygwin-drive))
+			  ((format "^%s:/Users/\\([^/]*\\)/Desktop" ,desktop-drive) . (format "%s:/cygwin/home/\\1/Desktop" ,cygwin-drive))
+			  ((format "^%s:/Users/\\([^/]*\\)/Downloads" ,downloads-drive) . (format "%s:/cygwin/home/\\1/Downloads" ,cygwin-drive)))))
 	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
 
 ;; Helm
