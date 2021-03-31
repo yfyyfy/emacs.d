@@ -699,6 +699,10 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-keep-variants nil)
 
+;; Frame
+(require 'my-frame)
+(my-frame-set-alpha 80)
+
 ;; Misc
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (setq mode-require-final-newline 'ask)
