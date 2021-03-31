@@ -410,12 +410,30 @@
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook #'add-node-modules-path)
+(with-eval-after-load 'web-mode
+  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
+  (add-to-list 'web-mode-comment-formats '("jsx" . "//"))
+  (add-to-list 'web-mode-content-types-alist '("jsx" . "\\.[jt]sx?\\'"))
+)
 (defun my-web-mode-hook ()
   (setq tab-width 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
+  (setq web-mode-code-indent-offset 2)
+  (when
+      (and buffer-file-name
+	   (string-match "^[jt]sx?$" (file-name-extension buffer-file-name)))
+    (my-setup-tide-mode)
+    (setq web-mode-enable-auto-quoting nil)
+    (local-set-key "\C-c\C-c" 'comment-region)
+    ))
 (with-eval-after-load 'web-mode
   (setq web-mode-engines-alist
 	'(("django" . "\\.html\\'")
@@ -433,7 +451,7 @@
           (lambda ()
 	    (my-setup-tide-mode)
 	    (setq indent-tabs-mode nil)))
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
 (with-eval-after-load 'js2-mode
