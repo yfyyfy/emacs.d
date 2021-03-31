@@ -436,6 +436,8 @@
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
+(with-eval-after-load 'js2-mode
+  (setq js2-strict-trailing-comma-warning nil))
 (add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
 (add-hook 'js-mode-hook
 	  (lambda ()
