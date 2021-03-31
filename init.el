@@ -612,12 +612,13 @@
 (require 'recentf-ext)
 (setq recentf-exclude '(tramp-tramp-file-p))
 (setq recentf-max-saved-items nil)
-(setq recentf-filename-handlers '(my-replace-pathname))
-
-(defun my-replace-pathname (name)
-  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/" name)
-	 (replace-match "/home/" t t name))
-	(t name)))
+(setq recentf-filename-handlers
+      (let* ((cygwin-drive "c")
+	     (desktop-drive "d")
+	     (documents-drive "d")
+	     (downloads-drive "d")
+	     (conv-list `(((format "^/cygdrive/%s/cygwin\\(64\\)?/home/" ,cygwin-drive) . "/home/"))))
+	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
 
 ;; Helm
 (defun my-helm-mini ()
