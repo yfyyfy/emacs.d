@@ -629,6 +629,8 @@
 (defun my-helm-mini ()
   "helm-mini + helm-find."
   (interactive)
+  (require 'helm-for-files) ;; For helm-source-recentf < helm-mini-default-sources < helm-source-recentf
+  (require 'helm-find) ;; For helm-source-findutils
   (unless helm-source-buffers-list
     (setq helm-source-buffers-list
 	  (helm-make-source "Buffers" 'helm-source-buffers)))
@@ -646,7 +648,6 @@
 (add-hook 'helm-after-initialize-hook
   '(lambda ()
      (helm-migemo-mode 1)))
-(require 'helm-files) ; my-helm-mini requires this.
 (my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
