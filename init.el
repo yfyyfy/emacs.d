@@ -638,6 +638,11 @@
 	:truncate-lines helm-buffers-truncate-lines))
 ;; (global-set-key [?\C-;] 'my-helm-mini)
 (global-set-key [67108923] 'my-helm-mini)
+(defun my-helm-do-grep (dir)
+  (interactive (list (if current-prefix-arg
+			 (read-directory-name "Directory: " default-directory nil t)
+		       default-directory)))
+  (helm-do-grep-1 (list dir) t))
 (add-hook 'helm-after-initialize-hook
   '(lambda ()
      (helm-migemo-mode 1)))
