@@ -31,13 +31,11 @@
 (require 'my-el-get)
 (setq my-el-get-package-list
       '(el-get
-	doxymacs ;; emacsattic version may be newer. See. https://emacsmirror.net/
 	helm-next-error
 	java-mode-indent-annotations
 	setup-cygwin
 	w32-symlinks
 	windows-path
-	TreeRex/doxygen-el
 	emacsmirror/visual-basic-mode))
 (my-el-get-activate-packages-install-if-necessary)
 
@@ -553,15 +551,6 @@
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
-
-;; Doxymacs
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-(defun my-doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
-(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-(with-eval-after-load 'doxymacs
-  (setq doxymacs-doxygen-style "JavaDoc"))
 
 ;; VB
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
