@@ -825,6 +825,7 @@ MYFUNCTION YOURFUNCTION"
   (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(autoload 'magit-staging "my-magit" nil t)
 
 ;; MSVC
 (when (eq system-type 'windows-nt)
