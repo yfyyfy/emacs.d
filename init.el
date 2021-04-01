@@ -717,7 +717,7 @@
 
 ;; Misc
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(setq mode-require-final-newline 'ask)
+(setq mode-require-final-newline nil) ;; 'ask
 (setq split-height-threshold nil)
 (setq split-width-threshold nil)
 (eval-after-load "color-moccur"
