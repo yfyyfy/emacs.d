@@ -786,6 +786,7 @@
 
 ;; Personal utils
 (autoload 'my-diff-buffers "my-diff" nil t)
+(autoload 'my-grep "my-grep" nil t)
 (autoload 'my-query-replace-multi "my-replace" nil t)
 
 ;; Experimental
