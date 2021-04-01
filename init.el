@@ -718,26 +718,6 @@
   '(progn
      (setq moccur-split-word t)))
 
-(defun my-diff-buffers (buffer1 buffer2 &optional switches)
-  ;; (interactive "bBuffer: \nbBuffer: ")
-  (interactive "bBuffer: \nbBuffer: \nsSwitches: ")
-  (let ((tempfile1 (make-temp-file "buffer-content-"))
-	(tempfile2 (make-temp-file "buffer-content-")))
-    (unwind-protect
-	(progn
-	  (with-current-buffer buffer1
-	    (write-region nil nil tempfile1 nil 'nomessage))
-	  (with-current-buffer buffer2
-	    (write-region nil nil tempfile2 nil 'nomessage))
-	  (diff tempfile1 tempfile2 switches t)
-	  (sit-for 0))
-      (progn
-	(when (file-exists-p tempfile1)
-	  (delete-file tempfile1))
-	(when (file-exists-p tempfile2)
-	  (delete-file tempfile2)))))
-  nil)
-
 ;; (font-family-list)
 ;; (x-list-fonts "*")
 (cond ((eq window-system 'w32)
@@ -748,39 +728,6 @@
        (set-face-attribute 'default nil :family "Consolas" :height 110)
        (set-fontset-font t 'japanese-jisx0208 (font-spec :family "KanjiStrokeOrders"))
        (add-to-list 'face-font-rescale-alist '(".*KanjiStrokeOrders.*" . 1.2))))
-
-(defun my-get-file-coding-systems (directory)
-  (let ((default-directory directory)
-	(files (directory-files directory)))
-    (delq nil (mapcar (lambda (x) (if (not (file-directory-p x))
-				      (with-temp-buffer
-					(insert-file-contents x)
-					(cons (expand-file-name x) buffer-file-coding-system))))
-		      files))))
-;; (my-get-file-coding-systems "/cygdrive/c/Program Files/Apache Group/Apache2/htdocs/erssmobile/apps/mobile/modules/view/templates/")
-
-(defun my-query-replace-multi (replace-list &optional delimited start end backward)
-  "replace list example:
-MyFunction YourFunction
-myfunction yourfunction
-MYFUNCTION YOURFUNCTION"
-  (interactive
-   (list
-    (let ((str (read-from-minibuffer"replace list: "))
-	  (rs (if current-prefix-arg (read-from-minibuffer "record separator: ") "\n"))
-	  (fs (if current-prefix-arg (read-from-minibuffer "field separator: ") " ")))
-      (mapcar (lambda (a) (split-string a fs t))
-	      (split-string str rs t)))
-    nil
-    (if (and transient-mark-mode mark-active)
-	(region-beginning))
-    (if (and transient-mark-mode mark-active)
-	(region-end))
-    nil))
-  (let ((case-fold-search nil))
-    (mapcar (lambda (a)
-	      (save-excursion (apply 'query-replace a)))
-	    replace-list)))
 
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
@@ -836,6 +783,10 @@ MYFUNCTION YOURFUNCTION"
      (define-key yas-keymap (kbd "TAB") nil)
      (define-key yas-keymap [(tab)] nil)
      (yas/global-mode 1)))
+
+;; Personal utils
+(autoload 'my-diff-buffers "my-diff" nil t)
+(autoload 'my-query-replace-multi "my-replace" nil t)
 
 ;; Experimental
 
