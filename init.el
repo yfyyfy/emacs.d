@@ -428,12 +428,14 @@
 
 ;; Python
 (require 'my-python-venv)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'my-python-venv-add-venv-to-exec-path)
 (add-hook 'python-mode-hook #'flycheck-mode)
+;; Jedi
 (with-eval-after-load 'python-environment
   ;; Python executable for default flycheck syntax checker.
   (setq flycheck-python-pycompile-executable (python-environment-bin "python")))
-(add-hook 'python-mode-hook 'jedi:setup)
 (with-eval-after-load 'jedi-core
   (setq jedi:complete-on-dot t))
 
