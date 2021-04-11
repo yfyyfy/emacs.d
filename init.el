@@ -349,6 +349,14 @@
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
+  (when (eq system-type 'windows-nt)
+    ;; The default python executable was python on Flycheck-31, but python3 on the latest version.
+    ;; However on Windows, venv creates python, not python3.
+    (setq flycheck-json-python-json-executable "python")
+    (setq flycheck-python-flake8-executable "python")
+    (setq flycheck-python-pylint-executable "python")
+    (setq flycheck-python-pycompile-executable "python"))
+
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (require 'tide) ;; Load tsx-tide.
   (flycheck-add-next-checker 'tsx-tide '(t . javascript-eslint))
