@@ -729,7 +729,8 @@
 (autoload 'magit-staging "my-magit" nil t)
 
 ;; MSVC
-(when (eq system-type 'windows-nt)
+(setq my-use-msvc nil)
+(when (and my-use-msvc (eq system-type 'windows-nt))
   (require 'cedet.config)
   (require 'flymake.config)
   (require 'setup.auto-complete)
