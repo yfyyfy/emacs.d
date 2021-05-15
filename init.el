@@ -831,7 +831,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lsp-mode company flycheck dash gnu-elpa-keyring-update tide web-mode py-isort jedi add-node-modules-path rjsx-mode git-gutter-fringe diff-hl wgrep magit-gitflow typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo msvc helm-gtags company-irony cmake-mode)))
+    (add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode magit magit-gitflow migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
