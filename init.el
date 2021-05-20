@@ -127,7 +127,8 @@
 ;; Modes
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(global-linum-mode 1)
+(global-display-line-numbers-mode)
+(global-git-gutter-mode)
 (line-number-mode 1)
 (column-number-mode 1)
 (show-paren-mode 1)
@@ -262,7 +263,6 @@
 (defun git-gutter:in-repository-p-override ()
   (setq-local git-gutter:vcs-type (my-git-gutter-nearest-backends git-gutter:handled-backends)))
 (advice-add 'git-gutter:in-repository-p :override #'git-gutter:in-repository-p-override)
-(global-git-gutter-mode)
 
 ;; Diff-hl
 (defun turn-on-diff-hl-mode-around (f &rest args)
