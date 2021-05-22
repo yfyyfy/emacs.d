@@ -40,7 +40,7 @@
 (my-el-get-activate-packages-install-if-necessary)
 
 ;; Path-conversion utility
-(require 'cygwin-mount)
+(require 'my-cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
@@ -165,19 +165,35 @@
 
 ;; Migemo
 (with-eval-after-load 'migemo
+  (setq migemo-dict
+	(with-cygwin-mount-activated
+	 (let ((migemo-dicts (list
+			      "/usr/share/cmigemo/utf-8/migemo-dict"
+			      "/usr/local/share/cmigemo/utf-8/migemo-dict"
+			      "/usr/share/migemo/dict/utf-8/migemo-dict"
+			      "/usr/local/share/migemo/dict/utf-8/migemo-dict")))
+	   (catch 'exists
+	     (dolist (migemo-dict-internal migemo-dicts)
+	       (when (file-exists-p migemo-dict-internal)
+		 (if (eq system-type 'windows-nt)
+		     ;; Windows binary requires Windows-style path.
+		     (setq migemo-dict-internal (cygwin-mount-substitute-longest-mount-name migemo-dict-internal)))
+		 (throw 'exists migemo-dict-internal)))))))
+
   (setq migemo-command "cmigemo")
   (setq migemo-options '("-q" "--emacs"))
-  (setq migemo-dictionary "c:/cygwin/usr/local/share/migemo/dict/utf-8/migemo-dict") ;; Windows binary requires Windows-style path.
+  (setq migemo-dictionary migemo-dict)
   (setq migemo-user-dictionary nil)
   (setq migemo-regex-dictionary nil)
   (setq migemo-coding-system 'utf-8-unix)
   (migemo-init)
 
-  ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
-  (defun migemo-get-pattern-around (f &rest args)
-    (let ((system-type 'windows-nt))
-      (apply f args)))
-  (advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around))
+  (when (eq system-type 'windows-nt)
+    ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
+    (defun migemo-get-pattern-around (f &rest args)
+      (let ((system-type 'windows-nt))
+	(apply f args)))
+    (advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around)))
 
 (autoload 'migemo-isearch-toggle-migemo "migemo" "Toggle migemo mode in isearch." t)
 (autoload 'migemo-toggle-isearch-enable "migemo" nil t)
