@@ -349,6 +349,9 @@
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
+  (unless (display-graphic-p)
+    (setq-default flycheck-indication-mode 'left-margin)
+    (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode))
   (when (eq system-type 'windows-nt)
     ;; The default python executable was python on Flycheck-31, but python3 on the latest version.
     ;; However on Windows, venv creates python, not python3.
