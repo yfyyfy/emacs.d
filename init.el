@@ -237,7 +237,7 @@
 	    nil t nil nil)))))))
 
 ;; Git-gutter
-(require 'git-gutter-fringe)
+;; (require 'git-gutter-fringe)
 (setq git-gutter:handled-backends '(git svn))
 (defun my-git-gutter-nearest-backends (backends)
   (let* ((lengths
