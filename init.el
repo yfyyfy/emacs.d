@@ -695,7 +695,8 @@
 (my-frame-set-alpha 80)
 (add-hook 'emacs-startup-hook
 	  #'(lambda () (my-frame-modify-frame-geometry 0)))
-(define-key global-map [remap suspend-frame] 'my-show-or-hide-frame)
+(if (eq system-type 'windows-nt)
+    (define-key global-map [remap suspend-frame] 'my-show-or-hide-frame))
 
 ;; Misc
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
