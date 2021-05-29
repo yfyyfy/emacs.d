@@ -318,6 +318,7 @@
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
 (setq dired-bind-jump nil)              ; Prevents C-x C-j from being overridden.
+(setq skk-kakutei-key [henkan])         ; Alter mode-change key (skk-latin-mode -> skk-j-mode) (originally "l")
 (add-hook 'isearch-mode-hook
 	  '(lambda ()
 	     (when (and (boundp 'skk-mode)
