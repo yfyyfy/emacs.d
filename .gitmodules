@@ -1,0 +1,3 @@
+[submodule "elpa-local-repos"]
+	path = elpa-local-repos
+	url = https://github.com/yfyyfy/my-elpa.git
