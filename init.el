@@ -18,29 +18,34 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+
+(autoload 'my-elpamr-create-mirror-for-installed "my-elpa-mirror" nil t)
+(autoload 'my-elpamr-restore-from-mirror "my-elpa-mirror" nil t)
+(when (and (not (file-directory-p package-user-dir))
+	   (yes-or-no-p (format "package-user-dir (%s) does not exist. Restore from local mirror? " package-user-dir)))
+  (my-elpamr-restore-from-mirror nil t))
 
 ;; el-get
 (require 'my-el-get)
 (setq my-el-get-package-list
       '(el-get
-	doxymacs ;; emacsattic version may be newer. See. https://emacsmirror.net/
 	helm-next-error
 	java-mode-indent-annotations
 	setup-cygwin
 	w32-symlinks
 	windows-path
-	TreeRex/doxygen-el
 	emacsmirror/visual-basic-mode))
-(my-el-get-activate-packages)
+(my-el-get-activate-packages-install-if-necessary)
 
 ;; Path-conversion utility
 (require 'cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
-       (require 'setup-cygwin))
+       (require 'setup-cygwin)
+       (setq package-user-dir (expand-file-name package-user-dir)))
       ((eq system-type 'cygwin)
        (setq cygwin-mount-cygwin-bin-directory "/usr/bin")
        (require 'windows-path)
@@ -56,6 +61,7 @@
 	(setenv "SHELL" (cygwin-mount-substitute-longest-mount-name (getenv "SHELL")))
 	(setq shell-file-name (cygwin-mount-substitute-longest-mount-name shell-file-name))
 	(and (boundp 'explicit-shell-file-name) (setq explicit-shell-file-name (cygwin-mount-substitute-longest-mount-name explicit-shell-file-name)))
+	(and (boundp 'package-user-dir)         (setq package-user-dir (cygwin-mount-substitute-longest-mount-name package-user-dir)))
 	(and (boundp 'scheme-program-name)      (setq scheme-program-name (cygwin-mount-substitute-longest-mount-name scheme-program-name)))))
     res))
 (advice-add 'cygwin-mount-activate :around #'cygwin-mount-activate-around)
@@ -66,6 +72,7 @@
 	(env-SHELL-windows-nt (cygwin-mount-substitute-longest-mount-name (getenv "SHELL")))
 	(shell-file-name-windows-nt (cygwin-mount-substitute-longest-mount-name shell-file-name))
 	(explicit-shell-file-name-windows-nt (and (boundp 'explicit-shell-file-name) (cygwin-mount-substitute-longest-mount-name explicit-shell-file-name)))
+	(package-user-dir-nt                 (and (boundp 'package-user-dir)         (cygwin-mount-substitute-longest-mount-name package-user-dir)))
 	(scheme-program-name-windows-nt      (and (boundp 'scheme-program-name)      (cygwin-mount-substitute-longest-mount-name scheme-program-name)))
 	(res (apply f args)))
     ;; Cygwin -> Windows
@@ -75,6 +82,7 @@
       (setenv "SHELL" env-SHELL-windows-nt)
       (setq shell-file-name shell-file-name-windows-nt)
       (and (boundp 'explicit-shell-file-name) (setq explicit-shell-file-name explicit-shell-file-name-windows-nt))
+      (and (boundp 'package-user-dir)         (setq package-user-dir package-user-dir-nt))
       (and (boundp 'scheme-program-name)      (setq scheme-program-name scheme-program-name-windows-nt)))
     res))
 (advice-add 'cygwin-mount-deactivate :around #'cygwin-mount-deactivate-around)
@@ -143,7 +151,7 @@
 (global-set-key "\C-h" 'backward-delete-char)
 (global-set-key "\M-H" 'help-for-help)
 (global-set-key "\C-cvt" 'toggle-truncate-lines)
-(global-set-key "\C-c\C-f" 'my-set-frame)
+(global-set-key "\C-c\C-f" 'my-frame-set-frame)
 (global-unset-key [mouse-2])
 (global-unset-key [prior])
 (global-unset-key [next])
@@ -339,6 +347,42 @@
       (apply f args)))
   (advice-add 'tramp-send-string :around #'tramp-send-string-around))
 
+;; Flycheck
+(with-eval-after-load 'flycheck
+  (when (eq system-type 'windows-nt)
+    ;; The default python executable was python on Flycheck-31, but python3 on the latest version.
+    ;; However on Windows, venv creates python, not python3.
+    (setq flycheck-json-python-json-executable "python")
+    (setq flycheck-python-flake8-executable "python")
+    (setq flycheck-python-pylint-executable "python")
+    (setq flycheck-python-pycompile-executable "python"))
+
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (require 'tide) ;; Load tsx-tide.
+  (flycheck-add-next-checker 'tsx-tide '(t . javascript-eslint))
+  ;; ;; Bring tsx-tide, jsx-tide and javascript-eslint to the end of `flycheck-checkers'.
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'tsx-tide flycheck-checkers)
+  ;; 	      '(tsx-tide)))
+  ;; 
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'jsx-tide flycheck-checkers)
+  ;; 	      '(jsx-tide)))
+  ;; 
+  ;; (setq flycheck-checkers
+  ;;       (append (delete 'javascript-eslint flycheck-checkers)
+  ;; 	      '(javascript-eslint)))
+
+  ;; flycheck-checkers
+  (flycheck-define-generic-checker 'general-tide
+    "A [JT]SX? syntax checker using tsserver."
+    :start #'tide-flycheck-start
+    :verify #'tide-flycheck-verify
+    :modes '(web-mode js2-jsx-mode rjsx-mode)
+    :predicate (lambda () t))
+  (add-to-list 'flycheck-checkers 'general-tide)
+  (flycheck-add-next-checker 'general-tide '(t . javascript-eslint)))
+
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
 	  '(lambda()
@@ -390,6 +434,19 @@
 	     (local-set-key "\C-c\C-c" 'comment-region)
 	     (ad-activate 'fortran-indent-to-column)))
 
+;; Python
+(require 'my-python-venv)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook #'lsp)
+(add-hook 'python-mode-hook #'my-python-venv-add-venv-to-exec-path)
+(add-hook 'python-mode-hook #'flycheck-mode)
+;; Jedi
+(with-eval-after-load 'python-environment
+  ;; Python executable for default flycheck syntax checker.
+  (setq flycheck-python-pycompile-executable (python-environment-bin "python")))
+(with-eval-after-load 'jedi-core
+  (setq jedi:complete-on-dot t))
+
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -399,23 +456,37 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+(add-hook 'web-mode-hook #'add-node-modules-path)
+(with-eval-after-load 'web-mode
+  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
+  (add-to-list 'web-mode-comment-formats '("jsx" . "//"))
+  (add-to-list 'web-mode-content-types-alist '("jsx" . "\\.[jt]sx?\\'"))
+)
 (defun my-web-mode-hook ()
   (setq tab-width 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-
-;; js
-(setq js-mode-hook
-      '(lambda ()
-	 (setq js-indent-level 2)
-	 (setq indent-tabs-mode nil)
-	 (local-set-key "\C-\M-f" 'forward-sexp)
-	 (local-set-key "\C-\M-b" 'backward-sexp)
-	 (local-set-key "\C-\M-n" 'forward-list)
-	 (local-set-key "\C-\M-p" 'backward-list)
-	 (local-set-key "\C-c\C-c" 'comment-region)))
+  (setq web-mode-code-indent-offset 2)
+  (when
+      (and buffer-file-name
+	   (string-match "^[jt]sx?$" (file-name-extension buffer-file-name)))
+    (my-setup-tide-mode)
+    (setq web-mode-enable-auto-quoting nil)
+    (local-set-key "\C-c\C-c" 'comment-region)
+    ;; (setq flycheck-disabled-checkers '(tsx-tide jsx-tide))
+    ;; (setq flycheck-disabled-checkers '(tsx-tide javascript-eslint))
+    ))
+(with-eval-after-load 'web-mode
+  (setq web-mode-engines-alist
+	'(("django" . "\\.html\\'")
+	  ("ejs" . "\\.ejs\\'"))))
 
 ;; TypeScript
 (defun my-setup-tide-mode ()
@@ -429,20 +500,36 @@
           (lambda ()
 	    (my-setup-tide-mode)
 	    (setq indent-tabs-mode nil)))
+;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+;; JavaScript
+(with-eval-after-load 'js2-mode
+  (setq js2-strict-trailing-comma-warning nil))
+(add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
+(add-hook 'js-mode-hook
+	  (lambda ()
+ 	    (setq js-indent-level 2)
+ 	    (setq indent-tabs-mode nil)
+ 	    (local-set-key "\C-c\C-c" 'comment-region)))
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+	    (my-setup-tide-mode)))
+(add-hook 'rjsx-mode-hook #'add-node-modules-path)
+(add-hook 'rjsx-mode-hook #'flycheck-mode)
+
+;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
+(defun js-jsx-indent-line-align-closing-bracket ()
+  "Workaround sgml-mode and align closing bracket with opening bracket"
+  (save-excursion
+    (beginning-of-line)
+    (when (looking-at-p "^ +\/?> *$")
+      (delete-char sgml-basic-offset))))
+(advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
-
-;; Doxymacs
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-(defun my-doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
-(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-(with-eval-after-load 'doxymacs
-  (setq doxymacs-doxygen-style "JavaDoc"))
 
 ;; VB
 (add-to-list 'auto-mode-alist '("\\.\\(frm\\|bas\\|cls\\|vbs\\|vba\\|vb\\)$" . visual-basic-mode))
@@ -458,7 +545,7 @@
   (setq org-directory "~/org.d")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-agenda-files '("~/org.d/notes.org"))
-  (add-to-list 'org-file-apps '("\\.pdf\\'" . "cygstart %ss")))
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "cygstart %s")))
 
 ;; Disable automatic rearrangement of the agenda file set.
 (add-hook 'org-mode-hook
@@ -493,17 +580,25 @@
 (require 'recentf-ext)
 (setq recentf-exclude '(tramp-tramp-file-p))
 (setq recentf-max-saved-items nil)
-(setq recentf-filename-handlers '(my-replace-pathname))
-
-(defun my-replace-pathname (name)
-  (cond ((string-match "^/cygdrive/c/cygwin\\(64\\)?/home/" name)
-	 (replace-match "/home/" t t name))
-	(t name)))
+(setq recentf-filename-handlers
+      (let* ((cygwin-drive "c")
+	     (desktop-drive "d")
+	     (documents-drive "d")
+	     (downloads-drive "d")
+	     (conv-list `(((format "^/cygdrive/%s/cygwin\\(64\\)?/home/" ,cygwin-drive) . "/home/")
+			  ((format "^%s:/cygwin64/" ,cygwin-drive) . (format "%s:/cygwin/" ,cygwin-drive))
+			  ((format "^%s:/cygwin/home/" ,cygwin-drive) . "/home/")
+			  ((format "^%s:/Users/\\([^/]*\\)/Desktop/" ,desktop-drive) . "/home/\\1/Desktop/")
+			  ((format "^%s:/Users/\\([^/]*\\)/Documents/" ,documents-drive) . "/home/\\1/Documents/")
+			  ((format "^%s:/Users/\\([^/]*\\)/Downloads/" ,downloads-drive) . "/home/\\1/Downloads/"))))
+	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
 
 ;; Helm
 (defun my-helm-mini ()
   "helm-mini + helm-find."
   (interactive)
+  (require 'helm-for-files) ;; For helm-source-recentf < helm-mini-default-sources < helm-source-recentf
+  (require 'helm-find) ;; For helm-source-findutils
   (unless helm-source-buffers-list
     (setq helm-source-buffers-list
 	  (helm-make-source "Buffers" 'helm-source-buffers)))
@@ -513,10 +608,14 @@
 	:truncate-lines helm-buffers-truncate-lines))
 ;; (global-set-key [?\C-;] 'my-helm-mini)
 (global-set-key [67108923] 'my-helm-mini)
+(defun my-helm-do-grep (dir)
+  (interactive (list (if current-prefix-arg
+			 (read-directory-name "Directory: " default-directory nil t)
+		       default-directory)))
+  (helm-do-grep-1 (list dir) t))
 (add-hook 'helm-after-initialize-hook
   '(lambda ()
      (helm-migemo-mode 1)))
-(require 'helm-files) ; my-helm-mini requires this.
 (my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
@@ -574,135 +673,24 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-keep-variants nil)
 
+;; Frame
+(setq default-frame-alist
+      '((menu-bar-lines . 0)
+	(tool-bar-lines . 0)))
+(require 'my-frame)
+(my-frame-set-alpha 80)
+(add-hook 'emacs-startup-hook
+	  #'(lambda () (my-frame-modify-frame-geometry 0)))
+(define-key global-map [remap suspend-frame] 'my-show-or-hide-frame)
+
 ;; Misc
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(setq mode-require-final-newline 'ask)
+(setq mode-require-final-newline nil) ;; 'ask
 (setq split-height-threshold nil)
 (setq split-width-threshold nil)
 (eval-after-load "color-moccur"
   '(progn
      (setq moccur-split-word t)))
-
-(defun my-diff-buffers (buffer1 buffer2 &optional switches)
-  ;; (interactive "bBuffer: \nbBuffer: ")
-  (interactive "bBuffer: \nbBuffer: \nsSwitches: ")
-  (let ((tempfile1 (make-temp-file "buffer-content-"))
-	(tempfile2 (make-temp-file "buffer-content-")))
-    (unwind-protect
-	(progn
-	  (with-current-buffer buffer1
-	    (write-region nil nil tempfile1 nil 'nomessage))
-	  (with-current-buffer buffer2
-	    (write-region nil nil tempfile2 nil 'nomessage))
-	  (diff tempfile1 tempfile2 switches t)
-	  (sit-for 0))
-      (progn
-	(when (file-exists-p tempfile1)
-	  (delete-file tempfile1))
-	(when (file-exists-p tempfile2)
-	  (delete-file tempfile2)))))
-  nil)
-
-(defun my-set-frame ()
-  (interactive)
-  (let* ((repeat t)
-	 (n0 0)
-	 (n1 (1- (length (display-monitor-attributes-list))))
-	 (font-hL 150)
-	 (font-hS 100))
-    (while repeat
-      (let ((key (read-event)))
-	(cond ((eq key ?i)
-	       (set-face-attribute 'default nil :height font-hL)
-	       (my-modify-frame-geometry n0)
-	       (message "Reset to initial settings."))
-	      ((eq key ?j)
-	       (set-face-attribute 'default nil :height font-hL)
-	       (my-modify-frame-geometry n1)
-	       (message "Reset to initial settings."))
-	      ((eq key ?k)
-	       (set-face-attribute 'default nil :height font-hS)
-	       (my-modify-frame-geometry n0)
-	       (message "Reset to initial settings."))
-	      ((eq key ?l)
-	       (set-face-attribute 'default nil :height font-hS)
-	       (my-modify-frame-geometry n1)
-	       (message "Reset to initial settings."))
-	      ((eq key ?-)
-	       (my-increment-face-attribute 'default :height -10 nil t)
-	       (my-modify-frame-geometry))
-	      ((eq key ?=)
-	       (my-increment-face-attribute 'default :height +10 nil t)
-	       (my-modify-frame-geometry))
-	      ((eq key ?+)
-	       (my-increment-face-attribute 'default :height +10 nil t)
-	       (my-modify-frame-geometry))
-	      ((eq key ?a)
-	       (set-frame-parameter nil 'left 0))
-	      ((eq key ?e)
-	       (set-frame-parameter nil 'left -1))
-	      ((eq key ?<)
-	       (set-frame-parameter nil 'top 0))
-	      ((eq key ?>)
-	       (set-frame-parameter nil 'top -1))
-	      ((eq key 'left)
-	       (my-increment-frame-parameter nil 'width -1 t))
-	      ((eq key 'S-left)
-	       (my-increment-frame-parameter nil 'width -10 t))
-	      ((eq key 'right)
-	       (my-increment-frame-parameter nil 'width +1 t))
-	      ((eq key 'S-right)
-	       (my-increment-frame-parameter nil 'width +10 t))
-	      ((eq key 'up)
-	       (my-increment-frame-parameter nil 'height -1 t))
-	      ((eq key 'down)
-	       (my-increment-frame-parameter nil 'height +1 t))
-	      ((eq key ?q)
-	       (setq repeat nil))))
-      (if repeat
-	  (progn
-	    (clear-this-command-keys t)
-	    (setq last-input-event nil))))
-    ;; (when last-input-event
-    ;;  (clear-this-command-keys t)
-    ;;  (setq unread-command-events (list last-input-event)))
-    ))
-
-(defun my-modify-frame-geometry (&optional display-id)
-  (let* ((display-id (or display-id (my-current-display-id)))
-	 (geometry (cdr (assoc 'geometry (nth display-id (display-monitor-attributes-list)))))
-	 (x (nth 0 geometry))
-	 (y (nth 1 geometry))
-	 (w (nth 2 geometry))
-	 (h (nth 3 geometry))
-	 (margin-w 40)
-	 (margin-h (if (zerop display-id) 70 30)))
-    (modify-frame-parameters nil `((left   . ,x)
-				   (top    . ,y)
-				   (width  . ,(/ (- w margin-w) (frame-char-width)))
-				   (height . ,(/ (- h margin-h) (frame-char-height)))))))
-
-(defun my-current-display-id ()
-  (let ((repeat t)
-	(n -1)
-	(list (display-monitor-attributes-list)))
-    (while (and repeat list)
-      (setq n (1+ n))
-      (setq repeat (not (equal (frame-monitor-attributes) (car list))))
-      (setq list (cdr list)))
-    (if repeat 0 n))) ; repeat should not be zero. Only in case..
-
-(defun my-increment-frame-parameter (frame parameter value &optional message)
-  (set-frame-parameter frame parameter
-		       (+ (frame-parameter frame parameter) value))
-  (if message
-      (message "Frame %s: %d" parameter (frame-parameter frame parameter))))
-
-(defun my-increment-face-attribute (face attribute value &optional frame message)
-  (set-face-attribute face frame attribute
-		       (+ (face-attribute face attribute frame t) value))
-  (if message
-      (message "Face %s: %d" attribute (face-attribute face attribute frame t))))
 
 ;; (font-family-list)
 ;; (x-list-fonts "*")
@@ -715,103 +703,18 @@
        (set-fontset-font t 'japanese-jisx0208 (font-spec :family "KanjiStrokeOrders"))
        (add-to-list 'face-font-rescale-alist '(".*KanjiStrokeOrders.*" . 1.2))))
 
-(setq default-frame-alist
-      '((menu-bar-lines . 0)
-	(tool-bar-lines . 0)))
-
-(add-hook 'emacs-startup-hook
-	  '(lambda () (my-modify-frame-geometry 0)))
-
-;; use printf??
-(defvar my-file-name-from-sendfilename-filename-win nil)
-(defvar my-file-name-from-sendfilename-filename nil)
-(defun my-file-name-from-sendfilename (&optional use-cache)
-  (interactive)
-  (if my-frame-hide
-      (my-show-or-hide-frame))
-  (let (filename-win filename)
-    (setq filename-win
-	  (with-temp-buffer
-	    (insert-file-contents "~/.sendfilename")
-	    (buffer-substring (point-min) (point-max))))
-    (if (and use-cache
-	     (equal my-file-name-from-sendfilename-filename-win
-		    filename-win))
-	;; Return cache
-	my-file-name-from-sendfilename-filename
-      ;; Cache variable
-      (setq my-file-name-from-sendfilename-filename-win filename-win)
-      ;; Format filename to retrieve
-      (or (string-match "\"\\(.*\\)\\\"[\s\r\n]*$" filename-win)
-	  (string-match "\\(.*\\) [\s\r\n]*$" filename-win))
-      (setq filename-win (match-string 1 filename-win))
-      (setq filename
-	    (with-temp-buffer
-	      (call-process "cygpath" nil (current-buffer) nil filename-win)
-	      (buffer-substring (point-min) (point-max))))
-      (string-match "\n$" filename)
-      (setq filename (replace-match "" nil nil filename))
-      ;; Cache variable and return filename
-      (setq my-file-name-from-sendfilename-filename filename))))
-
-(defun my-visit-file-sent-from-sendto ()
-  (interactive)
-  (switch-to-buffer (find-file-noselect (my-file-name-from-sendfilename))))
-
-(defvar my-frame-hide nil)
-(defun my-show-or-hide-frame (&optional show)
-  (interactive)
-  (if (or show my-frame-hide)
-      (progn
-	(set-frame-parameter nil 'left my-frame-hide)
-	(setq my-frame-hide nil))
-    (setq my-frame-hide (frame-parameter nil 'left))
-    (set-frame-parameter nil 'left (x-display-pixel-width))))
-
-(define-key global-map [remap suspend-frame] 'my-show-or-hide-frame)
-
-(defun my-get-file-coding-systems (directory)
-  (let ((default-directory directory)
-	(files (directory-files directory)))
-    (delq nil (mapcar (lambda (x) (if (not (file-directory-p x))
-				      (with-temp-buffer
-					(insert-file-contents x)
-					(cons (expand-file-name x) buffer-file-coding-system))))
-		      files))))
-;; (my-get-file-coding-systems "/cygdrive/c/Program Files/Apache Group/Apache2/htdocs/erssmobile/apps/mobile/modules/view/templates/")
-
-(defun my-query-replace-multi (replace-list &optional delimited start end backward)
-  "replace list example:
-MyFunction YourFunction
-myfunction yourfunction
-MYFUNCTION YOURFUNCTION"
-  (interactive
-   (list
-    (let ((str (read-from-minibuffer"replace list: "))
-	  (rs (if current-prefix-arg (read-from-minibuffer "record separator: ") "\n"))
-	  (fs (if current-prefix-arg (read-from-minibuffer "field separator: ") " ")))
-      (mapcar (lambda (a) (split-string a fs t))
-	      (split-string str rs t)))
-    nil
-    (if (and transient-mark-mode mark-active)
-	(region-beginning))
-    (if (and transient-mark-mode mark-active)
-	(region-end))
-    nil))
-  (let ((case-fold-search nil))
-    (mapcar (lambda (a)
-	      (save-excursion (apply 'query-replace a)))
-	    replace-list)))
-
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 (with-eval-after-load 'magit
+  (setq magit-diff-refine-hunk 'all)
   (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(autoload 'magit-staging "my-magit" nil t)
 
 ;; MSVC
-(when (eq system-type 'windows-nt)
+(setq my-use-msvc nil)
+(when (and my-use-msvc (eq system-type 'windows-nt))
   (require 'cedet.config)
   (require 'flymake.config)
   (require 'setup.auto-complete)
@@ -856,6 +759,49 @@ MYFUNCTION YOURFUNCTION"
      (define-key yas-keymap [(tab)] nil)
      (yas/global-mode 1)))
 
+;; Company
+(autoload 'company-mode-on "company" nil t)
+(with-eval-after-load 'company
+  ;; Select-next/previous with meta, not ctrl.
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  ;; Show doc with M-d, not C-h.
+  (define-key company-active-map (kbd "C-h") nil)
+  (define-key company-active-map (kbd "M-d") 'company-show-doc-buffer)
+  ;; Complete if only one option is available, otherwise select next.
+  (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+  ;; Etc.
+  (setq company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.1)
+  (setq company-selection-wrap-around t)
+  ;; Faces
+  (set-face-attribute 'company-tooltip nil
+                      :foreground "black"
+                      :background "lightgray")
+  (set-face-attribute 'company-preview-common nil
+                      :foreground "dark gray"
+                      :background "black"
+                      :underline t)
+  (set-face-attribute 'company-tooltip-selection nil
+                      :background "steelblue"
+                      :foreground "white")
+  (set-face-attribute 'company-tooltip-common nil
+                      :foreground "black"
+                      :underline t)
+  (set-face-attribute 'company-tooltip-common-selection nil
+                      :foreground "white"
+                      :background "steelblue"
+                      :underline t)
+  (set-face-attribute 'company-tooltip-annotation nil
+                      :foreground "red"))
+
+;; Personal utils
+(autoload 'my-diff-buffers "my-diff" nil t)
+(autoload 'my-grep "my-grep" nil t)
+(autoload 'my-query-replace-multi "my-replace" nil t)
+
 ;; Experimental
 
 ;; Load the experimental setting file.
@@ -885,7 +831,7 @@ MYFUNCTION YOURFUNCTION"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (git-gutter-fringe diff-hl wgrep magit-gitflow tide typescript-mode ddskk elpa-mirror recentf-ext color-moccur cygwin-mount w3 htmlize yaml-mode php-mode csv-mode magit helm-swoop migemo web-mode msvc helm-gtags company-irony cmake-mode)))
+    (add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode magit magit-gitflow migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
