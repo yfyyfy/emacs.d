@@ -276,27 +276,12 @@
 (advice-add 'git-gutter:in-repository-p :override #'git-gutter:in-repository-p-override)
 
 ;; Diff-hl
-(defun turn-on-diff-hl-mode-around (f &rest args)
-  (cond ((not (file-directory-p default-directory))
-		 nil)
-		((git-gutter:in-repository-p)
-		 ;; The default-direcories of some buffers are nonexistent,
-		 ;; e.g. the buffer named " *code-conversion-work*",
-		 ;; whose default-direcory is determined according to
-		 ;; the build environment of Emacs itself.
-		 ;; It ends up an error on global-diff-hl-mode such as:
-		 ;; Error in post-command-hook (global-diff-hl-mode-check-buffers): (file-error "Setting current directory" "Permission denied" "EMACS_BUILD_DIRECTORY")
-		 ;; In the case of " *code-conversion-work*", killing the buffer
-		 ;; (which will be re-created automatically) solves the problem,
-		 ;; but in general, it is better to prevent trrigering of
-		 ;; `turn-on-diff-hl-mode'.
-		 nil)
-		(t
-		 (apply f args))))
-(advice-add 'turn-on-diff-hl-mode :around #'turn-on-diff-hl-mode-around)
-(global-diff-hl-mode)
+(defun my-dired-mode-hook ()
+  (diff-hl-dired-mode)
+  (unless (display-graphic-p)
+    (diff-hl-margin-mode)))
+(add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-(add-hook 'dired-mode-hook #'diff-hl-dired-mode)
 
 (defun my-git-gutter-mode-hook ()
   (when git-gutter-mode
