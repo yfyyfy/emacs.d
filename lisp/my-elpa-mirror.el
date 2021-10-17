@@ -1,4 +1,4 @@
-(setq elpamr-default-output-directory "~/myelpa")
+(setq elpamr-default-output-directory (locate-user-emacs-file "elpa-local-repos"))
 
 (defun my-elpamr-create-mirror-for-installed ()
   "Set output directory and clean it up before calling `elpamr-create-mirror-for-installed'.
