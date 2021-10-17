@@ -322,15 +322,7 @@
   (if (eq system-type 'windows-nt)
       (setq tramp-default-method "plink")
     (setq tramp-default-method "ssh"))
-  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave"))
-  (setq tramp-remote-process-environment
-	`("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
-	  "LC_TIME=c"
-	  ,(format "TERM=%s" tramp-terminal-type)
-	  "EMACS=t" ;; Deprecated.
-	  ,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
-	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
-	  "autocorrect=" "correct=")))
+  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave")))
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
