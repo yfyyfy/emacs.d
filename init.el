@@ -331,18 +331,6 @@
 	  ,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
 	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
 	  "autocorrect=" "correct=")))
-;; Fix for connection to Mac OSX.
-(when (eq system-type 'windows-nt)
-  (defun tramp-send-string-around (f &rest args)
-    (let* ((proc (tramp-get-connection-process vec))
-	   (cs (cdr (process-coding-system proc))))
-      (if (seq-contains (coding-system-eol-type 'utf-8-hfs) cs)
-	  ;; Change coding-system-for-write from utf-8-hfs-dos to utf-8-hfs-unix.
-	  (with-current-buffer (process-buffer proc)
-	    (tramp-compat-funcall
-	     'set-buffer-process-coding-system (car (process-coding-system proc)) 'utf-8-hfs-unix)))
-      (apply f args)))
-  (advice-add 'tramp-send-string :around #'tramp-send-string-around))
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
