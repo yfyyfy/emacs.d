@@ -278,7 +278,7 @@
 
 ;; Diff-hl
 (defun my-dired-mode-hook ()
-  (diff-hl-dired-mode)
+  (diff-hl-dired-mode-unless-remote)
   (unless (display-graphic-p)
     (unless (and (boundp 'diff-hl-margin-minor-mode) diff-hl-margin-minor-mode)
       (diff-hl-margin-mode))))
