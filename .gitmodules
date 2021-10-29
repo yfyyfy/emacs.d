@@ -1,0 +1,3 @@
+[submodule "lisp/tide"]
+	path = lisp/tide
+	url = https://github.com/yfyyfy/tide.git
