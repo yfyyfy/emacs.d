@@ -1,3 +1,9 @@
 [submodule "lisp/tide"]
 	path = lisp/tide
 	url = ../tide.git
+[submodule "lisp/flycheck"]
+	path = lisp/flycheck
+	url = ../flycheck.git
+[submodule "lisp/add-node-modules-path"]
+	path = lisp/add-node-modules-path
+	url = ../add-node-modules-path.git
