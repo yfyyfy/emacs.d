@@ -28,6 +28,7 @@
 | magit                   | melpa-stable |        3.1.1 | 20210414.1306 |        |        2021.07.02 |                                                           |   2021.10.17 |
 | migemo                  | melpa-stable |        1.9.2 |   20200913.12 |        |        2019.01.12 |                                                           |   2021.05.15 |
 | msvc                    | 1.3.5        |        1.4.2 |  20191211.540 |        |        2019.12.11 | Keep current version.                                     |   2021.05.15 |
+| ob-async                | melpa        |        1.0.0 | 20210428.2052 |        |        2018.06.15 |                                                           |   2021.11.06 |
 | php-mode                | melpa-stable |       1.24.0 | 20210310.1724 |        |        2021.03.07 |                                                           |   2021.05.15 |
 | py-isort                | melpa-stable |       2016.1 | 20160925.1018 |        |        2016.09.25 |                                                           |   2021.05.15 |
 | recentf-ext             | melpa        |              |   20170926.35 |        |                   |                                                           |   2021.05.15 |
@@ -84,3 +85,5 @@
 4. Delete obsolete flycheck-31 (installed by the dependency of typescript-mode).
 
 5. Update magit from 2.90.1 to 3.1.1 (0460442)
+
+6. Install ob-async
