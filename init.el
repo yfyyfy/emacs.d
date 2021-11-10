@@ -736,6 +736,7 @@
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 (with-eval-after-load 'magit
+  (set-face-attribute 'magit-branch-current nil :inverse-video t)
   (setq magit-diff-refine-hunk 'all)
   (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
