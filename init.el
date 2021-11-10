@@ -568,6 +568,11 @@
 	     (org-defkey org-mode-map "\C-c[" 'undefined)
 	     (org-defkey org-mode-map "\C-c]" 'undefined)))
 
+(with-eval-after-load 'org
+  (setq org-babel-python-command "python3")
+  (add-to-list 'org-babel-load-languages '(shell . t))
+  (add-to-list 'org-babel-load-languages '(python . t)))
+
 ;; automatically change to DONE when all children are done
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
