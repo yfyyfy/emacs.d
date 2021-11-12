@@ -601,8 +601,9 @@
 		       default-directory)))
   (helm-do-grep-1 (list dir) t))
 (add-hook 'helm-after-initialize-hook
-  '(lambda ()
-     (helm-migemo-mode 1)))
+	  '(lambda ()
+             (if (executable-find "cmigemo")
+		 (helm-migemo-mode 1))))
 (my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
