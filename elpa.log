@@ -1,0 +1,89 @@
+# -*- mode: org; -*-
+
+* Packages explicitly installed
+| Package                 | installed    | melpa-stable |         melpa |    gnu | melpa-stable-date |                                                           | info updated |
+|-------------------------+--------------+--------------+---------------+--------+-------------------+-----------------------------------------------------------+--------------|
+| add-node-modules-path   | melpa        |        1.2.0 |  20210305.312 |        |        2017.09.15 |                                                           |   2021.05.15 |
+| cmake-mode              | melpa-stable |       3.20.2 | 20210104.1831 |        |                   |                                                           |   2021.05.15 |
+| color-moccur            | melpa        |              |   20141223.35 |        |                   |                                                           |   2021.05.15 |
+| company-irony           | melpa-stable |        1.1.0 | 20190124.2346 |        |        2017.09.06 |                                                           |   2021.05.15 |
+| company                 | melpa-stable |       0.9.13 | 20210416.2209 | 0.9.13 |        2020.07.26 |                                                           |   2021.05.15 |
+| csv-mode                | gnu          |              |               |   1.15 |        2021.02.23 |                                                           |   2021.05.15 |
+| cygwin-mount            | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
+| dash                    | melpa-stable |       2.18.1 | 20210330.1544 | 2.18.1 |        2021.02.28 |                                                           |   2021.05.15 |
+| ddskk                   | melpa        |              | 20210112.2013 |        |                   |                                                           |   2021.05.15 |
+| diff-hl                 | melpa-stable |        1.8.8 |  20210410.130 |  1.8.8 |        2020.12.20 |                                                           |   2021.05.15 |
+| elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        |        2021.04.14 |                                                           |   2021.05.15 |
+| flycheck                | melpa        |           31 |  20210321.852 |        |        2017.10.07 |                                                           |   2021.05.15 |
+| git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        |        2016.05.21 |                                                           |   2021.05.15 |
+| git-gutter              | melpa-stable |         0.91 | 20210127.1100 |        |        2020.10.26 |                                                           |   2021.05.15 |
+| gnu-elpa-keyring-update | gnu          |              |               | 2019.3 |                   | Required to access to GNU elpa. Keep this version.        |   2021.05.15 |
+| helm-gtags              | melpa-stable |        1.5.7 | 20200602.1610 |        |        2020.06.03 |                                                           |   2021.05.15 |
+| helm                    | melpa-stable |        3.7.1 |  20210514.615 |        |        2021.03.30 |                                                           |   2021.05.15 |
+| helm-swoop              | melpa-stable |        3.0.0 |  20200814.448 |        |        2020.08.06 |                                                           |   2021.05.15 |
+| htmlize                 | melpa-stable |         1.55 |  20200816.746 |        |        2019.11.11 |                                                           |   2021.05.15 |
+| jedi                    | melpa-stable |        0.2.8 | 20191011.1750 |        |        2019.10.12 |                                                           |   2021.05.15 |
+| lsp-mode                | melpa-stable |        7.0.1 | 20210418.2137 |        |        2020.08.07 |                                                           |   2021.05.15 |
+| magit-gitflow           | melpa-stable |        2.2.3 |               |        |        2017.09.29 | 20170929.824 == 2.2.3                                     |   2021.05.15 |
+| magit                   | melpa-stable |        3.1.1 | 20210414.1306 |        |        2021.07.02 |                                                           |   2021.10.17 |
+| migemo                  | melpa-stable |        1.9.2 |   20200913.12 |        |        2019.01.12 |                                                           |   2021.05.15 |
+| msvc                    | 1.3.5        |        1.4.2 |  20191211.540 |        |        2019.12.11 | Keep current version.                                     |   2021.05.15 |
+| ob-async                | melpa        |        1.0.0 | 20210428.2052 |        |        2018.06.15 |                                                           |   2021.11.06 |
+| php-mode                | melpa-stable |       1.24.0 | 20210310.1724 |        |        2021.03.07 |                                                           |   2021.05.15 |
+| py-isort                | melpa-stable |       2016.1 | 20160925.1018 |        |        2016.09.25 |                                                           |   2021.05.15 |
+| recentf-ext             | melpa        |              |   20170926.35 |        |                   |                                                           |   2021.05.15 |
+| rjsx-mode               | melpa-stable |        0.5.0 | 20200120.1446 |        |        2020.02.25 |                                                           |   2021.05.15 |
+| tide                    | melpa-stable |        4.2.3 | 20210412.1650 |        |        2021.03.24 |                                                           |   2021.05.15 |
+| typescript-mode         | melpa-stable |          0.3 | 20201002.1109 |        |        2018.05.14 |                                                           |   2021.05.15 |
+| w3                      | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
+| web-mode                | melpa-stable |           17 | 20210131.1758 |        |        2020.05.xx |                                                           |   2021.05.15 |
+| wgrep                   | melpa-stable |        2.3.2 | 20210322.2207 |        |        2020.02.03 |                                                           |   2021.05.15 |
+| yaml-mode               | melpa-stable |       0.0.15 | 20201109.1026 |        |        2020.11.09 |                                                           |   2021.05.15 |
+
+* Installation
+1. Delete all packages except:
+- cygwin-mount
+- gnu-elpa-keyring-update
+- msvc
+- w3
+
+2. Install packages below from melpa-stable and gnu:
+- cmake-mode
+- company
+- company-irony
+- csv-mode (gnu)
+- dash
+- diff-hl
+- elpa-mirror
+- git-gutter
+- helm
+- helm-gtags
+- helm-swoop
+- htmlize
+- jedi
+- lsp-mode
+- magit
+- magit-gitflow
+- migemo
+- php-mode
+- py-isort
+- rjsx-mode
+- tide
+- typescript-mode
+- web-mode
+- wgrep
+- yaml-mode
+
+3. Install packages below from melpa:
+- add-node-modules-path
+- color-moccur
+- ddskk
+- flycheck
+- git-gutter-fringe
+- recentf-ext
+
+4. Delete obsolete flycheck-31 (installed by the dependency of typescript-mode).
+
+5. Update magit from 2.90.1 to 3.1.1 (0460442)
+
+6. Install ob-async
