@@ -40,7 +40,7 @@
 (my-el-get-activate-packages-install-if-necessary)
 
 ;; Path-conversion utility
-(require 'cygwin-mount)
+(require 'my-cygwin-mount)
 (cond ((eq system-type 'windows-nt)
        (setq debug-on-error t)
        (setq cygwin-mount-cygwin-bin-directory "c:/cygwin/bin")
@@ -127,7 +127,8 @@
 ;; Modes
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(global-linum-mode 1)
+(global-display-line-numbers-mode)
+(global-git-gutter-mode)
 (line-number-mode 1)
 (column-number-mode 1)
 (show-paren-mode 1)
@@ -164,19 +165,35 @@
 
 ;; Migemo
 (with-eval-after-load 'migemo
+  (setq migemo-dict
+	(with-cygwin-mount-activated
+	 (let ((migemo-dicts (list
+			      "/usr/share/cmigemo/utf-8/migemo-dict"
+			      "/usr/local/share/cmigemo/utf-8/migemo-dict"
+			      "/usr/share/migemo/dict/utf-8/migemo-dict"
+			      "/usr/local/share/migemo/dict/utf-8/migemo-dict")))
+	   (catch 'exists
+	     (dolist (migemo-dict-internal migemo-dicts)
+	       (when (file-exists-p migemo-dict-internal)
+		 (if (eq system-type 'windows-nt)
+		     ;; Windows binary requires Windows-style path.
+		     (setq migemo-dict-internal (cygwin-mount-substitute-longest-mount-name migemo-dict-internal)))
+		 (throw 'exists migemo-dict-internal)))))))
+
   (setq migemo-command "cmigemo")
   (setq migemo-options '("-q" "--emacs"))
-  (setq migemo-dictionary "c:/cygwin/usr/local/share/migemo/dict/utf-8/migemo-dict") ;; Windows binary requires Windows-style path.
+  (setq migemo-dictionary migemo-dict)
   (setq migemo-user-dictionary nil)
   (setq migemo-regex-dictionary nil)
   (setq migemo-coding-system 'utf-8-unix)
   (migemo-init)
 
-  ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
-  (defun migemo-get-pattern-around (f &rest args)
-    (let ((system-type 'windows-nt))
-      (apply f args)))
-  (advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around))
+  (when (eq system-type 'windows-nt)
+    ;; Re-interpret system-type as windows-nt so that migemo-get-pattern removes the additional \r in the output of Windows binary.
+    (defun migemo-get-pattern-around (f &rest args)
+      (let ((system-type 'windows-nt))
+	(apply f args)))
+    (advice-add 'migemo-get-pattern :around #'migemo-get-pattern-around)))
 
 (autoload 'migemo-isearch-toggle-migemo "migemo" "Toggle migemo mode in isearch." t)
 (autoload 'migemo-toggle-isearch-enable "migemo" nil t)
@@ -195,16 +212,11 @@
   (setq ls-lisp-use-insert-directory-program "ls")
   (defun insert-directory-around (f &rest args)
     "Pass Unix-form path to ls."
-    (let ((cygwin-mount-activated-orig cygwin-mount-activated)
-	  newargs)
-      (if (not cygwin-mount-activated-orig)
-	  (cygwin-mount-activate))
-      (let* ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
-	     (file (cygwin-mount-substitute-longest-mount-name (car args))))
-	(setq newargs (cons file (cdr args))))
-      (if (not cygwin-mount-activated-orig)
-	  (cygwin-mount-deactivate))
-      (apply f newargs)))
+    (with-cygwin-mount-activated
+       (let* ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
+	      (file (cygwin-mount-substitute-longest-mount-name (car args)))
+	      (newargs (cons file (cdr args))))
+	 (apply f newargs))))
   (advice-add 'insert-directory :around #'insert-directory-around))
 (with-eval-after-load "dired"
   (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
@@ -236,7 +248,7 @@
 	    nil t nil nil)))))))
 
 ;; Git-gutter
-(require 'git-gutter-fringe)
+;; (require 'git-gutter-fringe)
 (setq git-gutter:handled-backends '(git svn))
 (defun my-git-gutter-nearest-backends (backends)
   (let* ((lengths
@@ -262,7 +274,6 @@
 (defun git-gutter:in-repository-p-override ()
   (setq-local git-gutter:vcs-type (my-git-gutter-nearest-backends git-gutter:handled-backends)))
 (advice-add 'git-gutter:in-repository-p :override #'git-gutter:in-repository-p-override)
-(global-git-gutter-mode)
 
 ;; Diff-hl
 (defun turn-on-diff-hl-mode-around (f &rest args)
@@ -307,6 +318,7 @@
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
 (setq dired-bind-jump nil)              ; Prevents C-x C-j from being overridden.
+(setq skk-kakutei-key [henkan])         ; Alter mode-change key (skk-latin-mode -> skk-j-mode) (originally "l")
 (add-hook 'isearch-mode-hook
 	  '(lambda ()
 	     (when (and (boundp 'skk-mode)
@@ -349,6 +361,9 @@
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
+  (unless (display-graphic-p)
+    (setq-default flycheck-indication-mode 'left-margin)
+    (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode))
   (when (eq system-type 'windows-nt)
     ;; The default python executable was python on Flycheck-31, but python3 on the latest version.
     ;; However on Windows, venv creates python, not python3.
@@ -681,7 +696,8 @@
 (my-frame-set-alpha 80)
 (add-hook 'emacs-startup-hook
 	  #'(lambda () (my-frame-modify-frame-geometry 0)))
-(define-key global-map [remap suspend-frame] 'my-show-or-hide-frame)
+(if (eq system-type 'windows-nt)
+    (define-key global-map [remap suspend-frame] 'my-show-or-hide-frame))
 
 ;; Misc
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -694,11 +710,20 @@
 
 ;; (font-family-list)
 ;; (x-list-fonts "*")
-(cond ((eq window-system 'w32)
+(defun my-font-family-available (&rest font-families)
+  (let ((available-p-list
+	 (mapcar #'(lambda (font-family) (if (member font-family (font-family-list)) t nil)) font-families)))
+    (eval `(and ,@available-p-list))))
+(cond ((my-font-family-available "Ricty Diminished")
+       (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
+       (set-fontset-font nil 'japanese-jisx0208 (cons "Ricty Diminished" "iso10646-1"))
+       (set-fontset-font nil 'japanese-jisx0212 (cons "Ricty Diminished" "iso10646-1"))
+       (set-fontset-font nil 'katakana-jisx0201 (cons "Ricty Diminished" "iso10646-1")))
+      ((my-font-family-available "Consolas" (string-as-multibyte "\203\201\203C\203\212\203I"))
        (set-face-attribute 'default nil :family "Consolas" :height 110)
        (set-fontset-font t 'japanese-jisx0208 (font-spec :family "\203\201\203C\203\212\203I")) ; メイリオ
        (add-to-list 'face-font-rescale-alist '(".*\203\201\203C\203\212\203I.*" . 1.1)))
-      (t ;(eq window-system 'x)
+      ((my-font-family-available "Consolas" "KanjiStrokeOrders")
        (set-face-attribute 'default nil :family "Consolas" :height 110)
        (set-fontset-font t 'japanese-jisx0208 (font-spec :family "KanjiStrokeOrders"))
        (add-to-list 'face-font-rescale-alist '(".*KanjiStrokeOrders.*" . 1.2))))
@@ -831,7 +856,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode magit magit-gitflow migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
+    (magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)

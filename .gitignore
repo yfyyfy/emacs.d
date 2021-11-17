@@ -1,10 +1,10 @@
-ac-comphist.dat
-ede-projects.el
-el-get
-elpa
-recentf
-server/*
-.ddskk/*
+/ac-comphist.dat
+/ede-projects.el
+/el-get
+/elpa
+/recentf
+/server/*
+/.ddskk/*
 /.python-environments
 !.ddskk/init
 !.gitkeep
