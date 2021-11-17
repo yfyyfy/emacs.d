@@ -508,6 +508,10 @@
       (delete-char sgml-basic-offset))))
 (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
+;; CSS
+(add-hook 'css-mode-hook #'add-node-modules-path)
+(add-hook 'css-mode-hook #'flycheck-mode)
+
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
