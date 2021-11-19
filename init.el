@@ -513,6 +513,7 @@
 (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 ;; CSS
+(add-hook 'css-mode-hook #'lsp)
 (add-hook 'css-mode-hook #'add-node-modules-path)
 (add-hook 'css-mode-hook #'flycheck-mode)
 
