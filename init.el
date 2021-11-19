@@ -363,6 +363,10 @@
   (add-to-list 'flycheck-checkers 'general-tide)
   (flycheck-add-next-checker 'general-tide '(t . javascript-eslint)))
 
+;; LSP
+(with-eval-after-load 'lsp-mode
+  (setq lsp-diagnostic-package :none))
+
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
 	  '(lambda()
