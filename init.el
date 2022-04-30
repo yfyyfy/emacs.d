@@ -486,10 +486,10 @@
 	  ("ejs" . "\\.ejs\\'"))))
 
 ;; TypeScript
-(add-hook 'typescript-mode-hook
-          (lambda ()
-	    (my-setup-tide-mode)
-	    (setq indent-tabs-mode nil)))
+(defun my-typescript-mode-hook ()
+  (my-setup-tide-mode)
+  (setq indent-tabs-mode nil))
+(add-hook 'typescript-mode-hook #'my-typescript-mode-hook)
 ;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
