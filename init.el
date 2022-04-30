@@ -422,9 +422,12 @@
 ;; Python
 (require 'my-python-venv)
 ;; (add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook #'lsp)
-(add-hook 'python-mode-hook #'my-python-venv-add-venv-to-exec-path)
-(add-hook 'python-mode-hook #'flycheck-mode)
+(defun my-python-mode-hook ()
+  (flycheck-mode)
+  (my-python-venv-add-venv-to-exec-path)
+  (lsp))
+(add-hook 'python-mode-hook #'my-python-mode-hook)
+
 ;; Jedi
 (with-eval-after-load 'python-environment
   ;; Python executable for default flycheck syntax checker.
@@ -496,11 +499,12 @@
  	    (setq js-indent-level 2)
  	    (setq indent-tabs-mode nil)
  	    (local-set-key "\C-c\C-c" 'comment-region)))
-(add-hook 'rjsx-mode-hook
-          (lambda ()
-	    (my-setup-tide-mode)))
-(add-hook 'rjsx-mode-hook #'add-node-modules-path)
-(add-hook 'rjsx-mode-hook #'flycheck-mode)
+
+(defun my-rjsx-mode-hook ()
+  (flycheck-mode)
+  (add-node-modules-path)
+  (my-setup-tide-mode))
+(add-hook 'rjsx-mode-hook #'my-rjsx-mode-hook)
 
 ;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
 (defun js-jsx-indent-line-align-closing-bracket ()
@@ -512,9 +516,12 @@
 (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 ;; CSS
-(add-hook 'css-mode-hook #'lsp)
-(add-hook 'css-mode-hook #'add-node-modules-path)
-(add-hook 'css-mode-hook #'flycheck-mode)
+(defun my-css-mode-hook ()
+  (flycheck-mode)
+  (add-node-modules-path)
+  (lsp)
+  )
+(add-hook 'css-mode-hook #'my-css-mode-hook)
 
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
