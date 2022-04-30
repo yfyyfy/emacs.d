@@ -366,7 +366,23 @@
 
 ;; LSP
 (with-eval-after-load 'lsp-mode
-  (setq lsp-diagnostic-package :none))
+  (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (setq lsp-ui-sideline-enable nil)
+  (require 'my-lsp-register-remote-client))
+
+(with-eval-after-load 'lsp-ui-doc
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-header t)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-height 30)
+  (if (not (display-graphic-p))
+      (setq lsp-ui-doc-max-width 80))
+  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-use-childframe t)
+  (if (featurep 'xwidget-internal)
+      (setq lsp-ui-doc-use-webkit t)))
 
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
@@ -435,6 +451,9 @@
 (with-eval-after-load 'jedi-core
   (setq jedi:complete-on-dot t))
 
+;; Switch for JavaScript-related file.
+(setq my-js-use-lsp t)
+
 ;; Tide
 (defun my-setup-tide-mode ()
   (tide-setup)
@@ -474,7 +493,9 @@
   (when
       (and buffer-file-name
 	   (string-match "^[jt]sx?$" (file-name-extension buffer-file-name)))
-    (my-setup-tide-mode)
+    (if my-js-use-lsp
+	(lsp)
+      (my-setup-tide-mode))
     (setq web-mode-enable-auto-quoting nil)
     (local-set-key "\C-c\C-c" 'comment-region)
     ;; (setq flycheck-disabled-checkers '(tsx-tide jsx-tide))
@@ -487,12 +508,19 @@
 
 ;; TypeScript
 (defun my-typescript-mode-hook ()
-  (my-setup-tide-mode)
+  (if my-js-use-lsp
+      (lsp)
+    (my-setup-tide-mode))
   (setq indent-tabs-mode nil))
 (add-hook 'typescript-mode-hook #'my-typescript-mode-hook)
 ;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
+(with-eval-after-load 'js
+  (if my-js-use-lsp
+      ;; Enable lsp-ui-peek-find-definitions for js-derived modes.
+      (define-key js-mode-map (kbd "M-.") nil)))
+
 (with-eval-after-load 'js2-mode
   (setq js2-strict-trailing-comma-warning nil))
 (add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
@@ -505,7 +533,10 @@
 (defun my-rjsx-mode-hook ()
   (flycheck-mode)
   (add-node-modules-path)
-  (my-setup-tide-mode))
+  (if my-js-use-lsp
+      (lsp)
+    (my-setup-tide-mode))
+  )
 (add-hook 'rjsx-mode-hook #'my-rjsx-mode-hook)
 
 ;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
@@ -816,6 +847,7 @@
 ;; Personal utils
 (autoload 'my-diff-buffers "my-diff" nil t)
 (autoload 'my-grep "my-grep" nil t)
+(autoload 'my-lsp-ui-doc-toggle "my-lsp" nil t)
 (autoload 'my-query-replace-multi "my-replace" nil t)
 
 ;; Experimental
