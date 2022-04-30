@@ -435,6 +435,15 @@
 (with-eval-after-load 'jedi-core
   (setq jedi:complete-on-dot t))
 
+;; Tide
+(defun my-setup-tide-mode ()
+  (tide-setup)
+  (flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode t)
+  (tide-hl-identifier-mode)
+  (company-mode-on))
+
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -477,13 +486,6 @@
 	  ("ejs" . "\\.ejs\\'"))))
 
 ;; TypeScript
-(defun my-setup-tide-mode ()
-  (tide-setup)
-  (flycheck-mode t)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode t)
-  (tide-hl-identifier-mode)
-  (company-mode-on))
 (add-hook 'typescript-mode-hook
           (lambda ()
 	    (my-setup-tide-mode)
