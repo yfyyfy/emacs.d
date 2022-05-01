@@ -851,6 +851,8 @@
 (autoload 'my-grep "my-grep" nil t)
 (autoload 'my-lsp-ui-doc-toggle "my-lsp" nil t)
 (autoload 'my-query-replace-multi "my-replace" nil t)
+(autoload 'my-docker-tramp-recentf-filename-handler "my-docker-tramp" nil t)
+(autoload 'my-docker-tramp-find-corresponding-file "my-docker-tramp" nil t)
 
 ;; Experimental
 
