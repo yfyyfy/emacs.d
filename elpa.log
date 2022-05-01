@@ -16,7 +16,7 @@
 | docker-compose-mode     | melpa-stable |        1.1.0 | 20200830.1336 |        |        2018.03.11 |                                                           |   2021.11.06 |
 | dockerfile-mode         | melpa-stable |          1.5 | 20211016.1545 |        |        2021.08.29 |                                                           |   2021.11.06 |
 | docker                  | melpa-stable |        1.4.0 |  20211105.138 |        |        2011.09.14 |                                                           |   2021.11.06 |
-| docker-tramp            | melpa-stable |          0.1 |  20210729.508 |        |        2016.10.21 |                                                           |   2021.11.06 |
+| docker-tramp            | melpa-stable |        0.1.1 |  20220219.420 |        |        2022.02.19 |                                                           |   2022.05.01 |
 | elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        |        2021.04.14 |                                                           |   2021.05.15 |
 | flycheck                | melpa        |           31 |  20210321.852 |        |        2017.10.07 |                                                           |   2021.05.15 |
 | git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        |        2016.05.21 |                                                           |   2021.05.15 |
@@ -96,3 +96,5 @@
 
 8. Update dash from 2.18.1 to 2.19.1
    Also update other lsp-related packages (markdown-mode and spinner)
+
+9. Update docker-tramp from 0.1 to 0.1.1
