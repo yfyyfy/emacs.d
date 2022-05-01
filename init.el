@@ -631,6 +631,7 @@
 			  ((format "^%s:/Users/\\([^/]*\\)/Downloads/" ,downloads-drive) . "/home/\\1/Downloads/"))))
 	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
 (setq recentf-filename-handlers (append recentf-filename-handlers my-recentf-cygwin-filename-handlers))
+(add-to-list 'recentf-filename-handlers 'my-docker-tramp-recentf-filename-handler t)
 
 ;; Helm
 (defun my-helm-mini ()
