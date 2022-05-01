@@ -7,3 +7,6 @@
 [submodule "lisp/add-node-modules-path"]
 	path = lisp/add-node-modules-path
 	url = ../add-node-modules-path.git
+[submodule "lisp/docker-tramp-ext"]
+	path = lisp/docker-tramp-ext
+	url = ../docker-tramp-ext.git
