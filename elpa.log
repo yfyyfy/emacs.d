@@ -10,7 +10,7 @@
 | company                 | melpa-stable |       0.9.13 | 20210416.2209 | 0.9.13 |        2020.07.26 |                                                           |   2021.05.15 |
 | csv-mode                | gnu          |              |               |   1.15 |        2021.02.23 |                                                           |   2021.05.15 |
 | cygwin-mount            | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
-| dash                    | melpa-stable |       2.18.1 | 20210330.1544 | 2.18.1 |        2021.02.28 |                                                           |   2021.05.15 |
+| dash                    | melpa-stable |       2.19.1 | 20220417.2250 | 2.19.1 |        2021.08.26 |                                                           |   2022.05.01 |
 | ddskk                   | melpa        |              | 20210112.2013 |        |                   |                                                           |   2021.05.15 |
 | diff-hl                 | melpa-stable |        1.8.8 |  20210410.130 |  1.8.8 |        2020.12.20 |                                                           |   2021.05.15 |
 | docker-compose-mode     | melpa-stable |        1.1.0 | 20200830.1336 |        |        2018.03.11 |                                                           |   2021.11.06 |
@@ -93,3 +93,6 @@
 6. Install ob-async
 
 7. Install docker-tramp, docker, dockerfile-mode and docker-compose-mode
+
+8. Update dash from 2.18.1 to 2.19.1
+   Also update other lsp-related packages (markdown-mode and spinner)
