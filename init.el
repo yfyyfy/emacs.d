@@ -590,6 +590,7 @@
 ;; Disable automatic rearrangement of the agenda file set.
 (add-hook 'org-mode-hook
 	  '(lambda ()
+	     (setq indent-tabs-mode nil)
 	     (org-defkey org-mode-map "\C-c[" 'undefined)
 	     (org-defkey org-mode-map "\C-c]" 'undefined)))
 
