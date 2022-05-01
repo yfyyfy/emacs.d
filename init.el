@@ -6,11 +6,6 @@
 (when load-file-name
   (setq user-emacs-directory (file-name-directory load-file-name)))
 
-(let ((default-directory (locate-user-emacs-file "lisp")))
-  (add-to-list 'load-path default-directory)
-  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-      (normal-top-level-add-subdirs-to-load-path)))
-
 (add-to-list 'Info-default-directory-list (locate-user-emacs-file "info"))
 (add-to-list 'Info-default-directory-list (expand-file-name "~/local/info"))
 
@@ -20,6 +15,11 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+
+(let ((default-directory (locate-user-emacs-file "lisp")))
+  (add-to-list 'load-path default-directory)
+  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+      (normal-top-level-add-subdirs-to-load-path)))
 
 (autoload 'my-elpamr-create-mirror-for-installed "my-elpa-mirror" nil t)
 (autoload 'my-elpamr-restore-from-mirror "my-elpa-mirror" nil t)
