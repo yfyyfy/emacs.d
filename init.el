@@ -371,6 +371,8 @@
   (setq lsp-ui-sideline-enable nil)
   (require 'my-lsp-register-remote-client))
 
+(setq lsp-keymap-prefix "C-c l")
+
 (with-eval-after-load 'lsp-ui-doc
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-doc-header t)
