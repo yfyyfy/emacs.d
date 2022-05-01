@@ -284,6 +284,13 @@
       (diff-hl-margin-mode))))
 (add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(defun diff-hl-dired-status-files-filter-args (args) ; (backend dir files update-function)
+  (let ((backend (nth 0 args))
+	(dir (nth 1 args))
+	(files (nth 2 args))
+	(update-function (nth 3 args)))
+    (list backend dir (if (equal backend 'SVN) nil files) update-function)))
+(advice-add 'diff-hl-dired-status-files :filter-args #'diff-hl-dired-status-files-filter-args)
 
 (defun my-git-gutter-mode-hook ()
   (when git-gutter-mode
