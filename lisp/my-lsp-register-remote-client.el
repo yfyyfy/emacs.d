@@ -1,3 +1,5 @@
+(require 'my-lsp)
+
 (lsp-register-client
  (make-lsp-client :new-connection (lsp-tramp-connection (list "typescript-language-server" "--stdio"))
 		  :remote? t
@@ -22,8 +24,20 @@
 						   error-callback)
 					 error-callback))))
 
+(defun my-lsp-tramp-local-command-for-eslint ()
+  (let* ((project-root (f-traverse-upwards #'(lambda (path) (f-exists? (f-join path "node_modules")))))
+	 (install-path (f-join project-root ".cache-lsp/eslint-patch/unzipped")))
+    (unless (f-exists? install-path)
+      (let ((host-install-path lsp-eslint-unzipped-path))
+	(if (f-exists? host-install-path)
+	    (copy-directory host-install-path install-path t t t)
+	  (message "Host lsp-eslint server does not exist. Could not copy from it."))))
+    (list "node"
+	  (file-local-name (f-join install-path "extension/server/out/eslintServer.js"))
+	  "--stdio")))
+
 (lsp-register-client
- (make-lsp-client :new-connection (lsp-tramp-connection (list "node" "/workspace/.cache-lsp/eslint-patch/unzipped/extension/server/out/eslintServer.js" "--stdio"))
+ (make-lsp-client :new-connection (lsp-tramp-connection #'my-lsp-tramp-local-command-for-eslint)
 		  :remote? t
 		  :server-id 'eslint-remote
 		  ;; Copied from lsp-eslint.el, commenting out server-id. download-server-fn may not work on remote.
