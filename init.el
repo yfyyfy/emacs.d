@@ -680,12 +680,12 @@
   (let (current-prefix-arg
 	(helm-swoop-pre-input-function 'ignore))
     (call-interactively
-     (case use-helm-swoop
-       (1 'isearch-forward)
+     (cond
+       ((eq use-helm-swoop 1) 'isearch-forward)
        ;; C-u C-s -> helm-occur/swoop depending on buffe-size.
-       (4 (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
+       ((eq use-helm-swoop 4) (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
        ;; C-u C-u C-s -> helm-swoop w/o migemo.
-       (16 'helm-swoop-nomigemo)))))
+       ((eq use-helm-swoop 16) 'helm-swoop-nomigemo)))))
 (global-set-key (kbd "C-s") 'isearch-forward-or-helm-swoop-or-helm-occur)
 
 ;; Ediff
