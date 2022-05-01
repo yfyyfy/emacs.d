@@ -618,7 +618,8 @@
 (require 'recentf-ext)
 (setq recentf-exclude '(tramp-tramp-file-p))
 (setq recentf-max-saved-items nil)
-(setq recentf-filename-handlers
+
+(setq my-recentf-cygwin-filename-handlers
       (let* ((cygwin-drive "c")
 	     (desktop-drive "d")
 	     (documents-drive "d")
@@ -630,6 +631,7 @@
 			  ((format "^%s:/Users/\\([^/]*\\)/Documents/" ,documents-drive) . "/home/\\1/Documents/")
 			  ((format "^%s:/Users/\\([^/]*\\)/Downloads/" ,downloads-drive) . "/home/\\1/Downloads/"))))
 	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
+(setq recentf-filename-handlers (append recentf-filename-handlers my-recentf-cygwin-filename-handlers))
 
 ;; Helm
 (defun my-helm-mini ()
