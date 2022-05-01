@@ -251,6 +251,7 @@
 ;; (require 'git-gutter-fringe)
 (setq git-gutter:handled-backends '(git svn))
 (defun my-git-gutter-nearest-backends (backends)
+  (require 'cl)
   (let* ((lengths
 	  (mapcar
 	   #'(lambda (elt)
