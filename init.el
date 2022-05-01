@@ -847,6 +847,8 @@
                       :foreground "red"))
 
 ;; Personal utils
+(autoload 'docker-tramp-ext-recentf-filename-handler "docker-tramp-ext" nil t)
+(autoload 'docker-tramp-ext-find-corresponding-file "docker-tramp-ext" nil t)
 (autoload 'my-diff-buffers "my-diff" nil t)
 (autoload 'my-grep "my-grep" nil t)
 (autoload 'my-lsp-ui-doc-toggle "my-lsp" nil t)
