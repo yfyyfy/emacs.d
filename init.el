@@ -251,7 +251,7 @@
 ;; (require 'git-gutter-fringe)
 (setq git-gutter:handled-backends '(git svn))
 (defun my-git-gutter-nearest-backends (backends)
-  (require 'cl)
+  (require 'cl-lib)
   (let* ((lengths
 	  (mapcar
 	   #'(lambda (elt)
@@ -267,7 +267,7 @@
 	  (apply 'max lengths))
 	 (pos
 	  (if (>= maxlen 0)
-	      (position maxlen lengths)
+	      (cl-position maxlen lengths)
 	    -1)))
     (if (>= pos 0)
 	(nth pos backends)
