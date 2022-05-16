@@ -594,10 +594,27 @@
 	     (org-defkey org-mode-map "\C-c[" 'undefined)
 	     (org-defkey org-mode-map "\C-c]" 'undefined)))
 
+(unless (version<= (org-version) "9.2")
+    (add-to-list 'org-modules 'org-tempo t))
 (with-eval-after-load 'org
+  (require 'ob-shell)
+  ;; (setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
+  (setq org-babel-min-lines-for-block-output 0)
   (setq org-babel-python-command "python3")
   (add-to-list 'org-babel-load-languages '(shell . t))
-  (add-to-list 'org-babel-load-languages '(python . t)))
+  (add-to-list 'org-babel-load-languages '(python . t))
+  (let ((alist '(("s"  . "src")
+		 ("ss"  . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\"")
+		 ("ssa" . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\" :async")
+		 ("ssd" . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\" :wrap src diff")
+		 ("ssn" . "src shell -n :eval never")
+		 ("sp"  . "src python -n :exports both :results output")
+		 ("spa" . "src python -n :exports both :results output :async")
+		 ("spn" . "src python -n :eval never"))))
+    (mapc #'(lambda (cell) (add-to-list 'org-structure-template-alist cell))
+	  (if (version<= (org-version) "9.2")
+	      (mapcar #'(lambda (cell) (list (car cell) (format "#+begin_%s\n?\n#+end_src" (cdr cell)))) alist)
+	    alist))))
 
 ;; automatically change to DONE when all children are done
 (defun org-summary-todo (n-done n-not-done)
