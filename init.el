@@ -600,8 +600,10 @@
   ;; (setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
   (setq org-babel-min-lines-for-block-output 0)
   (setq org-babel-python-command "python3")
-  (add-to-list 'org-babel-load-languages '(shell . t))
-  (add-to-list 'org-babel-load-languages '(python . t))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (python . t)))
   (let ((alist '(("s"  . "src")
 		 ("ss"  . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\"")
 		 ("ssa" . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\" :async")
