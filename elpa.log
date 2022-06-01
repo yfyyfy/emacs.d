@@ -18,6 +18,7 @@
 | docker                  | melpa-stable |        1.4.0 |  20211105.138 |        |        2011.09.14 |                                                           |   2021.11.06 |
 | docker-tramp            | melpa-stable |        0.1.1 |  20220219.420 |        |        2022.02.19 |                                                           |   2022.05.01 |
 | elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        |        2021.04.14 |                                                           |   2021.05.15 |
+| emaps                   | melpa-stable |        0.2.0 | 20200508.1759 |        |        2020.05.09 |                                                           |   2022.05.31 |
 | flycheck                | melpa        |           31 |  20210321.852 |        |        2017.10.07 |                                                           |   2021.05.15 |
 | git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        |        2016.05.21 |                                                           |   2021.05.15 |
 | git-gutter              | melpa-stable |         0.91 | 20210127.1100 |        |        2020.10.26 |                                                           |   2021.05.15 |
@@ -43,6 +44,7 @@
 | w3                      | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
 | web-mode                | melpa-stable |           17 | 20210131.1758 |        |        2020.05.xx |                                                           |   2021.05.15 |
 | wgrep                   | melpa-stable |        2.3.2 | 20210322.2207 |        |        2020.02.03 |                                                           |   2021.05.15 |
+| which-key               | melpa-stable |        3.6.0 | 20220518.1941 |  3.6.0 |        2022.02.15 |                                                           |   2022.05.31 |
 | yaml-mode               | melpa-stable |       0.0.15 | 20201109.1026 |        |        2020.11.09 |                                                           |   2021.05.15 |
 
 * Installation
@@ -101,3 +103,5 @@
 9. Update docker-tramp from 0.1 to 0.1.1
 
 10. Install lsp-ui
+
+11. Install emaps and which-key
