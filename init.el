@@ -212,6 +212,19 @@
 ;; emaps
 (define-key help-map "K" 'emaps-describe-keymap-bindings)
 
+;; avy
+(defun avy-isearch-maybe-migemo ()
+  (interactive)
+  (if migemo-isearch-enable-p
+      (avy-migemo-isearch)
+    (avy-isearch)))
+(global-set-key [remap goto-line] #'avy-goto-line)
+(global-set-key "\C-cs" #'avy-migemo-goto-char-timer)
+(eval-after-load "isearch"
+  '(progn
+     (define-key isearch-mode-map "\C-cs" 'avy-isearch-maybe-migemo)
+     (define-key isearch-mode-map "\C-c\C-s" 'avy-isearch-maybe-migemo)))
+
 ;; Dired
 (when (eq system-type 'windows-nt)
   ;; Use ls for dired.
