@@ -206,6 +206,12 @@
 	  (setq migemo-isearch-enable-p nil)))))
 (advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
+;; which-key
+(which-key-mode 1)
+
+;; emaps
+(define-key help-map "K" 'emaps-describe-keymap-bindings)
+
 ;; Dired
 (when (eq system-type 'windows-nt)
   ;; Use ls for dired.
