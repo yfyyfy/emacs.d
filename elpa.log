@@ -3,6 +3,8 @@
 * Packages explicitly installed
 | Package                 | installed    | melpa-stable |         melpa |    gnu | melpa-stable-date |                                                           | info updated |
 |-------------------------+--------------+--------------+---------------+--------+-------------------+-----------------------------------------------------------+--------------|
+| avy                     | melpa        |        0.5.0 |  20220102.805 |  0.5.0 |        2019.05.11 |                                                           |   2022.05.31 |
+| avy-migemo              | melpa        |        0.3.2 | 20180716.1455 |        |        2016.03.21 |                                                           |   2022.05.31 |
 | add-node-modules-path   | melpa        |        1.2.0 |  20210305.312 |        |        2017.09.15 |                                                           |   2021.05.15 |
 | cmake-mode              | melpa-stable |       3.20.2 | 20210104.1831 |        |                   |                                                           |   2021.05.15 |
 | color-moccur            | melpa        |              |   20141223.35 |        |                   |                                                           |   2021.05.15 |
@@ -105,3 +107,5 @@
 10. Install lsp-ui
 
 11. Install emaps and which-key
+
+12. Install avy and avy-migemo
