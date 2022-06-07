@@ -225,6 +225,9 @@
      (define-key isearch-mode-map "\C-cs" 'avy-isearch-maybe-migemo)
      (define-key isearch-mode-map "\C-c\C-s" 'avy-isearch-maybe-migemo)))
 
+;; link-hint
+(global-set-key "\C-clo" #'link-hint-open-link)
+(global-set-key "\C-clc" #'link-hint-copy-link)
 ;; Dired
 (when (eq system-type 'windows-nt)
   ;; Use ls for dired.
