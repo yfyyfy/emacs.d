@@ -580,6 +580,7 @@
 (defun my-org-load-hook ()
   (setq org-enforce-todo-dependencies t)
   (setq org-startup-truncated nil)
+  (setq org-edit-src-content-indentation 0)
   (setq org-return-follows-link t)
 ;  (setq org-export-html-postamble nil)
   (setq org-directory "~/org.d")
