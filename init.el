@@ -280,7 +280,8 @@
 (defun my-dired-mode-hook ()
   (diff-hl-dired-mode)
   (unless (display-graphic-p)
-    (diff-hl-margin-mode)))
+    (unless (and (boundp 'diff-hl-margin-minor-mode) diff-hl-margin-minor-mode)
+      (diff-hl-margin-mode))))
 (add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
