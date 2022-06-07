@@ -30,6 +30,7 @@
 | helm-swoop              | melpa-stable |        3.0.0 |  20200814.448 |        |        2020.08.06 |                                                           |   2021.05.15 |
 | htmlize                 | melpa-stable |         1.55 |  20200816.746 |        |        2019.11.11 |                                                           |   2021.05.15 |
 | jedi                    | melpa-stable |        0.2.8 | 20191011.1750 |        |        2019.10.12 |                                                           |   2021.05.15 |
+| link-hint               | melpa        |              |   20220414.56 |        |                   |                                                           |   2022.06.05 |
 | lsp-mode                | melpa-stable |        7.0.1 | 20210418.2137 |        |        2020.08.07 |                                                           |   2021.05.15 |
 | lsp-ui                  | melpa-stable |        8.0.0 | 20220425.1046 |        |        2021.09.05 |                                                           |   2022.05.01 |
 | magit-gitflow           | melpa-stable |        2.2.3 |               |        |        2017.09.29 | 20170929.824 == 2.2.3                                     |   2021.05.15 |
@@ -109,3 +110,5 @@
 11. Install emaps and which-key
 
 12. Install avy and avy-migemo
+
+13. Install link-hint
