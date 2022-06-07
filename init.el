@@ -598,6 +598,7 @@
     (add-to-list 'org-modules 'org-tempo t))
 (with-eval-after-load 'org
   (require 'ob-shell)
+  (require 'ob-async)
   ;; (setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
   (setq org-babel-min-lines-for-block-output 0)
   (setq org-babel-python-command "python3")
