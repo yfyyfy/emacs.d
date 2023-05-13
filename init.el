@@ -165,6 +165,19 @@
        (apply f args)))
 (advice-add 'save-buffers-kill-terminal :around #'save-buffers-kill-terminal-around)
 
+;; Indent
+(when (boundp 'indent-rigidly-map)
+  ;; Indent to tab stop.
+  (define-key indent-rigidly-map (kbd "f") 'indent-rigidly-right-to-tab-stop)
+  (define-key indent-rigidly-map (kbd "b") 'indent-rigidly-left-to-tab-stop)
+
+  ;; Indent by single char.
+  (define-key indent-rigidly-map (kbd "F") 'indent-rigidly-right)
+  (define-key indent-rigidly-map (kbd "B") 'indent-rigidly-left)
+
+  ;; Frequently used identation.
+  (define-key indent-rigidly-map (kbd "C-x TAB") 'indent-rigidly-right-to-tab-stop))
+
 ;; Workaround for term-mode
 (when (eq system-type 'windows-nt)
   (require 'fakecygpty)
@@ -479,6 +492,7 @@
 ;; (add-hook 'python-mode-hook 'jedi:setup)
 (defun my-python-mode-hook ()
   (flycheck-mode)
+  (setq tab-width python-indent-offset)
   (my-python-venv-add-venv-to-exec-path)
   (lsp))
 (add-hook 'python-mode-hook #'my-python-mode-hook)
