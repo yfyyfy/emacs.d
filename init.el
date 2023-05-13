@@ -158,6 +158,13 @@
 (global-unset-key [next])
 (global-unset-key [insert])
 
+;; Kill emacs/terminal
+(defun save-buffers-kill-terminal-around (f &rest args)
+  (if (or (not (frame-parameter nil 'client))
+	  (y-or-n-p "Exit terminal? "))
+       (apply f args)))
+(advice-add 'save-buffers-kill-terminal :around #'save-buffers-kill-terminal-around)
+
 ;; Workaround for term-mode
 (when (eq system-type 'windows-nt)
   (require 'fakecygpty)
