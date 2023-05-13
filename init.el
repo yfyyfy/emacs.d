@@ -792,19 +792,30 @@
   (let ((available-p-list
 	 (mapcar #'(lambda (font-family) (if (member font-family (font-family-list)) t nil)) font-families)))
     (eval `(and ,@available-p-list))))
-(cond ((my-font-family-available "Ricty Diminished")
-       (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
-       (set-fontset-font nil 'japanese-jisx0208 (cons "Ricty Diminished" "iso10646-1"))
-       (set-fontset-font nil 'japanese-jisx0212 (cons "Ricty Diminished" "iso10646-1"))
-       (set-fontset-font nil 'katakana-jisx0201 (cons "Ricty Diminished" "iso10646-1")))
-      ((my-font-family-available "Consolas" (string-as-multibyte "\203\201\203C\203\212\203I"))
-       (set-face-attribute 'default nil :family "Consolas" :height 110)
-       (set-fontset-font t 'japanese-jisx0208 (font-spec :family "\203\201\203C\203\212\203I")) ; メイリオ
-       (add-to-list 'face-font-rescale-alist '(".*\203\201\203C\203\212\203I.*" . 1.1)))
-      ((my-font-family-available "Consolas" "KanjiStrokeOrders")
-       (set-face-attribute 'default nil :family "Consolas" :height 110)
-       (set-fontset-font t 'japanese-jisx0208 (font-spec :family "KanjiStrokeOrders"))
-       (add-to-list 'face-font-rescale-alist '(".*KanjiStrokeOrders.*" . 1.2))))
+
+;; https://github.com/kaushalmodi/.emacs.d/blob/master/init.el
+(defun init-font ()
+  "Initialize font, then remove self from `focus-in-hook'."
+  (let ((initialized nil))
+    (cond ((my-font-family-available "Ricty Diminished")
+	   (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
+	   (set-fontset-font nil 'japanese-jisx0208 (cons "Ricty Diminished" "iso10646-1"))
+	   (set-fontset-font nil 'japanese-jisx0212 (cons "Ricty Diminished" "iso10646-1"))
+	   (set-fontset-font nil 'katakana-jisx0201 (cons "Ricty Diminished" "iso10646-1"))
+	   (setq initialized t))
+	  ((my-font-family-available "Consolas" (string-as-multibyte "\203\201\203C\203\212\203I"))
+	   (set-face-attribute 'default nil :family "Consolas" :height 110)
+	   (set-fontset-font t 'japanese-jisx0208 (font-spec :family "\203\201\203C\203\212\203I")) ; メイリオ
+	   (add-to-list 'face-font-rescale-alist '(".*\203\201\203C\203\212\203I.*" . 1.1))
+	   (setq initialized t))
+	  ((my-font-family-available "Consolas" "KanjiStrokeOrders")
+	   (set-face-attribute 'default nil :family "Consolas" :height 110)
+	   (set-fontset-font t 'japanese-jisx0208 (font-spec :family "KanjiStrokeOrders"))
+	   (add-to-list 'face-font-rescale-alist '(".*KanjiStrokeOrders.*" . 1.2))
+	   (setq initialized t)))
+    (when initialized
+      (remove-hook 'focus-in-hook #'init-font))))
+(add-hook 'focus-in-hook #'init-font)
 
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
