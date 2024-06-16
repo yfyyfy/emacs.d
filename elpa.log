@@ -43,6 +43,7 @@
 | py-isort                | melpa-stable |       2016.1 | 20160925.1018 |        |        2016.09.25 |                                                           |   2021.05.15 |
 | recentf-ext             | melpa        |              |   20170926.35 |        |                   |                                                           |   2021.05.15 |
 | rjsx-mode               | melpa-stable |        0.5.0 | 20200120.1446 |        |        2020.02.25 |                                                           |   2021.05.15 |
+| rust-mode               | melpa-stable |        1.0.5 |   20230112.27 |  1.0.5 |        2022.06.26 |                                                           |   2023.05.14 |
 | tide                    | melpa-stable |        4.2.3 | 20210412.1650 |        |        2021.03.24 |                                                           |   2021.05.15 |
 | typescript-mode         | melpa-stable |          0.3 | 20201002.1109 |        |        2018.05.14 |                                                           |   2021.05.15 |
 | w3                      | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
@@ -117,3 +118,5 @@
 14. Install link-hint
 
 15. Install ess
+
+16. Install rust-mode
