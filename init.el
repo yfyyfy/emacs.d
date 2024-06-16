@@ -217,14 +217,14 @@
 
 (autoload 'migemo-isearch-toggle-migemo "migemo" "Toggle migemo mode in isearch." t)
 (autoload 'migemo-toggle-isearch-enable "migemo" nil t)
-(defun helm-migemo-mode-around (f &rest args)
-  (let ((migemo-loaded-before (featurep 'migemo))
-	(migemo-loaded (require 'migemo nil 'noerror)))
-    (prog1
-	(apply f args)
-      (if (and migemo-loaded (not migemo-loaded-before))
-	  (setq migemo-isearch-enable-p nil)))))
-(advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
+;; (defun helm-migemo-mode-around (f &rest args)
+;;   (let ((migemo-loaded-before (featurep 'migemo))
+;; 	(migemo-loaded (require 'migemo nil 'noerror)))
+;;     (prog1
+;; 	(apply f args)
+;;       (if (and migemo-loaded (not migemo-loaded-before))
+;; 	  (setq migemo-isearch-enable-p nil)))))
+;; (advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
 ;; which-key
 (which-key-mode 1)
@@ -714,80 +714,84 @@
 (setq recentf-filename-handlers (append recentf-filename-handlers my-recentf-cygwin-filename-handlers))
 (add-to-list 'recentf-filename-handlers 'docker-tramp-ext-recentf-filename-handler t)
 
+;; (global-set-key [?\C-;] 'consult-buffer)
+(global-set-key [67108923] 'consult-buffer)
+(fido-vertical-mode t)
+
 ;; Helm
-(defun my-helm-mini ()
-  "helm-mini + helm-find."
-  (interactive)
-  (require 'helm-for-files) ;; For helm-source-recentf < helm-mini-default-sources < helm-source-recentf
-  (require 'helm-find) ;; For helm-source-findutils
-  (unless helm-source-buffers-list
-    (setq helm-source-buffers-list
-	  (helm-make-source "Buffers" 'helm-source-buffers)))
-  (helm :sources (append helm-mini-default-sources '(helm-source-findutils))
-	:buffer "*helm mini*"
-	:ff-transformer-show-only-basename nil
-	:truncate-lines helm-buffers-truncate-lines))
-;; (global-set-key [?\C-;] 'my-helm-mini)
-(global-set-key [67108923] 'my-helm-mini)
-(defun my-helm-do-grep (dir)
-  (interactive (list (if current-prefix-arg
-			 (read-directory-name "Directory: " default-directory nil t)
-		       default-directory)))
-  (helm-do-grep-1 (list dir) t))
-(add-hook 'helm-after-initialize-hook
-	  '(lambda ()
-             (if (executable-find "cmigemo")
-		 (helm-migemo-mode 1))))
-(my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
-
-;; helm-gtags
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-;; (setq helm-gtags-suggested-key-mapping t) ; Use custom-set-variables for setting this value is recommended.
-(with-eval-after-load 'helm-gtags
-  (define-key helm-gtags-mode-map "\C-cf" 'helm-gtags-parse-file)
-  (define-key helm-gtags-mode-map "\C-cg" 'helm-gtags-find-pattern)
-  (define-key helm-gtags-mode-map "\C-cs" 'helm-gtags-find-symbol)
-  (define-key helm-gtags-mode-map "\C-cr" 'helm-gtags-find-rtag)
-  (define-key helm-gtags-mode-map "\C-cd" 'helm-gtags-find-tag)
-  (define-key helm-gtags-mode-map "\C-]" 'helm-gtags-find-tag-from-here)
-  (define-key helm-gtags-mode-map (kbd "C-<") 'helm-gtags-previous-history)
-  (define-key helm-gtags-mode-map (kbd "C->") 'helm-gtags-next-history))
-
-(when (eq system-type 'windows-nt)
-  (defun helm-gtags--real-file-name-around (f &rest args)
-    (let ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
-	  (name (apply f args)))
-      (cygwin-mount-substitute-longest-mount-name name)))
-  (advice-add 'helm-gtags--real-file-name :around #'helm-gtags--real-file-name-around)
-
-  (defun helm-gtags--set-parsed-file-around (f &rest args)
-    (let ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
-	  (name (apply f args)))
-      (setq helm-gtags--parsed-file (cygwin-mount-substitute-longest-mount-name name))))
-  (advice-add 'helm-gtags--set-parsed-file :around #'helm-gtags--set-parsed-file-around))
-
-;; isearch/helm-swoop/helm-occur integration.
-;; http://emacs.rubikitch.com/helm-swoop-helm-occur/
-;;; migemoなしでhelm-swoop
-(cl-defun helm-swoop-nomigemo (&key $query ($multiline current-prefix-arg))
-  (interactive)
-  (let (helm-migemo-mode)
-    (helm-swoop :$query $query :$multiline $multiline)))
-
-(defun isearch-forward-or-helm-swoop-or-helm-occur (use-helm-swoop)
-  (interactive "p")
-  (let (current-prefix-arg
-	(helm-swoop-pre-input-function 'ignore))
-    (call-interactively
-     (cond
-       ((eq use-helm-swoop 1) 'isearch-forward)
-       ;; C-u C-s -> helm-occur/swoop depending on buffe-size.
-       ((eq use-helm-swoop 4) (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
-       ;; C-u C-u C-s -> helm-swoop w/o migemo.
-       ((eq use-helm-swoop 16) 'helm-swoop-nomigemo)))))
-(global-set-key (kbd "C-s") 'isearch-forward-or-helm-swoop-or-helm-occur)
+;; (defun my-helm-mini ()
+;;   "helm-mini + helm-find."
+;;   (interactive)
+;;   (require 'helm-for-files) ;; For helm-source-recentf < helm-mini-default-sources < helm-source-recentf
+;;   (require 'helm-find) ;; For helm-source-findutils
+;;   (unless helm-source-buffers-list
+;;     (setq helm-source-buffers-list
+;; 	  (helm-make-source "Buffers" 'helm-source-buffers)))
+;;   (helm :sources (append helm-mini-default-sources '(helm-source-findutils))
+;; 	:buffer "*helm mini*"
+;; 	:ff-transformer-show-only-basename nil
+;; 	:truncate-lines helm-buffers-truncate-lines))
+;; ;; (global-set-key [?\C-;] 'my-helm-mini)
+;; (global-set-key [67108923] 'my-helm-mini)
+;; (defun my-helm-do-grep (dir)
+;;   (interactive (list (if current-prefix-arg
+;; 			 (read-directory-name "Directory: " default-directory nil t)
+;; 		       default-directory)))
+;;   (helm-do-grep-1 (list dir) t))
+;; (add-hook 'helm-after-initialize-hook
+;; 	  '(lambda ()
+;;              (if (executable-find "cmigemo")
+;; 		 (helm-migemo-mode 1))))
+;; (my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
+;; 
+;; ;; helm-gtags
+;; (add-hook 'c-mode-hook 'helm-gtags-mode)
+;; (add-hook 'c++-mode-hook 'helm-gtags-mode)
+;; (add-hook 'asm-mode-hook 'helm-gtags-mode)
+;; ;; (setq helm-gtags-suggested-key-mapping t) ; Use custom-set-variables for setting this value is recommended.
+;; (with-eval-after-load 'helm-gtags
+;;   (define-key helm-gtags-mode-map "\C-cf" 'helm-gtags-parse-file)
+;;   (define-key helm-gtags-mode-map "\C-cg" 'helm-gtags-find-pattern)
+;;   (define-key helm-gtags-mode-map "\C-cs" 'helm-gtags-find-symbol)
+;;   (define-key helm-gtags-mode-map "\C-cr" 'helm-gtags-find-rtag)
+;;   (define-key helm-gtags-mode-map "\C-cd" 'helm-gtags-find-tag)
+;;   (define-key helm-gtags-mode-map "\C-]" 'helm-gtags-find-tag-from-here)
+;;   (define-key helm-gtags-mode-map (kbd "C-<") 'helm-gtags-previous-history)
+;;   (define-key helm-gtags-mode-map (kbd "C->") 'helm-gtags-next-history))
+;; 
+;; (when (eq system-type 'windows-nt)
+;;   (defun helm-gtags--real-file-name-around (f &rest args)
+;;     (let ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
+;; 	  (name (apply f args)))
+;;       (cygwin-mount-substitute-longest-mount-name name)))
+;;   (advice-add 'helm-gtags--real-file-name :around #'helm-gtags--real-file-name-around)
+;; 
+;;   (defun helm-gtags--set-parsed-file-around (f &rest args)
+;;     (let ((cygwin-mount-table--internal (my-transpose-cons-list cygwin-mount-table--internal))
+;; 	  (name (apply f args)))
+;;       (setq helm-gtags--parsed-file (cygwin-mount-substitute-longest-mount-name name))))
+;;   (advice-add 'helm-gtags--set-parsed-file :around #'helm-gtags--set-parsed-file-around))
+;; 
+;; ;; isearch/helm-swoop/helm-occur integration.
+;; ;; http://emacs.rubikitch.com/helm-swoop-helm-occur/
+;; ;;; migemoなしでhelm-swoop
+;; (cl-defun helm-swoop-nomigemo (&key $query ($multiline current-prefix-arg))
+;;   (interactive)
+;;   (let (helm-migemo-mode)
+;;     (helm-swoop :$query $query :$multiline $multiline)))
+;; 
+;; (defun isearch-forward-or-helm-swoop-or-helm-occur (use-helm-swoop)
+;;   (interactive "p")
+;;   (let (current-prefix-arg
+;; 	(helm-swoop-pre-input-function 'ignore))
+;;     (call-interactively
+;;      (cond
+;;        ((eq use-helm-swoop 1) 'isearch-forward)
+;;        ;; C-u C-s -> helm-occur/swoop depending on buffe-size.
+;;        ((eq use-helm-swoop 4) (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
+;;        ;; C-u C-u C-s -> helm-swoop w/o migemo.
+;;        ((eq use-helm-swoop 16) 'helm-swoop-nomigemo)))))
+;; (global-set-key (kbd "C-s") 'isearch-forward-or-helm-swoop-or-helm-occur)
 
 ;; Ediff
 ;; http://dev.ariel-networks.com/articles/emacs/part7/
