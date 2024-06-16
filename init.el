@@ -508,6 +508,10 @@
       (delete-char sgml-basic-offset))))
 (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
+;; CSS
+(add-hook 'css-mode-hook #'add-node-modules-path)
+(add-hook 'css-mode-hook #'flycheck-mode)
+
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
@@ -601,8 +605,9 @@
 		       default-directory)))
   (helm-do-grep-1 (list dir) t))
 (add-hook 'helm-after-initialize-hook
-  '(lambda ()
-     (helm-migemo-mode 1)))
+	  '(lambda ()
+             (if (executable-find "cmigemo")
+		 (helm-migemo-mode 1))))
 (my-el-get-load "helm-next-error") ;; Enable M-g M-p/M-g M-n for helm.
 
 ;; helm-gtags
