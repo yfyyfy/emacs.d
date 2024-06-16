@@ -21,6 +21,7 @@ for tarfile in *.tar
 do
 	tmpfile=`mktemp -d tmp.XXXXX`
 	tar xf $tarfile -C $tmpfile --warning=no-timestamp
+	chmod -R '=r,u+w,+X' $tmpfile/${tarfile%.tar}/
 	rm $tmpfile/${tarfile%.tar}/${tarfile%-*}-autoloads.el
 	tar cf $tarfile -C $tmpfile `ls $tmpfile` --mtime='1970-01-01 00:00:00Z' --warning=no-timestamp --owner=0 --group=0 --numeric-owner --sort=name
 	rm -rf $tmpfile

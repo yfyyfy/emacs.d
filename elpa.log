@@ -21,6 +21,7 @@
 | docker-tramp            | melpa-stable |        0.1.1 |  20220219.420 |        |        2022.02.19 |                                                           |   2022.05.01 |
 | elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        |        2021.04.14 |                                                           |   2021.05.15 |
 | emaps                   | melpa-stable |        0.2.0 | 20200508.1759 |        |        2020.05.09 |                                                           |   2022.05.31 |
+| ess                     | melpa        |      18.10.2 | 20230419.1527 |        |        2018.11.10 |                                                           |   2023.05.14 |
 | flycheck                | melpa        |           31 |  20210321.852 |        |        2017.10.07 |                                                           |   2021.05.15 |
 | git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        |        2016.05.21 |                                                           |   2021.05.15 |
 | git-gutter              | melpa-stable |         0.91 | 20210127.1100 |        |        2020.10.26 |                                                           |   2021.05.15 |
@@ -114,3 +115,5 @@
 13. Install avy and avy-migemo
 
 14. Install link-hint
+
+15. Install ess
