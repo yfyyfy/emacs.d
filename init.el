@@ -609,6 +609,14 @@
   )
 (add-hook 'css-mode-hook #'my-css-mode-hook)
 
+;; Rust
+(defun my-rust-mode-hook ()
+  (setq indent-tabs-mode nil)
+  (setq rust-format-on-save t)
+  (lsp)
+  )
+(add-hook 'rust-mode-hook #'my-rust-mode-hook)
+
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
