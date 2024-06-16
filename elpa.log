@@ -52,6 +52,8 @@
 | wgrep                   | melpa-stable |        2.3.2 | 20210322.2207 |        | ?      |        2020.02.03 |                                                           |   2021.05.15 |
 | which-key               | melpa-stable |        3.6.0 | 20220518.1941 |  3.6.0 | ?      |        2022.02.15 |                                                           |   2022.05.31 |
 | yaml-mode               | melpa-stable |       0.0.15 | 20201109.1026 |        | ?      |        2020.11.09 |                                                           |   2021.05.15 |
+| org-journal             | melpa-stable |        2.2.0 | 20240218.1645 |        | 2.2.0  |        2023.03.09 |                                                           |   2024.06.16 |
+| org-roam                | melpa-stable |        2.2.2 | 20240114.1941 |        |        |        2022.04.25 |                                                           |   2024.06.16 |
 
 * Installation
 1. Delete all packages except:
@@ -123,3 +125,5 @@
 16. Install rust-mode
 
 17. Install consult
+
+18. Install org-journal and org-roam
