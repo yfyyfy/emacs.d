@@ -10,6 +10,7 @@
 | color-moccur            | melpa        |              |   20141223.35 |        |                   |                                                           |   2021.05.15 |
 | company-irony           | melpa-stable |        1.1.0 | 20190124.2346 |        |        2017.09.06 |                                                           |   2021.05.15 |
 | company                 | melpa-stable |       0.9.13 | 20210416.2209 | 0.9.13 |        2020.07.26 |                                                           |   2021.05.15 |
+| consult                 | melpa-stable |          1.7 |  20240523.754 |    1.7 |        2024.05.23 |                                                           |   2024.06.16 |
 | csv-mode                | gnu          |              |               |   1.15 |        2021.02.23 |                                                           |   2021.05.15 |
 | cygwin-mount            | -            |              |               |        |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
 | dash                    | melpa-stable |       2.19.1 | 20220417.2250 | 2.19.1 |        2021.08.26 |                                                           |   2022.05.01 |
@@ -120,3 +121,5 @@
 15. Install ess
 
 16. Install rust-mode
+
+17. Install consult
