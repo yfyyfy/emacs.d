@@ -6,11 +6,6 @@
 (when load-file-name
   (setq user-emacs-directory (file-name-directory load-file-name)))
 
-(let ((default-directory (locate-user-emacs-file "lisp")))
-  (add-to-list 'load-path default-directory)
-  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-      (normal-top-level-add-subdirs-to-load-path)))
-
 (add-to-list 'Info-default-directory-list (locate-user-emacs-file "info"))
 (add-to-list 'Info-default-directory-list (expand-file-name "~/local/info"))
 
@@ -20,6 +15,11 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+
+(let ((default-directory (locate-user-emacs-file "lisp")))
+  (add-to-list 'load-path default-directory)
+  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+      (normal-top-level-add-subdirs-to-load-path)))
 
 (autoload 'my-elpamr-create-mirror-for-installed "my-elpa-mirror" nil t)
 (autoload 'my-elpamr-restore-from-mirror "my-elpa-mirror" nil t)
@@ -251,6 +251,7 @@
 ;; (require 'git-gutter-fringe)
 (setq git-gutter:handled-backends '(git svn))
 (defun my-git-gutter-nearest-backends (backends)
+  (require 'cl-lib)
   (let* ((lengths
 	  (mapcar
 	   #'(lambda (elt)
@@ -266,7 +267,7 @@
 	  (apply 'max lengths))
 	 (pos
 	  (if (>= maxlen 0)
-	      (position maxlen lengths)
+	      (cl-position maxlen lengths)
 	    -1)))
     (if (>= pos 0)
 	(nth pos backends)
@@ -276,27 +277,13 @@
 (advice-add 'git-gutter:in-repository-p :override #'git-gutter:in-repository-p-override)
 
 ;; Diff-hl
-(defun turn-on-diff-hl-mode-around (f &rest args)
-  (cond ((not (file-directory-p default-directory))
-		 nil)
-		((git-gutter:in-repository-p)
-		 ;; The default-direcories of some buffers are nonexistent,
-		 ;; e.g. the buffer named " *code-conversion-work*",
-		 ;; whose default-direcory is determined according to
-		 ;; the build environment of Emacs itself.
-		 ;; It ends up an error on global-diff-hl-mode such as:
-		 ;; Error in post-command-hook (global-diff-hl-mode-check-buffers): (file-error "Setting current directory" "Permission denied" "EMACS_BUILD_DIRECTORY")
-		 ;; In the case of " *code-conversion-work*", killing the buffer
-		 ;; (which will be re-created automatically) solves the problem,
-		 ;; but in general, it is better to prevent trrigering of
-		 ;; `turn-on-diff-hl-mode'.
-		 nil)
-		(t
-		 (apply f args))))
-(advice-add 'turn-on-diff-hl-mode :around #'turn-on-diff-hl-mode-around)
-(global-diff-hl-mode)
+(defun my-dired-mode-hook ()
+  (diff-hl-dired-mode-unless-remote)
+  (unless (display-graphic-p)
+    (unless (and (boundp 'diff-hl-margin-minor-mode) diff-hl-margin-minor-mode)
+      (diff-hl-margin-mode))))
+(add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-(add-hook 'dired-mode-hook #'diff-hl-dired-mode)
 
 (defun my-git-gutter-mode-hook ()
   (when git-gutter-mode
@@ -337,27 +324,7 @@
   (if (eq system-type 'windows-nt)
       (setq tramp-default-method "plink")
     (setq tramp-default-method "ssh"))
-  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave"))
-  (setq tramp-remote-process-environment
-	`("HISTFILE=$HOME/.tramp_history" "HISTSIZE=1"
-	  "LC_TIME=c"
-	  ,(format "TERM=%s" tramp-terminal-type)
-	  "EMACS=t" ;; Deprecated.
-	  ,(format "INSIDE_EMACS='%s,tramp:%s'" emacs-version tramp-version)
-	  "CDPATH=" "HISTORY=" "MAIL=" "MAILCHECK=" "MAILPATH=" "PAGER=\"\""
-	  "autocorrect=" "correct=")))
-;; Fix for connection to Mac OSX.
-(when (eq system-type 'windows-nt)
-  (defun tramp-send-string-around (f &rest args)
-    (let* ((proc (tramp-get-connection-process vec))
-	   (cs (cdr (process-coding-system proc))))
-      (if (seq-contains (coding-system-eol-type 'utf-8-hfs) cs)
-	  ;; Change coding-system-for-write from utf-8-hfs-dos to utf-8-hfs-unix.
-	  (with-current-buffer (process-buffer proc)
-	    (tramp-compat-funcall
-	     'set-buffer-process-coding-system (car (process-coding-system proc)) 'utf-8-hfs-unix)))
-      (apply f args)))
-  (advice-add 'tramp-send-string :around #'tramp-send-string-around))
+  (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave")))
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
@@ -568,6 +535,11 @@
 	     (org-defkey org-mode-map "\C-c[" 'undefined)
 	     (org-defkey org-mode-map "\C-c]" 'undefined)))
 
+(with-eval-after-load 'org
+  (setq org-babel-python-command "python3")
+  (add-to-list 'org-babel-load-languages '(shell . t))
+  (add-to-list 'org-babel-load-languages '(python . t)))
+
 ;; automatically change to DONE when all children are done
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
@@ -674,12 +646,12 @@
   (let (current-prefix-arg
 	(helm-swoop-pre-input-function 'ignore))
     (call-interactively
-     (case use-helm-swoop
-       (1 'isearch-forward)
+     (cond
+       ((eq use-helm-swoop 1) 'isearch-forward)
        ;; C-u C-s -> helm-occur/swoop depending on buffe-size.
-       (4 (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
+       ((eq use-helm-swoop 4) (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
        ;; C-u C-u C-s -> helm-swoop w/o migemo.
-       (16 'helm-swoop-nomigemo)))))
+       ((eq use-helm-swoop 16) 'helm-swoop-nomigemo)))))
 (global-set-key (kbd "C-s") 'isearch-forward-or-helm-swoop-or-helm-occur)
 
 ;; Ediff
@@ -731,6 +703,7 @@
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 (with-eval-after-load 'magit
+  (set-face-attribute 'magit-branch-current nil :inverse-video t)
   (setq magit-diff-refine-hunk 'all)
   (setq magit-gitflow-popup-key "C-c f"))
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -856,7 +829,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
+    (docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)

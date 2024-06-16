@@ -4,6 +4,8 @@
 /elpa
 /recentf
 /server/*
+/tramp
+/transient
 /.ddskk/*
 /.python-environments
 !.ddskk/init

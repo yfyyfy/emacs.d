@@ -13,6 +13,10 @@
 | dash                    | melpa-stable |       2.18.1 | 20210330.1544 | 2.18.1 |        2021.02.28 |                                                           |   2021.05.15 |
 | ddskk                   | melpa        |              | 20210112.2013 |        |                   |                                                           |   2021.05.15 |
 | diff-hl                 | melpa-stable |        1.8.8 |  20210410.130 |  1.8.8 |        2020.12.20 |                                                           |   2021.05.15 |
+| docker-compose-mode     | melpa-stable |        1.1.0 | 20200830.1336 |        |        2018.03.11 |                                                           |   2021.11.06 |
+| dockerfile-mode         | melpa-stable |          1.5 | 20211016.1545 |        |        2021.08.29 |                                                           |   2021.11.06 |
+| docker                  | melpa-stable |        1.4.0 |  20211105.138 |        |        2011.09.14 |                                                           |   2021.11.06 |
+| docker-tramp            | melpa-stable |          0.1 |  20210729.508 |        |        2016.10.21 |                                                           |   2021.11.06 |
 | elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        |        2021.04.14 |                                                           |   2021.05.15 |
 | flycheck                | melpa        |           31 |  20210321.852 |        |        2017.10.07 |                                                           |   2021.05.15 |
 | git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        |        2016.05.21 |                                                           |   2021.05.15 |
@@ -87,3 +91,5 @@
 5. Update magit from 2.90.1 to 3.1.1 (0460442)
 
 6. Install ob-async
+
+7. Install docker-tramp, docker, dockerfile-mode and docker-compose-mode
