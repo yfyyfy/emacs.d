@@ -206,6 +206,12 @@
 	  (setq migemo-isearch-enable-p nil)))))
 (advice-add 'helm-migemo-mode :around #'helm-migemo-mode-around)
 
+;; which-key
+(which-key-mode 1)
+
+;; emaps
+(define-key help-map "K" 'emaps-describe-keymap-bindings)
+
 ;; Dired
 (when (eq system-type 'windows-nt)
   ;; Use ls for dired.
@@ -916,7 +922,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (emaps which-key lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
+    (avy-migemo avy emaps which-key lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)
