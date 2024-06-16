@@ -1,7 +1,8 @@
-(defun my-frame-set-alpha (alpha-num)
+(defun my-frame-set-alpha (alpha-num &optional frame)
   "set frame parameter 'alpha"
   (interactive "nAlpha: ")
-  (set-frame-parameter nil 'alpha (cons alpha-num '(50))))
+  (message "my-frame-set-slpha: %d" alpha-num)
+  (set-frame-parameter frame 'alpha (cons alpha-num '(50))))
 
 ;;   (let ((frame-width (frame-text-width))
 ;; 	(frame-height (frame-text-height))

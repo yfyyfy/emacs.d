@@ -1,3 +1,6 @@
+;; (setq user-init-file (or load-file-name (buffer-file-name)))
+;; (setq user-emacs-directory (file-name-directory user-init-file))
+
 ;; Basic functions
 (defun my-transpose-cons-list (cons-list)
   (mapcar #'(lambda (ele) (cons (cdr ele) (car ele))) cons-list))
@@ -158,6 +161,11 @@
 (global-unset-key [next])
 (global-unset-key [insert])
 
+(global-unset-key [C-mouse-4])
+(global-unset-key [C-mouse-5])
+(global-set-key  [C-S-mouse-4] 'mouse-wheel-text-scale)
+(global-set-key  [C-S-mouse-5] 'mouse-wheel-text-scale)
+
 ;; Kill emacs/terminal
 (defun save-buffers-kill-terminal-around (f &rest args)
   (if (or (not (frame-parameter nil 'client))
@@ -248,6 +256,16 @@
 ;; link-hint
 (global-set-key "\C-clo" #'link-hint-open-link)
 (global-set-key "\C-clc" #'link-hint-copy-link)
+;; (autoload 'link-hint-open-link "link-hint" nil t)
+;; (autoload 'link-hint-copy-link "link-hint" nil t)
+
+;; @todo avy-migemo-goto-char not working. avy-migemo-goto-char-timer works
+;; niho
+;; 日本語入力
+;; nihonngo
+;; 二本松
+;; あいうえおあいうえお
+
 ;; Dired
 (when (eq system-type 'windows-nt)
   ;; Use ls for dired.
@@ -375,6 +393,9 @@
     (setq tramp-default-method "ssh"))
   (setq tramp-auto-save-directory (locate-user-emacs-file "tramp-autosave")))
 
+;; https://github.com/emacs-pe/docker-tramp.el
+;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
 ;; Flycheck
 (with-eval-after-load 'flycheck
   (unless (display-graphic-p)
@@ -418,8 +439,11 @@
 (with-eval-after-load 'lsp-mode
   (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (setq lsp-log-io t)
   (setq lsp-ui-sideline-enable nil)
   (require 'my-lsp-register-remote-client))
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
 
 (setq lsp-keymap-prefix "C-c l")
 
@@ -493,8 +517,11 @@
 (defun my-python-mode-hook ()
   (flycheck-mode)
   (setq tab-width python-indent-offset)
-  (my-python-venv-add-venv-to-exec-path)
-  (lsp))
+  (local-set-key "\C-c#" 'comment-region) ; M-; runs comment-dwim.
+  (if (not (file-remote-p (buffer-file-name)))
+      (my-python-venv-add-venv-to-exec-path))
+  ;; (lsp)
+  )
 (add-hook 'python-mode-hook #'my-python-mode-hook)
 
 ;; Jedi
@@ -505,7 +532,7 @@
   (setq jedi:complete-on-dot t))
 
 ;; Switch for JavaScript-related file.
-(setq my-js-use-lsp t)
+(setq my-js-use-lsp nil)
 
 ;; Tide
 (defun my-setup-tide-mode ()
@@ -547,7 +574,7 @@
       (and buffer-file-name
 	   (string-match "^[jt]sx?$" (file-name-extension buffer-file-name)))
     (if my-js-use-lsp
-	(lsp)
+	;; (lsp)
       (my-setup-tide-mode))
     (setq web-mode-enable-auto-quoting nil)
     (local-set-key "\C-c\C-c" 'comment-region)
@@ -562,7 +589,7 @@
 ;; TypeScript
 (defun my-typescript-mode-hook ()
   (if my-js-use-lsp
-      (lsp)
+      ;; (lsp)
     (my-setup-tide-mode))
   (setq indent-tabs-mode nil))
 (add-hook 'typescript-mode-hook #'my-typescript-mode-hook)
@@ -587,7 +614,7 @@
   (flycheck-mode)
   (add-node-modules-path)
   (if my-js-use-lsp
-      (lsp)
+      ;; (lsp)
     (my-setup-tide-mode))
   )
 (add-hook 'rjsx-mode-hook #'my-rjsx-mode-hook)
@@ -605,7 +632,7 @@
 (defun my-css-mode-hook ()
   (flycheck-mode)
   (add-node-modules-path)
-  (lsp)
+  ;; (lsp)
   )
 (add-hook 'css-mode-hook #'my-css-mode-hook)
 
@@ -613,7 +640,7 @@
 (defun my-rust-mode-hook ()
   (setq indent-tabs-mode nil)
   (setq rust-format-on-save t)
-  (lsp)
+  ;; (lsp)
   )
 (add-hook 'rust-mode-hook #'my-rust-mode-hook)
 
@@ -651,7 +678,7 @@
 (with-eval-after-load 'org
   (require 'ob-shell)
   (require 'ob-async)
-  ;; (setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
+(setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
   (setq org-babel-min-lines-for-block-output 0)
   (setq org-babel-python-command "python3")
   (org-babel-do-load-languages
@@ -693,6 +720,10 @@
 	  (insert " \\\\")
 	(insert "\\\\")))
     (forward-line 1)))))
+
+;; Org-roam
+;; (setq org-roam-directory (file-truename "~/org-roam"))
+;; (org-roam-db-autosync-mode)
 
 ;; Recentf
 (require 'recentf-ext)
@@ -804,7 +835,7 @@
       '((menu-bar-lines . 0)
 	(tool-bar-lines . 0)))
 (require 'my-frame)
-(my-frame-set-alpha 80)
+(my-frame-set-alpha 90)
 (add-hook 'emacs-startup-hook
 	  #'(lambda () (my-frame-modify-frame-geometry 0)))
 (if (eq system-type 'windows-nt)
@@ -849,6 +880,14 @@
     (when initialized
       (remove-hook 'focus-in-hook #'init-font))))
 (add-hook 'focus-in-hook #'init-font)
+
+;; after-make-frame-functions
+(defun init-frame (&optional frame)
+  (my-frame-set-alpha 80 frame)
+  (set-frame-parameter frame 'reverse t)
+  (set-frame-parameter frame 'fullscreen 'fullboth))
+(add-hook 'before-make-frame-hook 'init-frame)
+(add-to-list 'after-make-frame-functions 'init-frame)
 
 ;; Magit
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
@@ -954,6 +993,12 @@
 (autoload 'my-query-replace-multi "my-replace" nil t)
 
 ;; Experimental
+(setq docker-compose-command "docker compose")
+
+;; @todo Set in dir-local
+;; (defun myindent-ess-hook ()
+;;   (setq ess-indent-offset 2))
+;; (add-hook 'ess-mode-hook 'myindent-ess-hook)
 
 ;; Load the experimental setting file.
 (let ((filename (locate-user-emacs-file "init-sub-experimental.el")))
@@ -981,22 +1026,21 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (org-roam org-journal consult rust-mode ess link-hint avy-migemo avy emaps which-key lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
+   '(org-roam org-journal consult rust-mode ess link-hint avy-migemo avy emaps which-key lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc))
  '(safe-local-variable-values
-   (quote
-    ((typescript-indent-level . 2)
+   '((css-indent-offset . 2)
+     (typescript-indent-level . 2)
      (nxml-child-indent . 1)
      (sgml-basic-offset . 2)
      (sgml-basic-offset . 4)
      (web-mode-script-padding . 2)
-     (web-mode-style-padding . 2))))
+     (web-mode-style-padding . 2)))
  '(speedbar-frame-parameters
-   (quote
-    ((minibuffer)
+   '((minibuffer)
      (width . 50)
      (border-width . 0)
      (menu-bar-lines . 0)
      (tool-bar-lines . 0)
      (unsplittable . t)
-     (left-fringe . 0)))))
+     (left-fringe . 0)))
+ '(warning-suppress-types '((comp))))
