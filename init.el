@@ -365,6 +365,10 @@
   (add-to-list 'flycheck-checkers 'general-tide)
   (flycheck-add-next-checker 'general-tide '(t . javascript-eslint)))
 
+;; LSP
+(with-eval-after-load 'lsp-mode
+  (setq lsp-diagnostic-package :none))
+
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
 	  '(lambda()
@@ -419,15 +423,27 @@
 ;; Python
 (require 'my-python-venv)
 ;; (add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook #'lsp)
-(add-hook 'python-mode-hook #'my-python-venv-add-venv-to-exec-path)
-(add-hook 'python-mode-hook #'flycheck-mode)
+(defun my-python-mode-hook ()
+  (flycheck-mode)
+  (my-python-venv-add-venv-to-exec-path)
+  (lsp))
+(add-hook 'python-mode-hook #'my-python-mode-hook)
+
 ;; Jedi
 (with-eval-after-load 'python-environment
   ;; Python executable for default flycheck syntax checker.
   (setq flycheck-python-pycompile-executable (python-environment-bin "python")))
 (with-eval-after-load 'jedi-core
   (setq jedi:complete-on-dot t))
+
+;; Tide
+(defun my-setup-tide-mode ()
+  (tide-setup)
+  (flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode t)
+  (tide-hl-identifier-mode)
+  (company-mode-on))
 
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -471,17 +487,10 @@
 	  ("ejs" . "\\.ejs\\'"))))
 
 ;; TypeScript
-(defun my-setup-tide-mode ()
-  (tide-setup)
-  (flycheck-mode t)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode t)
-  (tide-hl-identifier-mode)
-  (company-mode-on))
-(add-hook 'typescript-mode-hook
-          (lambda ()
-	    (my-setup-tide-mode)
-	    (setq indent-tabs-mode nil)))
+(defun my-typescript-mode-hook ()
+  (my-setup-tide-mode)
+  (setq indent-tabs-mode nil))
+(add-hook 'typescript-mode-hook #'my-typescript-mode-hook)
 ;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
@@ -493,11 +502,12 @@
  	    (setq js-indent-level 2)
  	    (setq indent-tabs-mode nil)
  	    (local-set-key "\C-c\C-c" 'comment-region)))
-(add-hook 'rjsx-mode-hook
-          (lambda ()
-	    (my-setup-tide-mode)))
-(add-hook 'rjsx-mode-hook #'add-node-modules-path)
-(add-hook 'rjsx-mode-hook #'flycheck-mode)
+
+(defun my-rjsx-mode-hook ()
+  (flycheck-mode)
+  (add-node-modules-path)
+  (my-setup-tide-mode))
+(add-hook 'rjsx-mode-hook #'my-rjsx-mode-hook)
 
 ;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
 (defun js-jsx-indent-line-align-closing-bracket ()
@@ -509,8 +519,12 @@
 (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 ;; CSS
-(add-hook 'css-mode-hook #'add-node-modules-path)
-(add-hook 'css-mode-hook #'flycheck-mode)
+(defun my-css-mode-hook ()
+  (flycheck-mode)
+  (add-node-modules-path)
+  (lsp)
+  )
+(add-hook 'css-mode-hook #'my-css-mode-hook)
 
 ;; scheme
 (setq scheme-program-name "/usr/bin/guile")
