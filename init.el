@@ -284,6 +284,13 @@
       (diff-hl-margin-mode))))
 (add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+(defun diff-hl-dired-status-files-filter-args (args) ; (backend dir files update-function)
+  (let ((backend (nth 0 args))
+	(dir (nth 1 args))
+	(files (nth 2 args))
+	(update-function (nth 3 args)))
+    (list backend dir (if (equal backend 'SVN) nil files) update-function)))
+(advice-add 'diff-hl-dired-status-files :filter-args #'diff-hl-dired-status-files-filter-args)
 
 (defun my-git-gutter-mode-hook ()
   (when git-gutter-mode
@@ -367,7 +374,25 @@
 
 ;; LSP
 (with-eval-after-load 'lsp-mode
-  (setq lsp-diagnostic-package :none))
+  (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (setq lsp-ui-sideline-enable nil)
+  (require 'my-lsp-register-remote-client))
+
+(setq lsp-keymap-prefix "C-c l")
+
+(with-eval-after-load 'lsp-ui-doc
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-header t)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-height 30)
+  (if (not (display-graphic-p))
+      (setq lsp-ui-doc-max-width 80))
+  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-use-childframe t)
+  (if (featurep 'xwidget-internal)
+      (setq lsp-ui-doc-use-webkit t)))
 
 ;; Elisp
 (add-hook 'lisp-interaction-mode-hook
@@ -436,6 +461,9 @@
 (with-eval-after-load 'jedi-core
   (setq jedi:complete-on-dot t))
 
+;; Switch for JavaScript-related file.
+(setq my-js-use-lsp t)
+
 ;; Tide
 (defun my-setup-tide-mode ()
   (tide-setup)
@@ -475,7 +503,9 @@
   (when
       (and buffer-file-name
 	   (string-match "^[jt]sx?$" (file-name-extension buffer-file-name)))
-    (my-setup-tide-mode)
+    (if my-js-use-lsp
+	(lsp)
+      (my-setup-tide-mode))
     (setq web-mode-enable-auto-quoting nil)
     (local-set-key "\C-c\C-c" 'comment-region)
     ;; (setq flycheck-disabled-checkers '(tsx-tide jsx-tide))
@@ -488,12 +518,19 @@
 
 ;; TypeScript
 (defun my-typescript-mode-hook ()
-  (my-setup-tide-mode)
+  (if my-js-use-lsp
+      (lsp)
+    (my-setup-tide-mode))
   (setq indent-tabs-mode nil))
 (add-hook 'typescript-mode-hook #'my-typescript-mode-hook)
 ;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; JavaScript
+(with-eval-after-load 'js
+  (if my-js-use-lsp
+      ;; Enable lsp-ui-peek-find-definitions for js-derived modes.
+      (define-key js-mode-map (kbd "M-.") nil)))
+
 (with-eval-after-load 'js2-mode
   (setq js2-strict-trailing-comma-warning nil))
 (add-to-list 'auto-mode-alist '(".*\\.js\\'" . rjsx-mode))
@@ -506,7 +543,10 @@
 (defun my-rjsx-mode-hook ()
   (flycheck-mode)
   (add-node-modules-path)
-  (my-setup-tide-mode))
+  (if my-js-use-lsp
+      (lsp)
+    (my-setup-tide-mode))
+  )
 (add-hook 'rjsx-mode-hook #'my-rjsx-mode-hook)
 
 ;; http://blog.binchen.org/posts/indent-jsx-in-emacs.html
@@ -540,6 +580,7 @@
 (defun my-org-load-hook ()
   (setq org-enforce-todo-dependencies t)
   (setq org-startup-truncated nil)
+  (setq org-edit-src-content-indentation 0)
   (setq org-return-follows-link t)
 ;  (setq org-export-html-postamble nil)
   (setq org-directory "~/org.d")
@@ -550,13 +591,34 @@
 ;; Disable automatic rearrangement of the agenda file set.
 (add-hook 'org-mode-hook
 	  '(lambda ()
+	     (setq indent-tabs-mode nil)
 	     (org-defkey org-mode-map "\C-c[" 'undefined)
 	     (org-defkey org-mode-map "\C-c]" 'undefined)))
 
+(unless (version<= (org-version) "9.2")
+    (add-to-list 'org-modules 'org-tempo t))
 (with-eval-after-load 'org
+  (require 'ob-shell)
+  (require 'ob-async)
+  ;; (setq org-confirm-babel-evaluate nil) ;; Disabled for security reasons.
+  (setq org-babel-min-lines-for-block-output 0)
   (setq org-babel-python-command "python3")
-  (add-to-list 'org-babel-load-languages '(shell . t))
-  (add-to-list 'org-babel-load-languages '(python . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (python . t)))
+  (let ((alist '(("s"  . "src")
+		 ("ss"  . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\"")
+		 ("ssa" . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\" :async")
+		 ("ssd" . "src shell -n :exports both :results output :prologue \"exec 2>&1\" :epilogue \"true\" :wrap src diff")
+		 ("ssn" . "src shell -n :eval never")
+		 ("sp"  . "src python -n :exports both :results output")
+		 ("spa" . "src python -n :exports both :results output :async")
+		 ("spn" . "src python -n :eval never"))))
+    (mapc #'(lambda (cell) (add-to-list 'org-structure-template-alist cell))
+	  (if (version<= (org-version) "9.2")
+	      (mapcar #'(lambda (cell) (list (car cell) (format "#+begin_%s\n?\n#+end_src" (cdr cell)))) alist)
+	    alist))))
 
 ;; automatically change to DONE when all children are done
 (defun org-summary-todo (n-done n-not-done)
@@ -585,7 +647,8 @@
 (require 'recentf-ext)
 (setq recentf-exclude '(tramp-tramp-file-p))
 (setq recentf-max-saved-items nil)
-(setq recentf-filename-handlers
+
+(setq my-recentf-cygwin-filename-handlers
       (let* ((cygwin-drive "c")
 	     (desktop-drive "d")
 	     (documents-drive "d")
@@ -597,6 +660,8 @@
 			  ((format "^%s:/Users/\\([^/]*\\)/Documents/" ,documents-drive) . "/home/\\1/Documents/")
 			  ((format "^%s:/Users/\\([^/]*\\)/Downloads/" ,downloads-drive) . "/home/\\1/Downloads/"))))
 	(mapcar #'(lambda (elt) `(lambda (name) (replace-regexp-in-string ,(car elt) ,(cdr elt) name))) conv-list)))
+(setq recentf-filename-handlers (append recentf-filename-handlers my-recentf-cygwin-filename-handlers))
+(add-to-list 'recentf-filename-handlers 'docker-tramp-ext-recentf-filename-handler t)
 
 ;; Helm
 (defun my-helm-mini ()
@@ -815,8 +880,11 @@
                       :foreground "red"))
 
 ;; Personal utils
+(autoload 'docker-tramp-ext-recentf-filename-handler "docker-tramp-ext" nil t)
+(autoload 'docker-tramp-ext-find-corresponding-file "docker-tramp-ext" nil t)
 (autoload 'my-diff-buffers "my-diff" nil t)
 (autoload 'my-grep "my-grep" nil t)
+(autoload 'my-lsp-ui-doc-toggle "my-lsp" nil t)
 (autoload 'my-query-replace-multi "my-replace" nil t)
 
 ;; Experimental
@@ -848,7 +916,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
+    (emaps which-key lsp-ui docker-compose-mode dockerfile-mode docker docker-tramp ob-async magit magit-gitflow add-node-modules-path color-moccur ddskk git-gutter-fringe recentf-ext cmake-mode company company-irony csv-mode dash diff-hl elpa-mirror git-gutter helm helm-gtags helm-swoop htmlize jedi lsp-mode migemo php-mode py-isort rjsx-mode tide typescript-mode web-mode wgrep yaml-mode gnu-elpa-keyring-update cygwin-mount w3 msvc)))
  '(safe-local-variable-values
    (quote
     ((typescript-indent-level . 2)

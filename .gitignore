@@ -1,12 +1,16 @@
 /ac-comphist.dat
 /ede-projects.el
 /el-get
+/eln-cache
 /elpa
+/eshell
 /recentf
 /server/*
 /tramp
 /transient
+/.cache
 /.ddskk/*
+/.lsp-session-v*
 /.python-environments
 !.ddskk/init
 !.gitkeep
