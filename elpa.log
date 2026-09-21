@@ -1,59 +1,64 @@
 # -*- mode: org; -*-
 
 * Packages explicitly installed
-| Package                 | installed    | melpa-stable |         melpa |    gnu | nongnu | melpa-stable-date |                                                           | info updated |
-|-------------------------+--------------+--------------+---------------+--------+--------+-------------------+-----------------------------------------------------------+--------------|
-| avy                     | melpa        |        0.5.0 |  20220102.805 |  0.5.0 | ?      |        2019.05.11 |                                                           |   2022.05.31 |
-| avy-migemo              | melpa        |        0.3.2 | 20180716.1455 |        | ?      |        2016.03.21 |                                                           |   2022.05.31 |
-| add-node-modules-path   | melpa        |        1.2.0 |  20210305.312 |        | ?      |        2017.09.15 |                                                           |   2021.05.15 |
-| cmake-mode              | melpa-stable |       3.20.2 | 20210104.1831 |        | ?      |                   |                                                           |   2021.05.15 |
-| color-moccur            | melpa        |              |   20141223.35 |        | ?      |                   |                                                           |   2021.05.15 |
-| company-irony           | melpa-stable |        1.1.0 | 20190124.2346 |        | ?      |        2017.09.06 |                                                           |   2021.05.15 |
-| company                 | melpa-stable |       0.9.13 | 20210416.2209 | 0.9.13 | ?      |        2020.07.26 |                                                           |   2021.05.15 |
-| consult                 | melpa-stable |          1.7 |  20240523.754 |    1.7 | ?      |        2024.05.23 |                                                           |   2024.06.16 |
-| csv-mode                | gnu          |              |               |   1.15 | ?      |        2021.02.23 |                                                           |   2021.05.15 |
-| cygwin-mount            | -            |              |               |        | ?      |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
-| dash                    | melpa-stable |       2.19.1 | 20220417.2250 | 2.19.1 | ?      |        2021.08.26 |                                                           |   2022.05.01 |
-| ddskk                   | melpa        |              | 20210112.2013 |        | ?      |                   |                                                           |   2021.05.15 |
-| diff-hl                 | melpa-stable |        1.8.8 |  20210410.130 |  1.8.8 | ?      |        2020.12.20 |                                                           |   2021.05.15 |
-| docker-compose-mode     | melpa-stable |        1.1.0 | 20200830.1336 |        | ?      |        2018.03.11 |                                                           |   2021.11.06 |
-| dockerfile-mode         | melpa-stable |          1.5 | 20211016.1545 |        | ?      |        2021.08.29 |                                                           |   2021.11.06 |
-| docker                  | melpa-stable |        1.4.0 |  20211105.138 |        | ?      |        2011.09.14 |                                                           |   2021.11.06 |
-| docker-tramp            | melpa-stable |        0.1.1 |  20220219.420 |        | ?      |        2022.02.19 |                                                           |   2022.05.01 |
-| elpa-mirror             | melpa-stable |        2.1.6 |  20210414.208 |        | ?      |        2021.04.14 |                                                           |   2021.05.15 |
-| emaps                   | melpa-stable |        0.2.0 | 20200508.1759 |        | ?      |        2020.05.09 |                                                           |   2022.05.31 |
-| ess                     | melpa        |      18.10.2 | 20230419.1527 |        | ?      |        2018.11.10 |                                                           |   2023.05.14 |
-| flycheck                | melpa        |           31 |  20210321.852 |        | ?      |        2017.10.07 |                                                           |   2021.05.15 |
-| git-gutter-fringe       | melpa        |         0.23 | 20200323.2249 |        | ?      |        2016.05.21 |                                                           |   2021.05.15 |
-| git-gutter              | melpa-stable |         0.91 | 20210127.1100 |        | ?      |        2020.10.26 |                                                           |   2021.05.15 |
-| gnu-elpa-keyring-update | gnu          |              |               | 2019.3 | ?      |                   | Required to access to GNU elpa. Keep this version.        |   2021.05.15 |
-| helm-gtags              | melpa-stable |        1.5.7 | 20200602.1610 |        | ?      |        2020.06.03 |                                                           |   2021.05.15 |
-| helm                    | melpa-stable |        3.7.1 |  20210514.615 |        | ?      |        2021.03.30 |                                                           |   2021.05.15 |
-| helm-swoop              | melpa-stable |        3.0.0 |  20200814.448 |        | ?      |        2020.08.06 |                                                           |   2021.05.15 |
-| htmlize                 | melpa-stable |         1.55 |  20200816.746 |        | ?      |        2019.11.11 |                                                           |   2021.05.15 |
-| jedi                    | melpa-stable |        0.2.8 | 20191011.1750 |        | ?      |        2019.10.12 |                                                           |   2021.05.15 |
-| link-hint               | melpa        |              |   20220414.56 |        | ?      |                   |                                                           |   2022.06.05 |
-| lsp-mode                | melpa-stable |        8.0.0 |             ? |        | ?      |        2021.09.05 |                                                           |   2021.11.17 |
-| lsp-ui                  | melpa-stable |        8.0.0 | 20220425.1046 |        | ?      |        2021.09.05 |                                                           |   2022.05.01 |
-| magit-gitflow           | melpa-stable |        2.2.3 |               |        | ?      |        2017.09.29 | 20170929.824 == 2.2.3                                     |   2021.05.15 |
-| magit                   | melpa-stable |        3.1.1 | 20210414.1306 |        | ?      |        2021.07.02 |                                                           |   2021.10.17 |
-| migemo                  | melpa-stable |        1.9.2 |   20200913.12 |        | ?      |        2019.01.12 |                                                           |   2021.05.15 |
-| msvc                    | 1.3.5        |        1.4.2 |  20191211.540 |        | ?      |        2019.12.11 | Keep current version.                                     |   2021.05.15 |
-| ob-async                | melpa        |        1.0.0 | 20210428.2052 |        | ?      |        2018.06.15 |                                                           |   2021.11.06 |
-| php-mode                | melpa-stable |       1.24.0 | 20210310.1724 |        | ?      |        2021.03.07 |                                                           |   2021.05.15 |
-| py-isort                | melpa-stable |       2016.1 | 20160925.1018 |        | ?      |        2016.09.25 |                                                           |   2021.05.15 |
-| recentf-ext             | melpa        |              |   20170926.35 |        | ?      |                   |                                                           |   2021.05.15 |
-| rjsx-mode               | melpa-stable |        0.5.0 | 20200120.1446 |        | ?      |        2020.02.25 |                                                           |   2021.05.15 |
-| rust-mode               | melpa-stable |        1.0.5 |   20230112.27 |  1.0.5 | ?      |        2022.06.26 |                                                           |   2023.05.14 |
-| tide                    | melpa-stable |        4.2.3 | 20210412.1650 |        | ?      |        2021.03.24 |                                                           |   2021.05.15 |
-| typescript-mode         | melpa-stable |          0.3 | 20201002.1109 |        | ?      |        2018.05.14 |                                                           |   2021.05.15 |
-| w3                      | -            |              |               |        | ?      |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
-| web-mode                | melpa-stable |           17 | 20210131.1758 |        | ?      |        2020.05.xx |                                                           |   2021.05.15 |
-| wgrep                   | melpa-stable |        2.3.2 | 20210322.2207 |        | ?      |        2020.02.03 |                                                           |   2021.05.15 |
-| which-key               | melpa-stable |        3.6.0 | 20220518.1941 |  3.6.0 | ?      |        2022.02.15 |                                                           |   2022.05.31 |
-| yaml-mode               | melpa-stable |       0.0.15 | 20201109.1026 |        | ?      |        2020.11.09 |                                                           |   2021.05.15 |
-| org-journal             | melpa-stable |        2.2.0 | 20240218.1645 |        | 2.2.0  |        2023.03.09 |                                                           |   2024.06.16 |
-| org-roam                | melpa-stable |        2.2.2 | 20240114.1941 |        |        |        2022.04.25 |                                                           |   2024.06.16 |
+| Package                 | installed    | melpa-stable |         melpa |       gnu |  nongnu | melpa-stable-date |                                                           | info updated |
+|-------------------------+--------------+--------------+---------------+-----------+---------+-------------------+-----------------------------------------------------------+--------------|
+| ai-code                 | melpa-stable |        1.970 |  20260926.545 |           |         |        2026.09.24 |                                                           |   2026.09.27 |
+| avy                     | melpa        |        0.5.0 | 20241101.1357 |     0.5.0 |         |        2019.05.11 |                                                           |   2026.09.22 |
+| avy-migemo              | melpa        |        0.3.2 | 20180716.1455 |           |         |        2016.03.21 |                                                           |   2026.09.22 |
+| add-node-modules-path   | melpa        |        1.3.1 |  20230307.655 |           |         |        2022.03.15 |                                                           |   2026.09.22 |
+| cmake-mode              | melpa-stable |        4.4.3 | 20260825.1510 |           |         |                   |                                                           |   2026.09.22 |
+| color-moccur            | melpa        |              |   20141223.35 |           |         |                   |                                                           |   2026.09.22 |
+| company-irony           | melpa-stable |        1.1.1 | 20190124.2346 |     1.1.1 |         |        2021.06.05 |                                                           |   2026.09.22 |
+| company                 | melpa-stable |        1.1.0 |  20260721.100 |     1.1.0 |         |        2026.07.21 |                                                           |   2026.09.22 |
+| consult                 | melpa-stable |          3.9 | 20260913.2232 |       3.9 |         |        2026.09.14 |                                                           |   2026.09.22 |
+| copilot                 | melpa-stable |        0.9.0 | 20260907.2020 |           |         |        2026.07.06 |                                                           |   2026.09.27 |
+| csv-mode                | gnu          |              |               |      1.27 |         |        2021.02.23 | gnu: 2024.08.09                                           |   2026.09.22 |
+| cygwin-mount            | -            |              |               |           |         |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
+| dash                    | melpa-stable |       2.20.0 | 20260221.1346 |    2.20.0 |         |        2025.03.12 |                                                           |   2026.09.22 |
+| ddskk                   | melpa-stable |         17.2 | 20260329.1317 |           |         |        2026.03.29 |                                                           |   2026.09.22 |
+| diff-hl                 | melpa-stable |       1.10.0 |  20260915.417 |    1.11.2 |         |        2024.08.03 |                                                           |   2026.09.22 |
+| docker-compose-mode     | -            |        1.1.0 | 20200830.1336 |           |         |        2018.03.11 | Package not found on the repositories. Keep this version. |   2021.11.06 |
+| dockerfile-mode         | melpa-stable |          1.9 | 20251221.1644 |           |     1.9 |        2024.02.23 |                                                           |   2026.09.22 |
+| docker                  | melpa-stable |        2.5.0 | 20260824.1516 |           |         |        2026.01.26 |                                                           |   2026.09.22 |
+| docker-tramp            | melpa-stable |        0.1.1 |  20230809.511 |           |         |        2022.02.19 |                                                           |   2026.09.22 |
+| eat                     | nongnu       |              |               |           |   0.9.4 |        2023.12.16 |                                                           |   2026.09.27 |
+| elpa-mirror             | melpa-stable |        2.3.0 | 20240413.1426 |           |         |        2024.04.13 |                                                           |   2026.09.22 |
+| emaps                   | melpa-stable |        0.2.0 | 20200508.1759 |           |         |        2020.05.09 |                                                           |   2026.09.22 |
+| ess                     | melpa        |       25.1.0 | 20260818.1451 |     6.5.0 |         |         2025.1.10 | gnu: 2026.05.26                                           |   2026.09.22 |
+| flycheck                | melpa        |         39.0 | 20260902.1403 |           |    39.0 |        2026.08.10 |                                                           |   2026.09.22 |
+| git-gutter-fringe       | melpa        |         0.23 | 20211003.2228 |           |         |        2016.05.21 |                                                           |   2026.09.22 |
+| git-gutter              | melpa-stable |         0.93 | 20241212.1415 |           |         |        2024.09.03 |                                                           |   2026.09.22 |
+| gnu-elpa-keyring-update | gnu          |              |               | 2025.10.1 |         |                   | Required to access to GNU elpa.                           |   2026.09.22 |
+| gptel                   | melpa-stable |      0.9.9.6 |  20260925.357 |           | 0.9.9.6 |        2026.09.06 |                                                           |   2026.09.27 |
+| helm-gtags              | melpa-stable |        1.5.7 | 20260204.1753 |           |         |        2020.06.03 |                                                           |   2026.09.22 |
+| helm                    | melpa-stable |        4.0.7 | 20260915.1432 |           |   4.0.7 |        2024.08.22 |                                                           |   2026.09.22 |
+| helm-swoop              | melpa-stable |        3.0.0 |  20200814.448 |           |         |        2020.08.06 | Package not found on the repositories. Keep this version. |   2021.05.15 |
+| htmlize                 | melpa-stable |         1.59 | 20250724.1703 |           |    1.59 |        2025.07.22 |                                                           |   2026.09.22 |
+| jedi                    | melpa        |        0.2.8 | 20250602.2107 |           |         |        2019.10.12 |                                                           |   2026.09.22 |
+| link-hint               | melpa        |              |   20250911.57 |           |         |                   |                                                           |   2026.09.22 |
+| lsp-mode                | melpa-stable |       10.0.0 |  20260905.531 |           |         |        2026.04.03 |                                                           |   2026.09.22 |
+| lsp-ui                  | melpa-stable |        9.0.0 | 20260512.1516 |           |         |        2024.04.07 |                                                           |   2026.09.22 |
+| magit-gitflow           | melpa-stable |        2.2.3 |  20170929.824 |           |         |        2017.09.29 | 20170929.824 == 2.2.3                                     |   2026.09.22 |
+| magit                   | melpa-stable |        4.7.1 | 20260919.1302 |           |   4.7.1 |        2026.09.01 |                                                           |   2026.09.22 |
+| migemo                  | melpa        |        1.9.2 |  20250616.309 |           |         |        2019.01.12 |                                                           |   2026.09.22 |
+| msvc                    | 1.3.5        |        1.4.3 | 20221015.1610 |           |         |        2022.10.16 | Keep current version.                                     |   2026.09.22 |
+| ob-async                | melpa        |        1.0.0 | 20210428.2052 |           |         |        2018.06.15 |                                                           |   2026.09.22 |
+| php-mode                | melpa-stable |       1.28.0 | 20260825.1535 |           |  1.28.0 |        2026.08.25 |                                                           |   2026.09.22 |
+| py-isort                | melpa-stable |       2016.1 | 20160925.1018 |           |         |        2016.09.25 |                                                           |   2026.09.22 |
+| recentf-ext             | melpa        |              |   20170926.35 |           |         |                   |                                                           |   2026.09.22 |
+| rjsx-mode               | melpa-stable |        0.5.0 | 20200224.2149 |           |         |        2020.02.25 |                                                           |   2026.09.22 |
+| rust-mode               | melpa-stable |        1.0.6 |   20230112.27 |           |   1.0.6 |        2024.08.22 |                                                           |   2026.09.22 |
+| tide                    | melpa        |        5.1.3 |  20260219.336 |           |         |        2023.06.05 |                                                           |   2026.09.22 |
+| typescript-mode         | melpa        |          0.4 | 20250118.2056 |           |     0.4 |        2021.05.15 |                                                           |   2026.09.22 |
+| vterm                   | melpa        |              | 20260914.1641 |           |         |                   |                                                           |   2026.09.27 |
+| w3                      | -            |              |               |           |         |                   | Package not found on the repositories. Keep this version. |   2021.05.15 |
+| web-mode                | melpa-stable |      17.3.20 |  20260831.219 |           | 17.3.25 |        2024.11.12 | nongnu: 2026.08.24                                        |   2026.09.22 |
+| wgrep                   | melpa-stable |        3.0.0 | 20230203.1214 |           |   3.0.0 |        2023.02.03 |                                                           |   2026.09.22 |
+| which-key               | built-in     |        3.6.0 | 20240620.2145 |     3.6.1 |         |        2022.02.15 | gnu: 2024.07.19; built-in since Emacs 30.                 |   2026.09.22 |
+| yaml-mode               | melpa        |       0.0.16 | 20260830.2340 |           |  0.0.16 |        2023.09.20 |                                                           |   2026.09.22 |
+| org-journal             | melpa-stable |        2.2.0 | 20260413.1401 |           |   2.2.0 |        2023.03.09 |                                                           |   2026.09.22 |
+| org-roam                | melpa-stable |        2.3.1 | 20260425.1623 |           |         |        2025.06.27 |                                                           |   2026.09.22 |
 
 * Installation
 1. Delete all packages except:
@@ -127,3 +132,1079 @@
 17. Install consult
 
 18. Install org-journal and org-roam
+
+19. Install packages below from gnu:
+- csv-mode
+- gnu-elpa-keyring-update
+
+(enabled package-archives: gnu, nongnu)
+
+20. Install packages below from melpa-stable:
+- cmake-mode
+- company
+- company-irony
+- consult
+- dash
+- diff-hl
+- docker
+- docker-tramp
+- dockerfile-mode
+- elpa-mirror
+- emaps
+- git-gutter
+- helm
+- helm-gtags
+- htmlize
+- lsp-mode
+- lsp-ui
+- magit
+- magit-gitflow
+- org-journal
+- org-roam
+- php-mode
+- py-isort
+- rjsx-mode
+- rust-mode
+- web-mode
+- wgrep
+
+ (enabled package-archives: gnu, nongnu, melpa-stable)
+
+21. Install packages below from melpa-stable:
+- ddskk
+
+ (enabled package-archives: gnu, nongnu, melpa-stable, *melpa*)
+
+22. Install packages below from melpa:
+- add-node-modules-path
+- avy
+- avy-migemo
+- color-moccur
+- ess
+- flycheck
+- git-gutter-fringe
+- jedi
+- link-hint
+- migemo
+- ob-async
+- recentf-ext
+- tide
+- typescript-mode
+- yaml-mode
+
+ (enabled package-archives: gnu, nongnu, melpa-stable, melpa)
+
+23. Install packages below from elpa-local-repos:
+- cygwin-mount
+- docker-compose-mode
+# - gnu-elpa-keyring-update
+- helm-swoop
+- msvc
+- w3
+
+#+begin_src elisp :eval never
+(let ((package-selected-packages (list 'cygwin-mount 'docker-compose-mode 'helm-swoop 'msvc 'w3)))
+  (my-package-install package-selected-packages (list "~/.emacs.d/elpa-local-repos")))
+#+end_src
+
+
+** xxxxxxxxxxxx
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-qml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-qml.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-r.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-r.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-racket.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-racket.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-remark.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-remark.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rf.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rf.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-roc.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-roc.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ron.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ron.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-roslyn.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-roslyn.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rpm-spec.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rpm-spec.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rubocop.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rubocop.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruby-lsp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruby-lsp.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruby-syntax-tree.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruby-syntax-tree.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruff.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ruff.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rust.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-rust.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-semantic-tokens.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-semantic-tokens.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-semgrep.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-semgrep.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sml.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-solargraph.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-solargraph.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-solidity.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-solidity.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sorbet.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sorbet.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sql.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sql.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sqls.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-sqls.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-steep.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-steep.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-svelte.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-svelte.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-terraform.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-terraform.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-tex.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-tex.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-tilt.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-tilt.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-toml-tombi.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-toml-tombi.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-toml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-toml.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-trunk.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-trunk.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ts-query.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ts-query.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ttcn3.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-ttcn3.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typeprof.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typeprof.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typespec.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typespec.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typos.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typos.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typst.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-typst.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-v.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-v.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vala.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vala.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-verilog.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-verilog.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vetur.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vetur.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vhdl.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vhdl.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vimscript.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-vimscript.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-volar.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-volar.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-wat.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-wat.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-wgsl.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-wgsl.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-xml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-xml.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-yaml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-yaml.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-yang.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-yang.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-zig.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp-zig.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Compiling /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0/lsp.elc
+Checking /home/fujimoto/.emacs.d/elpa/lsp-mode-10.0.0...
+Done (Total of 152 files compiled, 2 skipped)
+Package ‘lsp-mode’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      htmlize-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/htmlize-1.59... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/htmlize-1.59/htmlize.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/htmlize-1.59/htmlize.elc
+Checking /home/fujimoto/.emacs.d/elpa/htmlize-1.59...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/htmlize-1.59/README-elpa
+Package ‘htmlize’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      wfnames-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/wfnames-1.2... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/wfnames-1.2/wfnames.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/wfnames-1.2/wfnames.elc
+Checking /home/fujimoto/.emacs.d/elpa/wfnames-1.2...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/wfnames-1.2/README-elpa
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 6 files for loaddefs...done
+  GEN      async-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/async-1.9.9/async-bytecomp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/async-bytecomp.elc
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9...
+Compiling /home/fujimoto/.emacs.d/elpa/async-1.9.9/async-package.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/async-package.elc
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/async-1.9.9/async.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/async.elc
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9...
+Compiling /home/fujimoto/.emacs.d/elpa/async-1.9.9/dired-async.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/dired-async.elc
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9...
+Compiling /home/fujimoto/.emacs.d/elpa/async-1.9.9/smtpmail-async.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/smtpmail-async.elc
+Checking /home/fujimoto/.emacs.d/elpa/async-1.9.9...
+Done (Total of 5 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/async-1.9.9/README-elpa
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 5 files for loaddefs...done
+  GEN      helm-core-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-core.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-core.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-lib.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-lib.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-multi-match.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-multi-match.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-source.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/helm-source.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7...
+Done (Total of 4 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/helm-core-4.0.7/README-elpa
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 41 files for loaddefs...done
+  GEN      helm-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-adaptive.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-adaptive.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-bookmark.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-bookmark.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-buffers.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-buffers.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-color.el...
+Waiting for git... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-color.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-color.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-command.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-command.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-dabbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-dabbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-easymenu.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-easymenu.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-elisp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-elisp.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-epa.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-epa.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eshell.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eshell.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eval.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eval.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-external.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-external.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-fd.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-fd.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-find.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-find.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-font.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-font.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-for-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-for-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-global-bindings.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-global-bindings.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-grep.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-grep.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-help.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-help.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-id-utils.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-id-utils.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-imenu.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-imenu.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-info.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-info.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-locate.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-locate.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-man.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-man.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-misc.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-misc.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-mode.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-mode.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-net.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-net.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-occur.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-occur.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-packages.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-packages.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-regexp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-regexp.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-ring.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-ring.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-semantic.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-semantic.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-sys.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-sys.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-tags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-tags.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-types.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-types.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-utils.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-utils.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-icons.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-icons.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Done (Total of 40 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/README-elpa
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...
+helm-gtags: Warning: Use keywords rather than deprecated positional arguments to ‘define-minor-mode’
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      helm-gtags-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/helm-gtags-1.5.7... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-gtags-1.5.7/helm-gtags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-gtags-1.5.7/helm-gtags.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-gtags-1.5.7...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/helm-gtags-1.5.7/README-elpa
+Package ‘helm-gtags’ installed
+Contacting host: elpa.nongnu.org:443 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 42 files for loaddefs...done
+  GEN      helm-autoloads.el
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-easymenu.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-global-bindings.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-help.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-types.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-utils.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-info.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-adaptive.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-net.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-icons.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-regexp.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-grep.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-occur.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eval.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-locate.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-tags.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-buffers.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-files.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-elisp.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-misc.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-mode.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-external.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-bookmark.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-imenu.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-for-files.el’ newer than byte-compiled file; using older file
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-adaptive.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-adaptive.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-bookmark.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-bookmark.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-buffers.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-buffers.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-color.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-color.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-command.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-command.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-dabbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-dabbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-easymenu.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-easymenu.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-elisp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-elisp.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-epa.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-epa.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eshell.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eshell.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eval.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-eval.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-external.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-external.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-fd.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-fd.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-find.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-find.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-font.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-font.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-for-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-for-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-global-bindings.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-global-bindings.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-grep.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-grep.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-help.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-help.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-id-utils.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-id-utils.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-imenu.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-imenu.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-info.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-info.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-locate.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-locate.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-man.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-man.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-misc.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-misc.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-mode.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-mode.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-net.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-net.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-occur.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-occur.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-packages.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-packages.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-regexp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-regexp.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-ring.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-ring.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-semantic.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-semantic.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-sys.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-sys.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-tags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-tags.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-types.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-types.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-utils.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-utils.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-icons.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm-x-icons.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Compiling /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/helm-4.0.7/helm.elc
+Checking /home/fujimoto/.emacs.d/elpa/helm-4.0.7...
+Done (Total of 40 files compiled, 2 skipped)
+Package ‘helm’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      git-gutter-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/git-gutter-0.93... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/git-gutter-0.93/git-gutter.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/git-gutter-0.93/git-gutter.elc
+Checking /home/fujimoto/.emacs.d/elpa/git-gutter-0.93...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/git-gutter-0.93/README-elpa
+Package ‘git-gutter’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      emaps-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/emaps-0.2.0... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/emaps-0.2.0/emaps.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/emaps-0.2.0/emaps.elc
+Checking /home/fujimoto/.emacs.d/elpa/emaps-0.2.0...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/emaps-0.2.0/README-elpa
+Package ‘emaps’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      elpa-mirror-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/elpa-mirror-2.3.0... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/elpa-mirror-2.3.0/elpa-mirror.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/elpa-mirror-2.3.0/elpa-mirror.elc
+Checking /home/fujimoto/.emacs.d/elpa/elpa-mirror-2.3.0...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/elpa-mirror-2.3.0/README-elpa
+Package ‘elpa-mirror’ installed
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      dockerfile-mode-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/dockerfile-mode-1.9... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/dockerfile-mode-1.9/dockerfile-mode.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/dockerfile-mode-1.9/dockerfile-mode.elc
+Checking /home/fujimoto/.emacs.d/elpa/dockerfile-mode-1.9...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/dockerfile-mode-1.9/README-elpa
+Package ‘dockerfile-mode’ installed
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 3 files for loaddefs...done
+  GEN      docker-tramp-autoloads.el
+Warning: Package ‘docker-tramp’ has been obsoleted, please use integrated package ‘tramp-container’
+Checking /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1/docker-tramp-compat.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1/docker-tramp-compat.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1/docker-tramp.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1/docker-tramp.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1...
+Done (Total of 2 files compiled, 2 skipped)
+Warning: Package ‘docker-tramp’ has been obsoleted, please use integrated package ‘tramp-container’
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/docker-tramp-0.1.1/README-elpa
+Package ‘docker-tramp’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 3 files for loaddefs...done
+  GEN      tablist-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/tablist-1.3... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/tablist-1.3/tablist-filter.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/tablist-1.3/tablist-filter.elc
+Checking /home/fujimoto/.emacs.d/elpa/tablist-1.3... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/tablist-1.3/tablist.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/tablist-1.3/tablist.elc
+Checking /home/fujimoto/.emacs.d/elpa/tablist-1.3...
+Done (Total of 2 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/tablist-1.3/README-elpa
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      aio-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/aio-1.1... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/aio-1.1/aio.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/aio-1.1/aio.elc
+Checking /home/fujimoto/.emacs.d/elpa/aio-1.1...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/aio-1.1/README-elpa
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 13 files for loaddefs...done
+  GEN      docker-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-compose.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-compose.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-container.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-container.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-context.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-context.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-core.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-core.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-faces.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-faces.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-group.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-group.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-image.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-image.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-network.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-network.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-process.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-process.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-utils.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-utils.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-volume.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker-volume.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Compiling /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/docker.elc
+Checking /home/fujimoto/.emacs.d/elpa/docker-2.5.0...
+Done (Total of 12 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/docker-2.5.0/README-elpa
+Package ‘docker’ installed
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 9 files for loaddefs...done
+  GEN      diff-hl-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-amend.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-amend.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-dired.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-dired.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-flydiff.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-flydiff.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-inline-popup.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-inline-popup.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-margin.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-margin.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-show-hunk-posframe.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-show-hunk-posframe.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-show-hunk.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl-show-hunk.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Compiling /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/diff-hl.elc
+Checking /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0...
+Done (Total of 8 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/diff-hl-1.10.0/README-elpa
+Package ‘diff-hl’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 3 files for loaddefs...done
+  GEN      dash-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/dash-2.20.0... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/dash-2.20.0/dash.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/dash-2.20.0/dash.elc
+Checking /home/fujimoto/.emacs.d/elpa/dash-2.20.0...
+Done (Total of 1 file compiled, 2 skipped)
+Package ‘dash’ installed
+Contacting host: elpa.gnu.org:443 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 10 files for loaddefs...done
+  GEN      consult-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-compile.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-compile.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-flymake.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-flymake.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-imenu.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-imenu.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-info.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-info.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-kmacro.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-kmacro.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-org.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-org.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-register.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-register.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-xref.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult-xref.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Compiling /home/fujimoto/.emacs.d/elpa/consult-3.9/consult.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/consult-3.9/consult.elc
+Checking /home/fujimoto/.emacs.d/elpa/consult-3.9...
+Done (Total of 9 files compiled, 2 skipped)
+Package ‘consult’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 10 files for loaddefs...done
+  GEN      irony-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-clang-complete.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-clang-complete.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-json.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-json.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-libclang.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb-libclang.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-cdb.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-completion.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-completion.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-diagnostics.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-diagnostics.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-iotask.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-iotask.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-snippet.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony-snippet.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Compiling /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/irony.elc
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/build-aux...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/cmake...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/src...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/test...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/build-aux/run-clang-tidy...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/cmake/modules...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/src/support...
+Checking /home/fujimoto/.emacs.d/elpa/irony-1.6.1/server/test/elisp... [5 times]
+Done (Total of 9 files compiled, 6 skipped in 2 directories)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/irony-1.6.1/README-elpa
+Contacting host: stable.melpa.org:80
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 3 files for loaddefs...done
+  GEN      posframe-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/posframe-1.5.2... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/posframe-1.5.2/posframe-benchmark.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/posframe-1.5.2/posframe-benchmark.elc
+Checking /home/fujimoto/.emacs.d/elpa/posframe-1.5.2... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/posframe-1.5.2/posframe.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/posframe-1.5.2/posframe.elc
+Checking /home/fujimoto/.emacs.d/elpa/posframe-1.5.2...
+Done (Total of 2 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/posframe-1.5.2/README-elpa
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 23 files for loaddefs...done
+  GEN      company-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-abbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-abbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-bbdb.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-bbdb.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-capf.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-capf.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-childframe.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-childframe.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-clang.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-clang.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-cmake.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-cmake.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-css.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-css.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev-code.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev-code.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-etags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-etags.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-gtags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-gtags.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-ispell.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-ispell.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-keywords.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-keywords.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-nxml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-nxml.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-oddmuse.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-oddmuse.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-semantic.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-semantic.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-template.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-template.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tempo.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tempo.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tng.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tng.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-yasnippet.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-yasnippet.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/images...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons/vscode-dark...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons/vscode-light...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/images/small...
+Done (Total of 22 files compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/README-elpa
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      company-irony-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/company-irony-1.1.1... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/company-irony-1.1.1/company-irony.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-irony-1.1.1/company-irony.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-irony-1.1.1...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/company-irony-1.1.1/README-elpa
+Package ‘company-irony’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 24 files for loaddefs...done
+  GEN      company-autoloads.el
+Source file ‘/home/fujimoto/.emacs.d/elpa/company-1.1.0/company.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/company-1.1.0/company-template.el’ newer than byte-compiled file; using older file
+Source file ‘/home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev.el’ newer than byte-compiled file; using older file
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-abbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-abbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-bbdb.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-bbdb.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-capf.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-capf.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-childframe.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-childframe.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-clang.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-clang.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-cmake.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-cmake.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-css.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-css.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev-code.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev-code.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-dabbrev.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-etags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-etags.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-files.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-files.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-gtags.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-gtags.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-ispell.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-ispell.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-keywords.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-keywords.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-nxml.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-nxml.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-oddmuse.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-oddmuse.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0... [2 times]
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-semantic.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-semantic.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-template.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-template.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tempo.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tempo.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tng.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-tng.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-yasnippet.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company-yasnippet.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Compiling /home/fujimoto/.emacs.d/elpa/company-1.1.0/company.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/company-1.1.0/company.elc
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/images...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons/vscode-dark...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/icons/vscode-light...
+Checking /home/fujimoto/.emacs.d/elpa/company-1.1.0/images/small...
+Done (Total of 22 files compiled, 2 skipped)
+Package ‘company’ installed
+Contacting host: stable.melpa.org:80 [2 times]
+Parsing tar file...done
+Extracting...done
+  INFO     Scraping 2 files for loaddefs...done
+  GEN      cmake-mode-autoloads.el
+Checking /home/fujimoto/.emacs.d/elpa/cmake-mode-4.4.3... [3 times]
+Compiling /home/fujimoto/.emacs.d/elpa/cmake-mode-4.4.3/cmake-mode.el...done
+Wrote /home/fujimoto/.emacs.d/elpa/cmake-mode-4.4.3/cmake-mode.elc
+Checking /home/fujimoto/.emacs.d/elpa/cmake-mode-4.4.3...
+Done (Total of 1 file compiled, 2 skipped)
+Contacting host: stable.melpa.org:80
+Wrote /home/fujimoto/.emacs.d/elpa/cmake-mode-4.4.3/README-elpa
+Package ‘cmake-mode’ installed
+Wrong number of arguments: #[(pkg-name) ((if package--initialized nil (package-initialize 'no-activate)) (or (car (cdr (assq pkg-name package-alist))) (car (cdr (assq pkg-name package-archive-contents))))) (#<symbol lsp-use-plists at 1472> #<symbol lsp-use-plists at 1472> #<symbol magit-buffer-upstream at 22047> #<symbol magit-buffer-arguments at 21862> #<symbol magit-define-aliases-for:magit-buffer-* at 21627> #<symbol magit-buffer-upstream at 22047> #<symbol magit-buffer-arguments at 21862> #<symbol magit-define-aliases-for:magit-buffer-* at 21627> #<symbol php-syntax-propertize-rules at 34699> #<symbol php-heredoc-start-re at 34018> ...) nil "Return the `package-desc' of PKG-NAME."], 2
+Error in post-command-hook (package-menu--post-refresh): (wrong-number-of-arguments #[(pkg-name) ((if package--initialized nil (package-initialize 'no-activate)) (or (car (cdr (assq pkg-name package-alist))) (car (cdr (assq pkg-name package-archive-contents))))) (#<symbol lsp-use-plists at 1472> #<symbol lsp-use-plists at 1472> #<symbol magit-buffer-upstream at 22047> #<symbol magit-buffer-arguments at 21862> #<symbol magit-define-aliases-for:magit-buffer-* at 21627> #<symbol magit-buffer-upstream at 22047> #<symbol magit-buffer-arguments at 21862> #<symbol magit-define-aliases-for:magit-buffer-* at 21627> #<symbol php-syntax-propertize-rules at 34699> #<symbol php-heredoc-start-re at 34018> #<symbol php-mode-version-number at 660> #<symbol rust--char-literal-rx at 47406> #<symbol wgrep-colon-file-separator-header-regexp at 5764> #<symbol wgrep-null-file-separator-header-regexp at 5660> #<symbol helm-advice-push-mark at 9271> #<symbol helm-current-error at 7102> #<symbol helm-current-prefix-arg at 7008> #<symbol helm-action-buffer at 6936> #<symbol helm-suspend-update-flag at 6898> #<symbol helm-current-buffer at 6822> #<symbol helm-buffer at 6760> #<symbol helm-pattern at 6681> #<symbol helm-yank-point at 6652> #<symbol helm-current-directory-alist at 6144> #<symbol helm-describe-variable-function at 5992> #<symbol helm-describe-function-function at 5840> #<symbol helm-boring-file-regexp-list at 4726> #<symbol helm-ff--boring-regexp at 4449> #<symbol helm-help-full-frame at 4156> #<symbol helm-scroll-amount at 3832> #<symbol helm-yank-text-at-point-function at 3437> #<symbol helm-file-globstar at 3214> #<symbol helm-debug-output-buffer at 3157> #<symbol ffap-machine-p-known at 3127> #<symbol ffap-machine-p-local at 3097> #<symbol ffap-machine-p-unknown at 3065> #<symbol find-function-source-path at 3030> #<symbol completion-flex-nospace at 2997> #<symbol helm-help-buffer-name at 2966> #<symbol helm-persistent-action-window-buffer at 2920> #<symbol helm-completion-styles-alist at 2882> #<symbol helm-completion-style at 2851> #<symbol helm--buffer-in-new-frame-p at 2814> #<symbol helm-persistent-action-display-window at 2767> #<symbol helm-current-position at 2736> #<symbol helm-initial-frame at 2708> #<symbol helm-sources at 2686>) nil "Return the `package-desc' of PKG-NAME."] 2)
+Mark set
+Mark saved where search started
+C-c C-g is undefined
+Mark saved where search started
+Quit
