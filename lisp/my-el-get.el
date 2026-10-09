@@ -56,6 +56,7 @@ This function does not work when system-type is windows-nt."
 	(goto-char (point-max))
 	(eval-print-last-sexp)))
     ;; Install the other packages.
+    (require 'el-get-bundle)
     (add-to-list 'el-get-recipe-path my-el-get-my-recipe-path)
     (mapc #'(lambda (package) (eval `(el-get-bundle ,package))) packages)))
 
@@ -79,6 +80,7 @@ Otherwise, return list of packages not installed."
 		(message "Following packages are not installed: %s"
 			 (mapconcat 'prin1-to-string packages-not-installed ", "))
 		packages-not-installed)
+	    (require 'el-get-bundle)
 	    (mapc #'(lambda (package) (eval `(el-get-bundle ,package))) packages)
 	    t)))
     (message "el-get was not found.")
