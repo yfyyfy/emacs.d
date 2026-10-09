@@ -36,9 +36,9 @@
       '(el-get
 	helm-next-error
 	java-mode-indent-annotations
-	setup-cygwin
-	w32-symlinks
-	windows-path
+	;; setup-cygwin
+	;; w32-symlinks
+	;; windows-path
 	emacsmirror/visual-basic-mode))
 (my-el-get-activate-packages-install-if-necessary)
 
@@ -748,6 +748,12 @@
 ;; (global-set-key [?\C-;] 'consult-buffer)
 (global-set-key [67108923] 'consult-buffer)
 (fido-vertical-mode t)
+(setq my-fido-mode-completion-styles '(substring initials flex))
+(defun my-minibuffer-setup-hook ()
+    "Override icomplete-minibuffer-setup."
+    (when fido-mode
+      (setq-local completion-styles my-fido-mode-completion-styles)))
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook 10)
 
 ;; Helm
 ;; (defun my-helm-mini ()
